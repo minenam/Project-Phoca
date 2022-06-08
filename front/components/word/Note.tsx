@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { NoteContainer, NoteBackground, NoteHeader } from "./NoteStyle";
+import { NoteContainer, NoteBackground, NoteHeader } from "./Note.style";
 import Dropzone from "./upload/Dropzone";
 import Results from "./results/Results";
 
