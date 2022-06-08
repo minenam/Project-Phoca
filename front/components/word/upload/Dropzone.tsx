@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { useDropzone, DropzoneProps } from "react-dropzone";
+import { AiOutlinePlus } from "react-icons/ai";
+import { Title, DropContainer, SubmitBtn } from "./Dropzone.style";
 
 interface dropzoneProps extends DropzoneProps {
   files?: File[];
@@ -28,15 +30,12 @@ const Upload = (props: dropzoneProps) => {
 
   return (
     <>
-      <div {...getRootProps()} style={{ border: "1px solid black" }}>
+      <Title>단어를 찾을 이미지를 아래에 넣어주세요.</Title>
+      <DropContainer {...getRootProps()}>
         <input {...getInputProps()} />
-        <p>Drag drop some files here, or click to select files</p>
-      </div>
-      <Link href="/word/results">
-        <a>
-          <button>결과 페이지 이동</button>
-        </a>
-      </Link>
+        <AiOutlinePlus />
+      </DropContainer>
+      <SubmitBtn>사진 보내기</SubmitBtn>
     </>
   );
 };
