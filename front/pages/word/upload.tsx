@@ -1,12 +1,6 @@
-import Upload from "../../components/upload/Dropzone";
-
+import Note from "../../components/word/Note";
 function UploadPage() {
-  return (
-    <div>
-      UploadPage
-      <Upload />
-    </div>
-  );
+  return <Note />;
 }
 
 export default UploadPage;

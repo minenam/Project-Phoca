@@ -1,5 +1,7 @@
+import Note from "../../components/word/Note";
+
 function ResultPage() {
-  return <div>results</div>;
+  return <Note />;
 }
 
 export default ResultPage;

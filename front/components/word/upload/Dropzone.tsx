@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { useDropzone, DropzoneProps } from "react-dropzone";
 
@@ -26,10 +27,17 @@ const Upload = (props: dropzoneProps) => {
   }, [files]);
 
   return (
-    <div {...getRootProps()} style={{ border: "1px solid black" }}>
-      <input {...getInputProps()} />
-      <p>Drag drop some files here, or click to select files</p>
-    </div>
+    <>
+      <div {...getRootProps()} style={{ border: "1px solid black" }}>
+        <input {...getInputProps()} />
+        <p>Drag drop some files here, or click to select files</p>
+      </div>
+      <Link href="/word/results">
+        <a>
+          <button>결과 페이지 이동</button>
+        </a>
+      </Link>
+    </>
   );
 };
 
