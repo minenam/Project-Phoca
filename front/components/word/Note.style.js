@@ -9,7 +9,7 @@ export const NoteContainer = styled("div", (props) => ({
 }));
 
 export const NoteBackground = styled("div", (props) => ({
-  width: "30%",
+  width: "575px",
   height: "60%",
   backgroundColor: "#FEDDA6",
   margin: "auto",
