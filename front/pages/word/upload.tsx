@@ -1,12 +1,12 @@
 import Upload from "../../components/upload/Dropzone";
 
-const UploadPage = () => {
+function UploadPage() {
   return (
     <div>
       UploadPage
       <Upload />
     </div>
   );
-};
+}
 
 export default UploadPage;
