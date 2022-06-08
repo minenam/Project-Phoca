@@ -30,3 +30,16 @@ export const SubmitBtn = styled("button", (props) => ({
   border: "none",
   cursor: "pointer",
 }));
+
+export const ImageContainer = styled("div", (props) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "50%",
+}));
+
+export const ThumbImage = styled("img", (props) => ({
+  width: "100%",
+  height: "100%",
+  objectFit: "contain",
+}));
