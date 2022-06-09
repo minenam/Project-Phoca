@@ -11,7 +11,9 @@ const Home: NextPage = () => {
   return (
     <div>
       <NavBar />
+
       <MainButtonWrapper>
+        <MainButton $guide>학습가이드</MainButton>
         {MAIN_BUTTON.map((item, idx) => {
           return (
             <MainButton

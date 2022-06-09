@@ -27,7 +27,7 @@ export const Anchor = styled("a", {
   cursor: "pointer",
   justifyContent: "flex-end",
   fontWeight: "bold",
-  width: "50%",
+  width: "53%",
   fontFamily: "Nanum Gothic Coding, monospace",
   fontSize: "2em",
 });
