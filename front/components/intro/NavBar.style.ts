@@ -28,6 +28,7 @@ export const Anchor = styled("a", {
   justifyContent: "flex-end",
   fontWeight: "bold",
   width: "50%",
+  fontFamily: "Nanum Gothic Coding, monospace",
   fontSize: "2em",
 });
 
@@ -35,7 +36,7 @@ export const Login = styled("a", {
   cursor: "pointer",
   fontSize: "1.5em",
   display: "flex",
-  marginRight: "25px",
+  fontFamily: "Quicksand, sans-serif",
   alignSelf: "flex-end",
   fontWeight: "bold",
 });
@@ -43,7 +44,8 @@ export const Login = styled("a", {
 export const Welcome = styled("p", {
   display: "flex",
   alignSelf: "flex-end",
-  marginRight: "25px",
-  borderBottom: "1.5px solid white",
+  fontWeight: 800,
+  fontFamily: "Quicksand, sans-serif",
+  borderBottom: "2.5px solid white",
   paddingBottom: "2px",
 });

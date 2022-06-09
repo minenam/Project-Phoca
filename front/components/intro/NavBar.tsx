@@ -21,9 +21,9 @@ const NavBar: FC = () => {
       </Link>
       <RightMenuWrapper>
         <Link href={"/login"}>
-          <Login>Login</Login>
+          <Login>Login&nbsp;</Login>
         </Link>
-        <Welcome>Hi! I'm Your English Mate!</Welcome>
+        <Welcome>Hi! I'm Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
       </RightMenuWrapper>
     </Nav>
   );
