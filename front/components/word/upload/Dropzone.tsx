@@ -64,7 +64,9 @@ const Upload = (props: dropzoneProps) => {
         thumbnail
       )}
 
-      <SubmitBtn onClick={imageSubmitHandler}>사진 보내기</SubmitBtn>
+      {files.length !== 0 && (
+        <SubmitBtn onClick={imageSubmitHandler}>사진 보내기</SubmitBtn>
+      )}
     </>
   );
 };
