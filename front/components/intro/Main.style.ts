@@ -1,7 +1,5 @@
 import { styled } from "styletron-react";
 
-const contentMargin = "20vh";
-
 export const MainButton = styled("div", (props: { $guide?: Boolean }) => ({
   display: "flex",
   justifyContent: "center",
