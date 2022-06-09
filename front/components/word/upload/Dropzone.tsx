@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useDropzone, DropzoneProps } from "react-dropzone";
 import { AiOutlinePlus } from "react-icons/ai";
 import {
@@ -8,32 +8,45 @@ import {
   ImageContainer,
   ThumbImage,
 } from "./Dropzone.style";
+import { useRouter } from "next/router";
 
 interface dropzoneProps extends DropzoneProps {
   files?: File[];
+  preview?: string;
   onDrop?: (acceptedFiles: File[]) => void;
 }
 
 const Upload = (props: dropzoneProps) => {
+  const router = useRouter();
   const [files, setFiles] = useState<File[]>([]); // 업로드할 파일
+  const [preview, setPreview] = useState(""); // 업로드한 파일의 프리뷰
 
   // drop handler
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(
-      acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        }),
-      ),
-    );
-  }, []);
+  const onDrop = (acceptedFiles: File[]) => {
+    setFiles(acceptedFiles);
+    setPreview(URL.createObjectURL(acceptedFiles[0]));
+  };
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  const thumbnail = files.map((file: any) => (
+  // 썸네일
+  const thumbnail = files.map((file: File) => (
     <ImageContainer key={file.name}>
-      <ThumbImage src={file.preview} alt={file.name} />
+      <ThumbImage src={preview} alt={file.name} />
     </ImageContainer>
   ));
+
+  // image submit handler
+  const imageSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    router.push(
+      {
+        pathname: "/word/results",
+        query: { word: "apple", imageUrl: preview },
+      },
+      "/word/results",
+    );
+  };
 
   useEffect(() => {
     console.log(files);
@@ -51,7 +64,7 @@ const Upload = (props: dropzoneProps) => {
         thumbnail
       )}
 
-      <SubmitBtn>사진 보내기</SubmitBtn>
+      <SubmitBtn onClick={imageSubmitHandler}>사진 보내기</SubmitBtn>
     </>
   );
 };

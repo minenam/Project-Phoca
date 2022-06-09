@@ -1,6 +1,14 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function Results() {
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log(router);
+  }, []);
+
   return (
     <div>
       Results
