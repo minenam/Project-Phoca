@@ -21,7 +21,7 @@ const NavBar: FC = () => {
       </Link>
       <RightMenuWrapper>
         <Link href={"/login"}>
-          <Login>Login&nbsp;</Login>
+          <Login>Login</Login>
         </Link>
         <Welcome>Hi! I'm Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
       </RightMenuWrapper>

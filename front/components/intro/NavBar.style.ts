@@ -35,6 +35,8 @@ export const Anchor = styled("a", {
 export const Login = styled("a", {
   cursor: "pointer",
   fontSize: "1.5em",
+  marginTop: "5px",
+  marginRight: "20px",
   display: "flex",
   fontFamily: "Quicksand, sans-serif",
   alignSelf: "flex-end",
