@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/reset.css";
 import type { AppProps } from "next/app";
 import { Provider as StyletronProvider } from "styletron-react";
 import { styletron } from "../styletron";
