@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import {
   ResultsContainer,
   ImageContainer,
   WordContainer,
   IconContainer,
   BtnContainer,
+  ThumbImage,
   EngWord,
   KorWord,
   TtsBtn,
@@ -23,19 +24,22 @@ function Results() {
   const router = useRouter();
   const { word, imageUrl }: Word = router.query;
 
-  useEffect(() => {
-    console.log(router);
-  }, []);
+  const ttsBtnClickHandler = () => {
+    const temp: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(word);
+    const voice: SpeechSynthesisVoice[] = window.speechSynthesis.getVoices();
+    temp.voice = voice[2];
+    window.speechSynthesis.speak(temp);
+  };
 
   return (
     <ResultsContainer>
       <ImageContainer>
-        <img src={imageUrl} alt="submit-image" />
+        <ThumbImage src={imageUrl} alt="submit-image" />
       </ImageContainer>
       <WordContainer>
         <EngWord>{word}</EngWord>
         <IconContainer>
-          <TtsBtn>
+          <TtsBtn onClick={ttsBtnClickHandler}>
             <FaVolumeUp />
           </TtsBtn>
           <EditBtn>
@@ -45,7 +49,9 @@ function Results() {
       </WordContainer>
       <KorWord>사과</KorWord>
       <BtnContainer>
-        <Button>사진 다시 찍기</Button>
+        <Link href="/word/upload">
+          <Button>사진 다시 찍기</Button>
+        </Link>
         <Button>단어장 저장하기</Button>
       </BtnContainer>
     </ResultsContainer>

@@ -8,8 +8,14 @@ export const ImageContainer = styled("div", (props) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: "45%",
+  height: "330px",
   marginTop: "2rem",
+}));
+
+export const ThumbImage = styled("img", (props) => ({
+  width: "100%",
+  height: "100%",
+  objectFit: "contain",
 }));
 
 export const WordContainer = styled("div", (props) => ({
