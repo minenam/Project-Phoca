@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <MainPhrase>메인 문구</MainPhrase>
+      <MainPhrase>메인 문구 들어갈 자리입니다.</MainPhrase>
       <MainButtonWrapper>
         <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
           학습가이드
