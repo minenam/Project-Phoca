@@ -10,13 +10,7 @@ import {
 } from "./Dropzone.style";
 import { useRouter } from "next/router";
 
-interface dropzoneProps extends DropzoneProps {
-  files?: File[];
-  preview?: string;
-  onDrop?: (acceptedFiles: File[]) => void;
-}
-
-const Upload = (props: dropzoneProps) => {
+const Upload = () => {
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]); // 업로드할 파일
   const [preview, setPreview] = useState(""); // 업로드한 파일의 프리뷰
