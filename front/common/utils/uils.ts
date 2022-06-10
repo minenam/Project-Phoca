@@ -21,3 +21,6 @@ export const MAIN_BUTTON: button_arr[] = [
     buttonColor: "#FE7394",
   },
 ];
+
+export const headerHeight: string = "100px";
+export const sidebarWidth: string = "300px";
