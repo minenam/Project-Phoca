@@ -15,6 +15,13 @@ export const MainButton = styled("div", (props: { $guide?: Boolean }) => ({
   gridRowStart: props.$guide && 1,
   gridRowEnd: props.$guide && 3,
   backgroundColor: props.$guide && "#88C72E",
+  ":hover": {
+    opacity: 1,
+    border: "calc(2px + .85vw) solid rgba(255, 255, 255, .5)",
+    transition: ".5s background-color ease,    .2s border ease",
+    borderRadius:
+      "calc(var(--x) / var(--size) * 100%) calc(var(--dx) / var(--size) * 100%) calc(var(--dx) / var(--size) * 100%)  calc(var(--x) / var(--size) * 100%) / calc(var(--y) / var(--size) * 100%) calc(var(--y) / var(--size) * 100%) calc(var(--dy) / var(--size) * 100%) calc(var(--dy) / var(--size) * 100%)",
+  },
 }));
 
 export const MainButtonWrapper = styled("div", {
