@@ -54,4 +54,5 @@ export const Welcome = styled("p", {
   fontFamily: "Quicksand, sans-serif",
   borderBottom: "2.5px solid white",
   paddingBottom: "2px",
+  marginBottom: "5px",
 });
