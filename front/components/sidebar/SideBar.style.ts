@@ -1,6 +1,6 @@
 import { styled } from "styletron-react";
+import { headerHeight } from "../../common/utils/uils";
 
-const headerHeight = "100px";
 export const SideBarContainer = styled("div", (props) => ({
   position: "absolute",
   zIndex: 100,
