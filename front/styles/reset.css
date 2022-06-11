@@ -98,7 +98,7 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-family: "TmoneyRoundWindExtraBold";
+  font-family: "TmoneyRoundWindExtraBold", sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -113,11 +113,11 @@ menu,
 nav,
 section {
   display: block;
-  font-family: "TmoneyRoundWindExtraBold";
+  font-family: "TmoneyRoundWindExtraBold", sans-serif;
 }
 body {
   line-height: 1;
-  font-family: "TmoneyRoundWindExtraBold";
+  font-family: "TmoneyRoundWindExtraBold", sans-serif;
 }
 ol,
 ul {
@@ -139,5 +139,5 @@ table {
   border-spacing: 0;
 }
 button {
-  font-family: "TmoneyRoundWindExtraBold";
+  font-family: "TmoneyRoundWindExtraBold", sans-serif;
 }
