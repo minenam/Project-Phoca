@@ -7,6 +7,7 @@ import {
   MainButtonWrapper,
   MainPhrase,
 } from "../components/intro/Main.style";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [css] = useStyletron();
@@ -15,16 +16,17 @@ const Home: NextPage = () => {
   useEffect(() => {
     console.log(btnRef);
     btnRef.current.forEach((btn: any) => {
-      console.log("e", btn);
       btn.addEventListener("mousemove", (e: MouseEvent) => {
-        console.log("event", e);
-        const size = parseInt(getComputedStyle(btn).width);
-        const x = size * 0.3 * 0.7 + 0.7 * e.offsetX;
-        const y = size * 0.3 * 0.7 + 0.7 * e.offsetY;
+        if (e.offsetX < 285) {
+          const size = parseInt(getComputedStyle(btn).width);
 
-        btn.style.setProperty("--x", x.toString());
-        btn.style.setProperty("--y", y.toString());
-        btn.style.setProperty("--size", size.toString());
+          const x = size * 0.3 * 0.7 + 0.7 * e.offsetX;
+          const y = size * 0.3 * 0.7 + 0.7 * e.offsetY;
+
+          btn.style.setProperty("--x", x.toString());
+          btn.style.setProperty("--y", y.toString());
+          btn.style.setProperty("--size", size.toString());
+        }
       });
     });
   }, []);
@@ -33,17 +35,21 @@ const Home: NextPage = () => {
     <div>
       <MainPhrase>메인 문구 들어갈 자리입니다.</MainPhrase>
       <MainButtonWrapper>
-        <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
-          학습가이드
-        </MainButton>
+        <Link href={MAIN_BUTTON[0].link}>
+          <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
+            학습가이드
+          </MainButton>
+        </Link>
+
         {MAIN_BUTTON.map((item, idx) => {
           return (
-            <MainButton
-              key={idx}
-              ref={(ref) => (btnRef.current[idx + 1] = ref)}
-              className={css({ backgroundColor: item.buttonColor })}>
-              {item.buttonName}
-            </MainButton>
+            <Link href={item.link} key={idx}>
+              <MainButton
+                ref={(ref) => (btnRef.current[idx + 1] = ref)}
+                className={css({ backgroundColor: item.buttonColor })}>
+                {item.buttonName}
+              </MainButton>
+            </Link>
           );
         })}
       </MainButtonWrapper>

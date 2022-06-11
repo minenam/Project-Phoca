@@ -5,14 +5,13 @@ export const MainButton = styled("div", (props: { $guide?: Boolean }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  borderRadius: "25px",
+  borderRadius: "30px",
   width: "300px",
   margin: "0 auto",
   cursor: "pointer",
   fontFamily: "Nanum Gothic Coding, monospace",
   fontWeight: "bold",
   fontSize: "1.5rem",
-
   height: props.$guide ? "100%" : "300px",
   gridRowStart: props.$guide && 1,
   gridRowEnd: props.$guide && 3,
@@ -25,9 +24,9 @@ export const MainButton = styled("div", (props: { $guide?: Boolean }) => ({
     transition: ".5s background-color ease, .2s border ease",
     borderRadius:
       "calc(var(--x) / var(--size) * 100%) calc(var(--dx) / var(--size) * 100%) calc(var(--dx) / var(--size) * 100%)  calc(var(--x) / var(--size) * 100%) / calc(var(--y) / var(--size) * 100%) calc(var(--y) / var(--size) * 100%) calc(var(--dy) / var(--size) * 100%) calc(var(--dy) / var(--size) * 100%)",
-    ":before": {
+    ":after": {
       content: "''",
-      backgroundImage: "url(/awesome.svg)",
+      // backgroundImage: "url(/awesome.svg)",
       backgroundRepeat: "round",
       position: "absolute",
       top: "0px",
@@ -37,7 +36,7 @@ export const MainButton = styled("div", (props: { $guide?: Boolean }) => ({
       opacity: "0.7",
     },
   },
-  ":before": {
+  ":after": {
     content: "''",
     backgroundImage: "url(/well_done.svg)",
     backgroundRepeat: "round",
