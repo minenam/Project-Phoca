@@ -9,11 +9,12 @@ import SideBar from "../components/sidebar/SideBar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const urlWithoutSidebar: string[] = ["/", "/login", "register"];
+  const urlWithoutNavbar: string[] = ["/login", "/register"];
+  const urlWithoutSidebar: string[] = ["/", "/login", "/register"];
 
   return (
     <StyletronProvider value={styletron}>
-      <NavBar />
+      {urlWithoutNavbar.indexOf(router.pathname) === -1 && <NavBar />}
       {urlWithoutSidebar.indexOf(router.pathname) === -1 && <SideBar />}
       <Component {...pageProps} />
     </StyletronProvider>
