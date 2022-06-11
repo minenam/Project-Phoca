@@ -1,10 +1,20 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { configAsync } from "./orm.config";
+import { ConfigModule } from "@nestjs/config";
+import { WordbookModule } from "./wordbook/wordbook.module";
+// import { WordModule } from './word/word.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync(configAsync),
+    WordbookModule,
+    // WordModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

@@ -1,5 +1,7 @@
+import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { SwaggerModule } from "@nestjs/swagger";
+import { config } from "aws-sdk";
 import { BaseAPIDocumentation } from "./api/base.document";
 import { AppModule } from "./app.module";
 
@@ -10,7 +12,13 @@ async function bootstrap() {
   const documentOption = new BaseAPIDocumentation().initializaeOptions();
   const document = SwaggerModule.createDocument(app, documentOption);
   SwaggerModule.setup("api", app, document);
-
-  await app.listen(5000);
+  const configService = app.get(ConfigService);
+  const port = configService.get("PORT");
+  config.update({
+    accessKeyId: configService.get("AWS_ACCESS_KEY_ID"),
+    secretAccessKey: configService.get("AWS_SECRET_ACCESS_KEY"),
+    region: configService.get("AWS_BUCKET_REGION"),
+  });
+  await app.listen(port);
 }
 bootstrap();
