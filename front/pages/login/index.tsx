@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
+import AuthCard from "../../components/user/AuthCard";
 
 const LoginPage: NextPage = () => {
-  return <div>LoginPage</div>;
+  return <AuthCard />;
 };
 
 export default LoginPage;
