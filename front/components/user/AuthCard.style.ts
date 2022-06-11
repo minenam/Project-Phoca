@@ -20,8 +20,8 @@ export const Card = styled("div", {
   backgroundColor: "rgba( 255, 255, 255, 0.5 )",
   boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
   backdropFilter: "blur( 4px )",
-  width: "800px",
-  height: "600px",
+  width: "600px",
+  height: "400px",
   borderRadius: "50px",
   border: "1px solid rgba( 255, 255, 255, 0.18 )",
 });
@@ -31,6 +31,7 @@ export const TitleContainer = styled("div", {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+  marginBottom: "1rem",
 });
 
 export const Logo = styled("img", {
