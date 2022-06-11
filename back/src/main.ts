@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { SwaggerModule } from "@nestjs/swagger";
 import { BaseAPIDocumentation } from "./api/base.document";
 import { AppModule } from "./app.module";
 
