@@ -8,6 +8,8 @@ export const MyPageWrapper = styled("div", {
   justifyContent: "flex-end",
   alignItems: "center",
   // height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+  marginLeft: `${SIDEBAR_WIDTH}px`,
+  width: `calc(100vw - ${sidebarWidth}px`,
   flexDirection: "column",
 });
 
@@ -41,10 +43,10 @@ export const Wrapper = styled("div", {
   alignSelf: "flex-end",
 });
 
-export const UserInfo = styled("div", {
+export const UserInfoWrapper = styled("div", {
   display: "flex",
-  flexDirection: "row",
-  alignSelf: "flex-end",
+  flexDirection: "column",
+  alignSelf: "center",
 });
 
 export const Avatar = styled("div", {
@@ -71,4 +73,63 @@ export const Triangle = styled("div", {
   borderLeft: "15px solid transparent",
   borderRight: "15px solid transparent",
   transform: "rotate(90deg)",
+});
+
+export const UserName = styled("p", {
+  textAlign: "center",
+  marginTop: "10px",
+});
+
+export const EmailRoundedBox = styled("div", {
+  backgroundColor: "#FFAA2A",
+  textAlign: "center",
+  lineHeight: "2rem",
+  height: "2rem",
+  width: "4.5rem",
+  borderRadius: "25px",
+});
+export const UserDetailWrapper = styled("div", {
+  display: "flex",
+  justifySelf: "flex-start",
+  alignContent: "center",
+  flexDirection: "row",
+  marginLeft: "50px",
+  marginTop: "20px",
+});
+export const UserInfoDetail = styled("p", {
+  lineHeight: "2rem",
+  marginLeft: "10px",
+  textAlign: "center",
+});
+
+export const UserWrapper = styled("div", (props: { $box?: Boolean }) => ({
+  display: "flex",
+  width: "100%",
+  justifyContent: props.$box ? "space-evenly" : "space-between",
+  alignContent: "center",
+  flexDirection: "row",
+  marginTop: props.$box ? "1.5rem" : "",
+}));
+
+export const Branch = styled("img", {
+  display: "felx",
+  position: "relative",
+  width: "20rem",
+  alignItems: "center",
+  justifySelf: "flex-end",
+});
+
+export const ImgWrapper = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  marginLeft: "50px",
+  marginTop: "50px",
+});
+
+export const Seal = styled("img", {
+  position: "absolute",
+  width: "5rem",
+  right: "1.2rem",
+  top: "10rem",
+  zIndex: 100,
 });
