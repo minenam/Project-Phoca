@@ -3,7 +3,7 @@ import { headerHeight } from "../../common/utils/uils";
 
 export const SideBarContainer = styled("div", (props) => ({
   position: "absolute",
-  zIndex: 100,
+  zIndex: 2,
   display: "flex",
   flexDirection: "column",
 }));
