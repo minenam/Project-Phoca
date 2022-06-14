@@ -3,14 +3,14 @@ import { styled } from "styletron-react";
 export const Form = styled("form", {
   display: "flex",
   flexDirection: "column",
-  height: "50%",
+  height: "80%",
 });
 
 export const ContentContainer = styled("div", {
-  height: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+  marginBottom: 0,
 });
 
 export const Field = styled("div", {
@@ -25,7 +25,7 @@ export const Label = styled("label", {
 
 export const Input = styled("input", {
   border: "0",
-  borderBottom: "3px solid black",
+  borderBottom: "2px solid black",
   backgroundColor: "transparent",
   height: "30px",
   fontSize: "1.5rem",
@@ -39,13 +39,35 @@ export const BtnContainer = styled("div", {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  height: "100%",
 });
 
-export const Button = styled("button", {
+export const LinkBtn = styled("button", {
+  backgroundColor: "#fff",
+  backgroundImage: "linear-gradient(45deg, #FFAA2A 50%, transparent 50%)",
+  backgroundPosition: "100%",
+  backgroundSize: "400%",
+  transition: "background 0.5s ease-in-out",
+  border: "3px solid #FFAA2A",
+  borderRadius: "10px",
+  width: "170px",
+  height: "40px",
+  fontSize: "1rem",
+  fontWeight: "bold",
+  color: "#FFAA2A",
+  marginRight: "1rem",
+  cursor: "pointer",
+  ":hover": {
+    backgroundPosition: 0,
+    color: "#fff",
+  },
+});
+
+export const SubmitButton = styled("button", {
   backgroundColor: "#FFAA2A",
   border: 0,
   borderRadius: "10px",
-  width: "150px",
+  width: "170px",
   height: "40px",
   fontSize: "1rem",
   fontWeight: "bold",
@@ -62,16 +84,13 @@ export const ErrorMsg = styled("div", {
 
 export const SnsTitle = styled("div", {
   display: "flex",
-  flexBasis: "100%",
   alignItems: "center",
-  fontSize: "1.5rem",
-  marginTop: "2rem",
-  fontWeight: 900,
+  fontSize: "1rem",
   ":before": {
     content: "''",
     flexGrow: 1,
     backgroundColor: "#000",
-    height: "3px",
+    height: "1.5px",
     fontSize: "0px",
     lineHeight: "0px",
     marginRight: "0.5rem",
@@ -80,7 +99,7 @@ export const SnsTitle = styled("div", {
     content: "''",
     flexGrow: 1,
     backgroundColor: "#000",
-    height: "3px",
+    height: "1.5px",
     fontSize: "0px",
     lineHeight: "0px",
     marginLeft: "0.5rem",
@@ -88,7 +107,6 @@ export const SnsTitle = styled("div", {
 });
 
 export const KakaoBtn = styled("button", {
-  marginTop: "1rem",
   border: 0,
   backgroundColor: "transparent",
   cursor: "pointer",

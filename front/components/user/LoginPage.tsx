@@ -8,11 +8,12 @@ import {
   Label,
   Input,
   BtnContainer,
-  Button,
+  SubmitButton,
+  LinkBtn,
   ErrorMsg,
   SnsTitle,
   KakaoBtn,
-} from "./LoginPage.style";
+} from "./AccountPage.style";
 
 interface LoginValues {
   id: string;
@@ -69,18 +70,18 @@ function LoginPage() {
           </Field>
         </ContentContainer>
         <BtnContainer>
-          <Button type="submit">로그인</Button>
           <Link href="/register">
-            <Button>회원가입</Button>
+            <LinkBtn>회원가입 하러 가기</LinkBtn>
           </Link>
+          <SubmitButton type="submit">로그인</SubmitButton>
+        </BtnContainer>
+        <SnsTitle>SNS 로그인</SnsTitle>
+        <BtnContainer>
+          <KakaoBtn>
+            <img src="/images/kakaoLogin.png" alt="kakao-login-btn" />
+          </KakaoBtn>
         </BtnContainer>
       </Form>
-      <SnsTitle>SNS 로그인</SnsTitle>
-      <BtnContainer>
-        <KakaoBtn>
-          <img src="/images/kakaoLogin.png" alt="kakao-login-btn" />
-        </KakaoBtn>
-      </BtnContainer>
     </>
   );
 }

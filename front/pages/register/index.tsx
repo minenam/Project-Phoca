@@ -7,22 +7,22 @@ import {
   Logo,
   Title,
 } from "../../components/user/AuthCard.style";
-import LoginPage from "../../components/user/LoginPage";
+import RegisterPage from "../../components/user/RegisterPage";
 
-const Login: NextPage = () => {
+const Register: NextPage = () => {
   return (
-    <AuthCardContainer $login>
+    <AuthCardContainer>
       <Card>
         <TitleContainer>
           <Link href="/">
             <Logo src="/logo.png" alt="logo" />
           </Link>
-          <Title>로그인</Title>
+          <Title>회원가입</Title>
         </TitleContainer>
-        <LoginPage />
+        <RegisterPage />
       </Card>
     </AuthCardContainer>
   );
 };
 
-export default Login;
+export default Register;
