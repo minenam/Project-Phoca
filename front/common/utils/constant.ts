@@ -1,9 +1,9 @@
-interface button_arr {
+interface Button {
   buttonName: string;
   buttonColor: string;
 }
 
-export const MAIN_BUTTON: button_arr[] = [
+export const MAIN_BUTTON: Button[] = [
   {
     buttonName: "단어장 만들기",
     buttonColor: "#AF93FF",
@@ -17,7 +17,10 @@ export const MAIN_BUTTON: button_arr[] = [
     buttonColor: "#48CFC8",
   },
   {
-    buttonName: "단어퀴즈 하러가기",
+    buttonName: "단어퀴즈 보러가기",
     buttonColor: "#FE7394",
   },
 ];
+
+export const HEADER_HEIGHT: string = "100px";
+export const SIDEBAR_WIDTH: string = "300px";
