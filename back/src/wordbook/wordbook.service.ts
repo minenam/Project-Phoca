@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Wordbook } from './wordbook.entity';
-import { Repository, DeleteResult } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CreateWordbookDto } from './dto/create-wordbook.dto';
-import { v4 as uuid } from 'uuid';
+import { Injectable } from "@nestjs/common";
+import { Wordbook } from "./wordbook.entity";
+import { Repository, DeleteResult } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CreateWordbookDto } from "./dto/create-wordbook.dto";
+import { v4 as uuid } from "uuid";
 @Injectable()
 export class WordbookService {
   constructor(
