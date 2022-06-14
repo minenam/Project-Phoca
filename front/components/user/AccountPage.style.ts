@@ -71,6 +71,7 @@ export const TextButton = styled("button", {
   border: 0,
   color: "#fff",
   cursor: "pointer",
+  fontSize: "1rem",
 });
 
 export const ErrorMsg = styled("div", {

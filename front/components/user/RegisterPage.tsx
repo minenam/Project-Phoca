@@ -8,8 +8,9 @@ import {
   Label,
   Input,
   BtnContainer,
-  LinkBtn,
   SubmitButton,
+  TextBtnContainer,
+  TextButton,
   ErrorMsg,
 } from "./AccountPage.style";
 
@@ -106,10 +107,12 @@ function RegisterPage() {
           </Field>
         </ContentContainer>
         <BtnContainer>
-          <Link href="/login">
-            <LinkBtn>로그인 하러 가기</LinkBtn>
-          </Link>
           <SubmitButton type="submit">회원가입</SubmitButton>
+          <TextBtnContainer>
+            <Link href="/login">
+              <TextButton>로그인 하러가기</TextButton>
+            </Link>
+          </TextBtnContainer>
         </BtnContainer>
       </Form>
     </>
