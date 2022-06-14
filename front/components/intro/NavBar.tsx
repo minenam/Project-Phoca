@@ -1,6 +1,5 @@
 import { FC } from "react";
 import Link from "next/link";
-import { styled } from "styletron-react";
 import {
   Anchor,
   Login,
@@ -14,14 +13,14 @@ import {
 const NavBar: FC = () => {
   return (
     <Nav>
-      <Link href={"/"}>
+      <Link href={"/"} passHref>
         <Anchor>
           <Logo src="/logo.png" alt="logo" />
           <LogoText>포카</LogoText>
         </Anchor>
       </Link>
       <RightMenuWrapper>
-        <Link href={"/login"}>
+        <Link href={"/login"} passHref>
           <Login>Login</Login>
         </Link>
         <Welcome>Hi! I&apos;m Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
