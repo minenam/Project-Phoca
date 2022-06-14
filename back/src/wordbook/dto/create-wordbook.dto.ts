@@ -1,17 +1,15 @@
-import { IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateWordbookDto {
-  @IsNotEmpty()
-  @IsUUID()
-  wordbookId: string;
+  // @IsUUID()
+  // wordbookId: string;
 
   @IsString()
   @IsNotEmpty()
   wordbookName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   isPrivate: boolean;
 
-  @IsNotEmpty()
-  createDate: Date;
+  // createDate: Date;
 }

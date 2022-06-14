@@ -4,11 +4,13 @@ import {
   Post,
   Body,
   Param,
-  Put,
   Delete,
+  Patch,
 } from "@nestjs/common";
 import { WordbookService } from "./wordbook.service";
 import { Wordbook } from "./wordbook.entity";
+import { UpdateWordbookDto } from "./dto/update-wordbook.dto";
+import { CreateWordbookDto } from "./dto/create-wordbook.dto";
 
 @Controller("wordbook")
 export class WordbookController {
@@ -18,17 +20,20 @@ export class WordbookController {
     return this.wordbookService.getAll();
   }
   @Post("create")
-  create(@Body() wordbook: Wordbook) {
-    return this.wordbookService.create(wordbook);
+  create(@Body() createWordbookDto: CreateWordbookDto) {
+    return this.wordbookService.create(createWordbookDto);
   }
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.wordbookService.get(id);
   }
 
-  @Put(":id")
-  update(@Param("id") id: string, @Body() wordbook: Wordbook) {
-    return this.wordbookService.update(id, wordbook);
+  @Patch(":id")
+  update(
+    @Param("id") id: string,
+    @Body() updateWordbookDto: UpdateWordbookDto,
+  ) {
+    return this.wordbookService.update(id, updateWordbookDto);
   }
 
   @Delete(":id")

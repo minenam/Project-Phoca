@@ -1,8 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Wordbook } from "./wordbook.entity";
 import { Repository, DeleteResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CreateWordbookDto } from "./dto/create-wordbook.dto";
 import { v4 as uuid } from "uuid";
 @Injectable()
 export class WordbookService {
@@ -16,11 +15,9 @@ export class WordbookService {
   // async getById(userId): Promise<Wordbook[]> {
   //   return await this.wordbookRepository.find(userId);
   // }
-  async create(createWordbookDto: CreateWordbookDto): Promise<Wordbook> {
-    createWordbookDto.wordbookId = uuid();
-    createWordbookDto.createDate = new Date(Date.now());
-    console.log(createWordbookDto);
-    const newWordbook = await this.wordbookRepository.create(createWordbookDto);
+  async create(wordbook: Partial<Wordbook>): Promise<Wordbook> {
+    wordbook.wordbookId = uuid();
+    const newWordbook = this.wordbookRepository.create(wordbook);
     return await this.wordbookRepository.save(newWordbook);
   }
   async get(wordbookId: string): Promise<Wordbook> {
@@ -32,8 +29,14 @@ export class WordbookService {
     wordbookId: string,
     wordbook: Partial<Wordbook>,
   ): Promise<Wordbook> {
-    await this.wordbookRepository.update(wordbookId, wordbook);
-    return await this.wordbookRepository.findOne({ where: { wordbookId } });
+    const item = await this.wordbookRepository.findOne({
+      where: { wordbookId },
+    });
+    if (!item) {
+      throw new NotFoundException("wordbook not found");
+    }
+    Object.assign(item, wordbook);
+    return this.wordbookRepository.save(item);
   }
   async delete(wordbookId: string): Promise<DeleteResult> {
     await this.wordbookRepository.findOne({ where: { wordbookId } });
