@@ -10,6 +10,8 @@ import {
   BtnContainer,
   Button,
   ErrorMsg,
+  SnsTitle,
+  KakaoBtn,
 } from "./LoginPage.style";
 
 interface LoginValues {
@@ -73,6 +75,12 @@ function LoginPage() {
           </Link>
         </BtnContainer>
       </Form>
+      <SnsTitle>SNS 로그인</SnsTitle>
+      <BtnContainer>
+        <KakaoBtn>
+          <img src="/images/kakaoLogin.png" alt="kakao-login-btn" />
+        </KakaoBtn>
+      </BtnContainer>
     </>
   );
 }

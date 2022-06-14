@@ -59,3 +59,37 @@ export const ErrorMsg = styled("div", {
   gridColumnStart: 2,
   marginTop: "0.5rem",
 });
+
+export const SnsTitle = styled("div", {
+  display: "flex",
+  flexBasis: "100%",
+  alignItems: "center",
+  fontSize: "1.5rem",
+  marginTop: "2rem",
+  fontWeight: 900,
+  ":before": {
+    content: "''",
+    flexGrow: 1,
+    backgroundColor: "#000",
+    height: "3px",
+    fontSize: "0px",
+    lineHeight: "0px",
+    marginRight: "0.5rem",
+  },
+  ":after": {
+    content: "''",
+    flexGrow: 1,
+    backgroundColor: "#000",
+    height: "3px",
+    fontSize: "0px",
+    lineHeight: "0px",
+    marginLeft: "0.5rem",
+  },
+});
+
+export const KakaoBtn = styled("button", {
+  marginTop: "1rem",
+  border: 0,
+  backgroundColor: "transparent",
+  cursor: "pointer",
+});
