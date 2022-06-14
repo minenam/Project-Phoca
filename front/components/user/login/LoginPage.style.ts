@@ -53,3 +53,9 @@ export const Button = styled("button", {
   marginRight: "1rem",
   cursor: "pointer",
 });
+
+export const ErrorMsg = styled("div", {
+  color: "red",
+  gridColumnStart: 2,
+  marginTop: "0.5rem",
+});
