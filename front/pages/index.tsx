@@ -1,6 +1,6 @@
 import { Ref, useEffect, useRef } from "react";
 import type { NextPage } from "next";
-import { MAIN_BUTTON } from "../common/utils/uils";
+import { MAIN_BUTTON } from "../common/utils/constant";
 import { useStyletron } from "styletron-react";
 import {
   MainButton,
