@@ -1,8 +1,20 @@
 import type { NextPage } from "next";
-import Note from "../../components/word/Note";
+import {
+  NoteContainer,
+  NoteBackground,
+  NoteHeader,
+} from "../../components/word/Note.style";
+import Dropzone from "../../components/word/upload/Dropzone";
 
 const UploadPage: NextPage = () => {
-  return <Note />;
+  return (
+    <NoteContainer>
+      <NoteBackground>
+        <NoteHeader />
+        <Dropzone />
+      </NoteBackground>
+    </NoteContainer>
+  );
 };
 
 export default UploadPage;
