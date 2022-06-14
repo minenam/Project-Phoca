@@ -9,7 +9,8 @@ import {
   Input,
   BtnContainer,
   SubmitButton,
-  LinkBtn,
+  TextBtnContainer,
+  TextButton,
   ErrorMsg,
   SnsTitle,
   KakaoBtn,
@@ -70,10 +71,13 @@ function LoginPage() {
           </Field>
         </ContentContainer>
         <BtnContainer>
-          <Link href="/register">
-            <LinkBtn>회원가입 하러 가기</LinkBtn>
-          </Link>
           <SubmitButton type="submit">로그인</SubmitButton>
+          <TextBtnContainer>
+            <Link href="/register">
+              <TextButton>회원가입</TextButton>
+            </Link>{" "}
+            |<TextButton>비밀번호 찾기</TextButton>
+          </TextBtnContainer>
         </BtnContainer>
         <SnsTitle>SNS 로그인</SnsTitle>
         <BtnContainer>

@@ -17,13 +17,12 @@ export const AuthCardContainer = styled(
 );
 
 export const Card = styled("div", {
-  backgroundColor: "rgba( 255, 255, 255, 0.5 )",
+  backgroundColor: "#FEB63D",
   boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
   backdropFilter: "blur( 4px )",
-  width: "600px",
+  width: "700px",
   height: "500px",
   borderRadius: "50px",
-  border: "1px solid rgba( 255, 255, 255, 0.18 )",
 });
 
 export const TitleContainer = styled("div", {
