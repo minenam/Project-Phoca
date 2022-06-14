@@ -1,19 +1,19 @@
 import { styled } from "styletron-react";
-import { headerHeight, sidebarWidth } from "../../common/utils/uils";
 
-const SIDEBAR_WIDTH = parseInt(sidebarWidth.substring(0, 3)) + 100;
-const HEADER_HEIGHT = parseInt(headerHeight.substring(0, 3)) + 30;
-export const MyPageWrapper = styled("div", {
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  // height: `calc(100vh - ${HEADER_HEIGHT}px)`,
-  marginLeft: `${SIDEBAR_WIDTH}px`,
-  width: `calc(100vw - ${sidebarWidth}px`,
-  flexDirection: "column",
-});
+export const MyPageWrapper = styled(
+  "div",
+  (props: { $sideBarWidth?: string }) => ({
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    // height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+    marginLeft: props.$sideBarWidth,
+    width: `calc(100vw - ${props.$sideBarWidth}px`,
+    flexDirection: "column",
+  }),
+);
 
-export const Browser = styled("div", (props: { $myWord?: Boolean }) => ({
+export const Browser = styled("a", {
   display: "flex",
   justifyContent: "center",
   position: "relative",
@@ -26,16 +26,20 @@ export const Browser = styled("div", (props: { $myWord?: Boolean }) => ({
   whiteSpace: "pre-wrap",
   alignItems: "center",
   cursor: "pointer",
-}));
-
-export const UserInfoEdit = styled("div", {
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  backgroundColor: "#FE8C55",
-  height: "35px",
-  width: `calc(100vw - ${SIDEBAR_WIDTH}px)`,
 });
+
+export const UserInfoEdit = styled(
+  "div",
+  (props: { $sideBarWidth: string }) => ({
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "#FE8C55",
+    height: "35px",
+    width: `calc(100vw - ${props.$sideBarWidth})`,
+    marginTop: "1.2rem",
+  }),
+);
 
 export const Wrapper = styled("div", {
   display: "flex",
@@ -58,9 +62,11 @@ export const Avatar = styled("div", {
 });
 
 export const AvatarImage = styled("img", {
-  width: "100%",
-  height: "100%",
-  obejectFit: "contain",
+  width: "95%",
+  height: "95%",
+  display: "block",
+  margin: "0 auto",
+  objectFit: "contain",
 });
 
 export const Triangle = styled("div", {
@@ -130,6 +136,6 @@ export const Seal = styled("img", {
   position: "absolute",
   width: "5rem",
   right: "1.2rem",
-  top: "10rem",
-  zIndex: 100,
+  top: "11rem",
+  zIndex: 1,
 });

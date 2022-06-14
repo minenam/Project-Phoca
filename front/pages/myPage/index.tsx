@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { SIDEBAR_WIDTH } from "../../common/utils/constant";
 import {
   Browser,
   MyPageWrapper,
@@ -17,12 +18,22 @@ import {
   ImgWrapper,
   Seal,
 } from "./MyPage.style";
+import Link from "next/link";
+import { useState } from "react";
 
 const myPage: NextPage = () => {
+  const [userToken, setUserToken] = useState("");
+  const [user, setUser] = useState();
+
+  const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
+  // useCallback으로 Api가서 유저정보 가져오고 페이지 세팅하기 useEffect(() => {}, []);
+
   return (
-    <MyPageWrapper>
+    <MyPageWrapper $sideBarWidth={`${sideBarWidth}px`}>
       <Wrapper>
-        <UserInfoEdit>회원 정보 수정하기</UserInfoEdit>
+        <UserInfoEdit $sideBarWidth={`${sideBarWidth}px`}>
+          회원 정보 수정하기
+        </UserInfoEdit>
       </Wrapper>
       <UserWrapper>
         <UserInfoWrapper>
@@ -47,15 +58,19 @@ const myPage: NextPage = () => {
         </ImgWrapper>
       </UserWrapper>
       <UserWrapper $box>
-        <Browser>
-          단어장 {"\n"}둘러보기
-          <Triangle />
-        </Browser>
+        <Link href={"/network"} passHref>
+          <Browser>
+            단어장 {"\n"}둘러보기
+            <Triangle />
+          </Browser>
+        </Link>
 
-        <Browser $myWord>
-          내 단어장{"\n"}바로가기
-          <Triangle />
-        </Browser>
+        <Link href={"/vocabulary"} passHref>
+          <Browser>
+            내 단어장{"\n"}바로가기
+            <Triangle />
+          </Browser>
+        </Link>
       </UserWrapper>
     </MyPageWrapper>
   );
