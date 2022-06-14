@@ -36,13 +36,17 @@ export const Input = styled("input", {
   },
 });
 
-export const BtnContainer = styled("div", {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100%",
-  flexDirection: "column",
-});
+export const BtnContainer = styled(
+  "div",
+  (props: { $registerPage?: Boolean }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: props.$registerPage ? "" : "100%",
+    flexDirection: "column",
+    marginTop: props.$registerPage ? "1rem" : 0,
+  }),
+);
 
 export const SubmitButton = styled("button", {
   backgroundColor: "#FE8C55",
@@ -57,14 +61,18 @@ export const SubmitButton = styled("button", {
   cursor: "pointer",
 });
 
-export const TextBtnContainer = styled("div", {
-  display: "flex",
-  justifyContent: "space-evenly",
-  alignItems: "center",
-  width: "50%",
-  color: "#fff",
-  marginTop: "1rem",
-});
+export const TextBtnContainer = styled(
+  "div",
+  (props: { $loginPage?: Boolean }) => ({
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "50%",
+    color: "#fff",
+    marginTop: "1rem",
+    marginLeft: props.$loginPage ? "2rem" : 0,
+  }),
+);
 
 export const TextButton = styled("button", {
   backgroundColor: "transparent",
@@ -108,4 +116,5 @@ export const KakaoBtn = styled("button", {
   border: 0,
   backgroundColor: "transparent",
   cursor: "pointer",
+  marginBottom: "1rem",
 });

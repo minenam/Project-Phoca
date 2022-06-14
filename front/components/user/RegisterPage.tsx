@@ -106,7 +106,7 @@ function RegisterPage() {
             ) : null}
           </Field>
         </ContentContainer>
-        <BtnContainer>
+        <BtnContainer $registerPage>
           <SubmitButton type="submit">회원가입</SubmitButton>
           <TextBtnContainer>
             <Link href="/login">

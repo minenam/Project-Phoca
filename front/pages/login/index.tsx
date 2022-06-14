@@ -11,7 +11,7 @@ import LoginPage from "../../components/user/LoginPage";
 
 const Login: NextPage = () => {
   return (
-    <AuthCardContainer $login>
+    <AuthCardContainer $loginPage>
       <Card>
         <TitleContainer>
           <Link href="/">

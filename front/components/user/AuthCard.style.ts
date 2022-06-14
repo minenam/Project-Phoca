@@ -2,12 +2,12 @@ import { styled } from "styletron-react";
 
 export const AuthCardContainer = styled(
   "div",
-  (props: { $login?: Boolean }) => ({
+  (props: { $loginPage?: Boolean }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    background: props.$login
+    backgroundImage: props.$loginPage
       ? "url('/images/loginBg.jpg')"
       : "url('/images/registerBg.jpg')",
     backgroundRepeat: "no-repeat",
@@ -30,6 +30,7 @@ export const TitleContainer = styled("div", {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+  marginBottom: "1rem",
 });
 
 export const Logo = styled("img", {

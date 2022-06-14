@@ -72,7 +72,7 @@ function LoginPage() {
         </ContentContainer>
         <BtnContainer>
           <SubmitButton type="submit">로그인</SubmitButton>
-          <TextBtnContainer>
+          <TextBtnContainer $loginPage>
             <Link href="/register">
               <TextButton>회원가입</TextButton>
             </Link>{" "}
