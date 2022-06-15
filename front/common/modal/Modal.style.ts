@@ -5,9 +5,9 @@ export const Container = styled(
   (props: { $isOpen: boolean; $width: string }) => ({
     position: "absolute",
     width: props.$width,
-    top: "40%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    top: "35%",
+    left: "60%",
+    transform: "translate(-60%, -35%)",
     backgroundColor: "#fff",
     zIndex: 3,
     visibility: props.$isOpen ? "visible" : "hidden",
