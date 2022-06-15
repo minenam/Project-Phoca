@@ -23,7 +23,7 @@ export const Nav = styled("nav", {
   display: "flex",
   flexDirection: "row",
   width: "100%",
-  height: "100px",
+  height: "130px",
 });
 
 export const Anchor = styled("a", {
@@ -54,5 +54,5 @@ export const Welcome = styled("p", {
   fontFamily: "Quicksand, sans-serif",
   borderBottom: "2.5px solid white",
   paddingBottom: "2px",
-  marginBottom: "5px",
+  marginBottom: "15px",
 });
