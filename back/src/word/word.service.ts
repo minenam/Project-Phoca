@@ -42,7 +42,7 @@ export class WordService {
         wordEng,
         wordKor,
         wordImage,
-        // wordbookId,
+        wordbookId,
       });
       return await this.wordRepository.save(newWord);
     } catch (e) {

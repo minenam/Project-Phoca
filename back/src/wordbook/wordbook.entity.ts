@@ -5,14 +5,14 @@ export enum Security {
   PUBLIC = "public",
   PRIVATE = "private",
 }
-@Index("wordbook_pkey", ["wordbookId"], { unique: true })
+@Index("wordbook_pkey", ["wordbook_id"], { unique: true })
 @Entity("wordbook", { schema: "public" })
 export class Wordbook {
-  @Column("uuid", { primary: true, name: "wordbookid" })
+  @Column("uuid", { primary: true, name: "wordbook_id" })
   @Generated("uuid")
   wordbookId: string;
 
-  @Column("character varying", { name: "wordbookname", length: 15 })
+  @Column("character varying", { name: "wordbook_name", length: 15 })
   wordbookName: string;
 
   @Column({ type: "enum", enum: Security, default: Security.PUBLIC })
@@ -24,6 +24,6 @@ export class Wordbook {
   })
   createDate: Date;
 
-  @OneToMany(() => Word, (word) => word.wordbookId)
-  wordId: Word[];
+  @OneToMany(() => Word, (word) => word.wordbook)
+  word: Word[];
 }
