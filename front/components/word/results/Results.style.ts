@@ -8,7 +8,7 @@ export const ImageContainer = styled("div", (props) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: "330px",
+  height: "300px",
   marginTop: "2rem",
 }));
 
@@ -27,19 +27,17 @@ export const IconContainer = styled("div", (props) => ({
   display: "flex",
   flexDirection: "column",
   marginTop: "1.5rem",
-  marginLeft: "1rem",
+  marginLeft: "2rem",
 }));
 
 export const EngWord = styled("p", (props) => ({
   gridColumnStart: 2,
   fontSize: "5rem",
-  fontWeight: 900,
   margin: 0,
 }));
 
 export const KorWord = styled("p", (props) => ({
   fontSize: "1.8rem",
-  fontWeight: 700,
   margin: 0,
   textAlign: "center",
 }));
