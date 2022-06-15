@@ -1,4 +1,5 @@
 import { IsOptional, IsString } from "class-validator";
+import { Security } from "../wordbook.entity";
 
 export class UpdateWordbookDto {
   @IsString()
@@ -6,5 +7,5 @@ export class UpdateWordbookDto {
   wordbookName: string;
 
   @IsOptional()
-  isPrivate: boolean;
+  security: Security;
 }
