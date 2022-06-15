@@ -29,6 +29,7 @@ export class UserService {
       password: hashedPassword,
     });
     await this.userRepository.save(user);
+
     return user;
   }
 

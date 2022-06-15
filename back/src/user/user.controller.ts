@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   NotFoundException,
   Param,
   ParseUUIDPipe,
@@ -21,6 +22,7 @@ import { AuthGuard } from "@nestjs/passport";
 
 @Controller("user")
 export class UserController {
+  private logger = new Logger("UserController");
   constructor(private userService: UserService) {}
 
   @Get()
@@ -32,6 +34,7 @@ export class UserController {
   @Post("/register")
   @UsePipes(ValidationPipe)
   register(@Body() createUserDto: CreateUserDto): Promise<Users> {
+    this.logger.verbose(`Try to Register: Username ${createUserDto.userName}`);
     return this.userService.register(createUserDto);
   }
 
@@ -41,6 +44,7 @@ export class UserController {
   login(
     @Body() authCredentialDto: AuthCredentialDto,
   ): Promise<{ accessToken: string }> {
+    this.logger.verbose(`Try to Login: User Email ${authCredentialDto.email}`);
     return this.userService.login(authCredentialDto);
   }
 
@@ -57,6 +61,7 @@ export class UserController {
   // 유저 계정 삭제 user/:userId
   @Delete("/:userId")
   withdraw(@Param("userId", ParseUUIDPipe) userId): Promise<void> {
+    this.logger.verbose(`Try to Withdraw: UserID ${userId}`);
     return this.userService.deleteUser(userId);
   }
 
@@ -66,6 +71,7 @@ export class UserController {
     @Param("userId", ParseUUIDPipe) userId,
     @Body() createUserDto: CreateUserDto,
   ): Promise<Users> {
+    this.logger.verbose(`Try to Update: UserID ${userId}`);
     return this.userService.updateUser(userId, createUserDto);
   }
 
@@ -73,6 +79,6 @@ export class UserController {
   @Post("/test")
   @UseGuards(AuthGuard())
   test(@Req() req) {
-    console.log(req);
+    this.logger.verbose(`Try to Request: User ${req.user.email}`);
   }
 }
