@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -23,7 +24,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  test(): Promise<Users[]> {
+  usersList(): Promise<Users[]> {
     return this.userService.getAll();
   }
 
@@ -35,7 +36,6 @@ export class UserController {
   }
 
   // 유저 로그인 /user/login
-  @UseGuards(AuthGuard())
   @Post("/login")
   @UsePipes(ValidationPipe)
   login(
@@ -67,5 +67,12 @@ export class UserController {
     @Body() createUserDto: CreateUserDto,
   ): Promise<Users> {
     return this.userService.updateUser(userId, createUserDto);
+  }
+
+  // userGuard 인가 테스트
+  @Post("/test")
+  @UseGuards(AuthGuard())
+  test(@Req() req) {
+    console.log(req);
   }
 }
