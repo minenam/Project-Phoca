@@ -33,7 +33,9 @@ export class UserService {
   }
 
   // 유저 검증 (로그인)
-  async login(authcredntialDto: AuthCredentialDto): Promise<string> {
+  async login(
+    authcredntialDto: AuthCredentialDto,
+  ): Promise<{ accessToken: string }> {
     return await this.authService.validateUser(authcredntialDto);
   }
 

@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
@@ -15,6 +16,7 @@ import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { Users } from "./user.entity";
 import { AuthCredentialDto } from "src/auth/dto/auth.credential.dto";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller("user")
 export class UserController {
@@ -33,9 +35,12 @@ export class UserController {
   }
 
   // 유저 로그인 /user/login
+  @UseGuards(AuthGuard())
   @Post("/login")
   @UsePipes(ValidationPipe)
-  login(@Body() authCredentialDto: AuthCredentialDto): Promise<string> {
+  login(
+    @Body() authCredentialDto: AuthCredentialDto,
+  ): Promise<{ accessToken: string }> {
     return this.userService.login(authCredentialDto);
   }
 
