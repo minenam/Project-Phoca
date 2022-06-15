@@ -8,7 +8,6 @@ import {
   Patch,
 } from "@nestjs/common";
 import { WordbookService } from "./wordbook.service";
-import { Wordbook } from "./wordbook.entity";
 import { UpdateWordbookDto } from "./dto/update-wordbook.dto";
 import { CreateWordbookDto } from "./dto/create-wordbook.dto";
 

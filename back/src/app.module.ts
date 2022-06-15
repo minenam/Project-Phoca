@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { configAsync } from "./orm.config";
 import { ConfigModule } from "@nestjs/config";
 import { WordbookModule } from "./wordbook/wordbook.module";
-// import { WordModule } from './word/word.module';
+import { WordModule } from "./word/word.module";
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { WordbookModule } from "./wordbook/wordbook.module";
     }),
     TypeOrmModule.forRootAsync(configAsync),
     WordbookModule,
-    // WordModule,
+    WordModule,
   ],
   controllers: [],
   providers: [],

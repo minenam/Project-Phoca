@@ -1,5 +1,5 @@
-import { Column, Entity, Index } from "typeorm";
-// import { Word } from '../word/word.entity';
+import { Column, Entity, Index, OneToMany } from "typeorm";
+import { Word } from "../word/word.entity";
 @Index("wordbook_pkey", ["wordbookId"], { unique: true })
 @Entity("wordbook", { schema: "public" })
 export class Wordbook {
@@ -18,6 +18,6 @@ export class Wordbook {
   })
   createDate: Date;
 
-  // @OneToMany(() => Word, (word) => word.wordbookId)
-  // word: Word[];
+  @OneToMany(() => Word, (word) => word.wordbookId)
+  wordId: Word[];
 }
