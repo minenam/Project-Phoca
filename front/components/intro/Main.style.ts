@@ -6,6 +6,7 @@ export const MainButton = styled(
     position: "relative",
     display: "flex",
     justifyContent: "center",
+    flexDirection: "column",
     alignItems: "center",
     borderRadius: "25px",
     width: "300px",
@@ -14,7 +15,6 @@ export const MainButton = styled(
     fontFamily: "Nanum Gothic Coding, monospace",
     fontWeight: "bold",
     fontSize: "1.5rem",
-
     height: props.$guide ? "100%" : "300px",
     gridRowStart: props.$guide && 1,
     gridRowEnd: props.$guide && 3,
@@ -22,6 +22,7 @@ export const MainButton = styled(
     "--dx": "calc(var(--size) - var(--x))",
     "--dy": "calc(var(--size) - var(--y))",
     ":hover": {
+      fontSize: 0,
       opacity: 1,
       border: "calc(2px + .85vw) solid rgba(255, 255, 255, .5)",
       transition: ".5s background-color ease, .2s border ease",
@@ -32,7 +33,7 @@ export const MainButton = styled(
         backgroundImage: `url(${props.$backgroundImage})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundSize: "contain",
+        backgroundSize: "80%",
         position: "absolute",
         top: "0px",
         right: "0px",
@@ -56,6 +57,6 @@ export const MainPhrase = styled("p", {
   fontSize: "2rem",
   textAlign: "center",
   padding: "20px",
-  marginTop: "20px",
-  marginBottom: "20px",
+  marginTop: "15px",
+  marginBottom: "15px",
 });
