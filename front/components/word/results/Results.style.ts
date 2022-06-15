@@ -2,6 +2,9 @@ import { styled } from "styletron-react";
 
 export const ResultsContainer = styled("div", (props) => ({
   boxSizing: "content-box",
+  display: "flex",
+  flexDirection: "column",
+  height: "90%",
 }));
 
 export const ImageContainer = styled("div", (props) => ({
@@ -20,7 +23,8 @@ export const ThumbImage = styled("img", (props) => ({
 
 export const WordContainer = styled("div", (props) => ({
   display: "grid",
-  height: "100%",
+  gridTemplateColumns: "1fr 1fr 1fr",
+  marginTop: "1rem",
 }));
 
 export const IconContainer = styled("div", (props) => ({
@@ -38,7 +42,6 @@ export const EngWord = styled("p", (props) => ({
 
 export const KorWord = styled("p", (props) => ({
   fontSize: "1.8rem",
-  margin: 0,
   textAlign: "center",
   gridColumnStart: 2,
 }));
@@ -56,6 +59,8 @@ export const EditBtn = styled("div", (props) => ({
 export const BtnContainer = styled("div", (props) => ({
   display: "flex",
   justifyContent: "space-evenly",
+  alignItems: "center",
+  flex: 1,
 }));
 export const Button = styled("button", (props) => ({
   width: "40%",
