@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { Wordbook } from "./wordbook.entity";
 import { Repository, DeleteResult } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { v4 as uuid } from "uuid";
 @Injectable()
 export class WordbookService {
   constructor(
@@ -16,9 +15,12 @@ export class WordbookService {
   //   return await this.wordbookRepository.find(userId);
   // }
   async create(wordbook: Partial<Wordbook>): Promise<Wordbook> {
-    wordbook.wordbookId = uuid();
-    const newWordbook = this.wordbookRepository.create(wordbook);
-    return await this.wordbookRepository.save(newWordbook);
+    try {
+      const newWordbook = this.wordbookRepository.create(wordbook);
+      return await this.wordbookRepository.save(newWordbook);
+    } catch (e) {
+      return e.driverError.where;
+    }
   }
   async get(wordbookId: string): Promise<Wordbook> {
     return await this.wordbookRepository.findOne({
