@@ -5,51 +5,53 @@ import {
   Get,
   NotFoundException,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { User } from "./users.model";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { Users } from "./user.entity";
 
 @Controller("user")
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  test(): User[] {
+  test(): Promise<Users[]> {
     return this.userService.getAll();
   }
 
   @Post()
   @UsePipes(ValidationPipe)
-  register(@Body() createUserDto: CreateUserDto): User {
+  register(@Body() createUserDto: CreateUserDto): Promise<Users> {
     return this.userService.createUser(createUserDto);
   }
 
   @Get("/:userId")
-  login(@Param("userId") userId: string): User {
+  getUserById(@Param("userId", ParseUUIDPipe) userId): Promise<Users> {
     const user = this.userService.getUserById(userId);
     if (!user) {
-      throw new NotFoundException("login is failed");
+      console.log("login is failed");
+      throw new NotFoundException(`can't find userid ${userId}`);
     }
-    console.log(`login is successed`);
+    console.log("login is successed");
     return user;
   }
 
   @Delete("/:userId")
-  withdraw(@Param("userId") userId: string): void {
-    this.userService.deleteUser(userId);
+  withdraw(@Param("userId", ParseUUIDPipe) userId): Promise<void> {
     console.log(`withdraw : ${userId}`);
+    return this.userService.deleteUser(userId);
   }
 
   @Patch("/:userId")
   updateUser(
-    @Param("userId") userId: string,
+    @Param("userId", ParseUUIDPipe) userId,
     @Body() createUserDto: CreateUserDto,
-  ): User {
+  ): Promise<Users> {
     console.log(`update : ${createUserDto.userName}`);
     return this.userService.updateUser(userId, createUserDto);
   }

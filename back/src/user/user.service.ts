@@ -1,53 +1,57 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { User } from "./users.model";
-import { v4 as uuid } from "uuid";
 import { CreateUserDto } from "./dto/create-user.dto";
+import { Users } from "./user.entity";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class UserService {
-  private users: User[] = [];
+  constructor(
+    @InjectRepository(Users)
+    private userRepository: Repository<Users>,
+  ) {}
 
-  getAll(): User[] {
-    return this.users;
+  async getAll(): Promise<Users[]> {
+    const userList = await this.userRepository.find();
+    return userList;
   }
 
-  createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto): Promise<Users> {
     const { userName, email, password } = createUserDto;
-    const user: User = {
-      userId: uuid(),
-      userName,
+    const user = this.userRepository.create({
+      username: userName,
       email,
       password,
-      provider: "local",
-      joinedAt: new Date(),
-      lastloginedAt: new Date(),
-      activated: true,
-    };
-
-    this.users.push(user);
+    });
+    await this.userRepository.save(user);
     return user;
   }
 
-  getUserById(userId: string): User {
-    const user = this.users.find((user) => user.userId === userId);
+  async getUserById(userId: string): Promise<Users> {
+    const getUser = await this.userRepository.findOneBy({ userid: userId });
 
-    if (!user) {
-      throw new NotFoundException(`userId ${userId} 를 찾을 수 없습니다.`);
+    if (!getUser) {
+      throw new NotFoundException(`can't find userid ${userId}`);
     }
-    return user;
+    return getUser;
   }
 
-  deleteUser(userId: string): void {
-    const getUser = this.getUserById(userId);
-    this.users = this.users.filter((user) => user.userId !== getUser.userId);
+  async deleteUser(userId: string): Promise<void> {
+    const result = await this.userRepository.delete({ userid: userId });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Can't fond Board with userid ${userId}`);
+    }
   }
 
-  updateUser(userId: string, createUserDto: CreateUserDto) {
+  async updateUser(userId: string, createUserDto: CreateUserDto) {
     const { userName, email, password } = createUserDto;
-    const user = this.users.find((user) => user.userId === userId);
-    user.userName = userName;
+    const user = await this.getUserById(userId);
+
+    user.username = userName;
     user.email = email;
     user.password = password;
+    await this.userRepository.save(user);
+
     return user;
   }
 }
