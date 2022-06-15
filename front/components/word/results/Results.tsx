@@ -46,8 +46,8 @@ function Results() {
             <FaEdit />
           </EditBtn>
         </IconContainer>
+        <KorWord>사과</KorWord>
       </WordContainer>
-      <KorWord>사과</KorWord>
       <BtnContainer>
         <Link href="/word/upload">
           <Button>사진 다시 찍기</Button>

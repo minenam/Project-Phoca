@@ -20,7 +20,7 @@ export const ThumbImage = styled("img", (props) => ({
 
 export const WordContainer = styled("div", (props) => ({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr 1fr",
+  height: "100%",
 }));
 
 export const IconContainer = styled("div", (props) => ({
@@ -40,6 +40,7 @@ export const KorWord = styled("p", (props) => ({
   fontSize: "1.8rem",
   margin: 0,
   textAlign: "center",
+  gridColumnStart: 2,
 }));
 
 export const TtsBtn = styled("div", (props) => ({
