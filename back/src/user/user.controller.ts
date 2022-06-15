@@ -14,6 +14,7 @@ import {
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { Users } from "./user.entity";
+import { AuthCredentialDto } from "src/auth/dto/auth.credential.dto";
 
 @Controller("user")
 export class UserController {
@@ -24,35 +25,42 @@ export class UserController {
     return this.userService.getAll();
   }
 
-  @Post()
+  // 유저 회원가입 /user/register
+  @Post("/register")
   @UsePipes(ValidationPipe)
   register(@Body() createUserDto: CreateUserDto): Promise<Users> {
-    return this.userService.createUser(createUserDto);
+    return this.userService.register(createUserDto);
   }
 
+  // 유저 로그인 /user/login
+  @Post("/login")
+  @UsePipes(ValidationPipe)
+  login(@Body() authCredentialDto: AuthCredentialDto): Promise<string> {
+    return this.userService.login(authCredentialDto);
+  }
+
+  // 특정 유저 정보 조회 user/:userId
   @Get("/:userId")
   getUserById(@Param("userId", ParseUUIDPipe) userId): Promise<Users> {
     const user = this.userService.getUserById(userId);
     if (!user) {
-      console.log("login is failed");
       throw new NotFoundException(`can't find userid ${userId}`);
     }
-    console.log("login is successed");
     return user;
   }
 
+  // 유저 계정 삭제 user/:userId
   @Delete("/:userId")
   withdraw(@Param("userId", ParseUUIDPipe) userId): Promise<void> {
-    console.log(`withdraw : ${userId}`);
     return this.userService.deleteUser(userId);
   }
 
+  // 유저 정보 수정 user/:userId
   @Patch("/:userId")
   updateUser(
     @Param("userId", ParseUUIDPipe) userId,
     @Body() createUserDto: CreateUserDto,
   ): Promise<Users> {
-    console.log(`update : ${createUserDto.userName}`);
     return this.userService.updateUser(userId, createUserDto);
   }
 }

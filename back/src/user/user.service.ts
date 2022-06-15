@@ -3,12 +3,15 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { Users } from "./user.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { AuthService } from "src/auth/auth.service";
+import { AuthCredentialDto } from "src/auth/dto/auth.credential.dto";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
+    private authService: AuthService,
   ) {}
 
   async getAll(): Promise<Users[]> {
@@ -16,17 +19,25 @@ export class UserService {
     return userList;
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<Users> {
+  // 유저 생성 (회원가입)
+  async register(createUserDto: CreateUserDto): Promise<Users> {
     const { userName, email, password } = createUserDto;
+    const hashedPassword = await this.authService.hashedUser(password);
     const user = this.userRepository.create({
       username: userName,
       email,
-      password,
+      password: hashedPassword,
     });
     await this.userRepository.save(user);
     return user;
   }
 
+  // 유저 검증 (로그인)
+  async login(authcredntialDto: AuthCredentialDto): Promise<string> {
+    return await this.authService.validateUser(authcredntialDto);
+  }
+
+  // 유저 ID로 조회
   async getUserById(userId: string): Promise<Users> {
     const getUser = await this.userRepository.findOneBy({ userid: userId });
 
@@ -36,6 +47,7 @@ export class UserService {
     return getUser;
   }
 
+  // 유저 계정 삭제
   async deleteUser(userId: string): Promise<void> {
     const result = await this.userRepository.delete({ userid: userId });
     if (result.affected === 0) {
@@ -43,6 +55,7 @@ export class UserService {
     }
   }
 
+  // 유저 정보 (이름, 이메일, 비밀번호) 수정
   async updateUser(userId: string, createUserDto: CreateUserDto) {
     const { userName, email, password } = createUserDto;
     const user = await this.getUserById(userId);
