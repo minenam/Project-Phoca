@@ -7,10 +7,11 @@ import {
   MainButtonWrapper,
   MainPhrase,
 } from "../components/intro/Main.style";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [css] = useStyletron();
-  const btnRef = useRef<(HTMLDivElement | null)[]>([]);
+  const btnRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     console.log(btnRef);
@@ -33,17 +34,26 @@ const Home: NextPage = () => {
     <div>
       <MainPhrase>메인 문구 들어갈 자리입니다.</MainPhrase>
       <MainButtonWrapper>
-        <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
-          학습가이드
-        </MainButton>
+        <Link href={"/guide"} passHref>
+          <MainButton
+            $guide
+            $backgroundImage="/faq.svg"
+            ref={(ref) => (btnRef.current[0] = ref)}>
+            학습가이드
+          </MainButton>
+        </Link>
+
         {MAIN_BUTTON.map((item, idx) => {
+          console.log("item.", item.backgroundImage);
           return (
-            <MainButton
-              key={idx}
-              ref={(ref) => (btnRef.current[idx + 1] = ref)}
-              className={css({ backgroundColor: item.buttonColor })}>
-              {item.buttonName}
-            </MainButton>
+            <Link href={item.link} key={idx} passHref>
+              <MainButton
+                ref={(ref) => (btnRef.current[idx + 1] = ref)}
+                className={css({ backgroundColor: item.buttonColor })}
+                $backgroundImage={item.backgroundImage}>
+                {item.buttonName}
+              </MainButton>
+            </Link>
           );
         })}
       </MainButtonWrapper>
