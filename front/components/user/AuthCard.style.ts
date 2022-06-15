@@ -1,20 +1,11 @@
 import { styled } from "styletron-react";
 
-export const AuthCardContainer = styled(
-  "div",
-  (props: { $loginPage?: Boolean }) => ({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    backgroundImage: props.$loginPage
-      ? "url('/images/loginBg.jpg')"
-      : "url('/images/registerBg.jpg')",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }),
-);
+export const AuthCardContainer = styled("div", {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
+});
 
 export const Card = styled("div", {
   backgroundColor: "#FEB63D",

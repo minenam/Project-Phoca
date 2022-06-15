@@ -1,5 +1,6 @@
-import Link from "next/link";
 import type { NextPage } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import {
   AuthCardContainer,
   Card,
@@ -12,6 +13,13 @@ import RegisterPage from "../../components/user/RegisterPage";
 const Register: NextPage = () => {
   return (
     <AuthCardContainer>
+      <Image
+        alt="registerpage-background-image"
+        src="/images/registerBg.jpg"
+        layout="fill"
+        objectFit="cover"
+        priority={true}
+      />
       <Card>
         <TitleContainer>
           <Link href="/">
