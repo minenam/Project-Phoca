@@ -27,7 +27,7 @@ function Results() {
   const router = useRouter();
   const { word, imageUrl }: Word = router.query;
 
-  const [open, setOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const ttsBtnClickHandler = () => {
     const temp: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(word);
@@ -37,11 +37,11 @@ function Results() {
   };
 
   const editBtnClickHandler = () => {
-    setOpen(true);
+    setEditModalOpen(true);
   };
 
   const modalCloseHandler = () => {
-    setOpen(false);
+    setEditModalOpen(false);
   };
 
   return (
@@ -69,7 +69,11 @@ function Results() {
           <Button>단어장 저장하기</Button>
         </BtnContainer>
       </ResultsContainer>
-      <Modal open={open} width="800px" onClose={modalCloseHandler} large={true}>
+      <Modal
+        open={editModalOpen}
+        width="800px"
+        onClose={modalCloseHandler}
+        large={true}>
         <EditForm imageUrl={imageUrl} onClose={modalCloseHandler} />
       </Modal>
     </>
