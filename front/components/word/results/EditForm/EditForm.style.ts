@@ -39,9 +39,9 @@ export const ThumbImage = styled("img", {
   objectFit: "contain",
 });
 
-export const WordListContainer = styled("div", {
+export const ListContainer = styled("div", (props: { $height: string }) => ({
   width: "90%",
-  height: "300px",
+  height: props.$height,
   backgroundColor: "#FFECD0",
   overflowY: "auto",
   "::-webkit-scrollbar": {
@@ -52,9 +52,9 @@ export const WordListContainer = styled("div", {
     borderRadius: "20px",
   },
   paddingTop: "2rem",
-});
+}));
 
-export const WordContainer = styled("div", {
+export const ItemContainer = styled("div", {
   display: "flex",
   alignItems: "center",
   width: "80%",

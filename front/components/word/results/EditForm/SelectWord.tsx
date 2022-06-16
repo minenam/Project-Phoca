@@ -6,8 +6,8 @@ import {
   Line,
   ImageContainer,
   ThumbImage,
-  WordListContainer,
-  WordContainer,
+  ListContainer,
+  ItemContainer,
   EngWord,
   KorWord,
 } from "./EditForm.style";
@@ -22,6 +22,7 @@ interface SelectWordProps {
 }
 function SelectWord(props: SelectWordProps) {
   const { data, imageUrl, setEngWord, setKorWord, engWord } = props;
+
   const checkboxClickHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     const selected = data.filter((item, idx) => idx === Number(value));
@@ -40,9 +41,9 @@ function SelectWord(props: SelectWordProps) {
           <ThumbImage src={imageUrl} />
         </ImageContainer>
       </TitleContainer>
-      <WordListContainer>
+      <ListContainer $height="300px">
         {props.data.map((item, idx) => (
-          <WordContainer key={`${item.engWord}${idx}`}>
+          <ItemContainer key={`${item.engWord}${idx}`}>
             <input
               type="checkbox"
               name="word"
@@ -52,9 +53,9 @@ function SelectWord(props: SelectWordProps) {
             />
             <EngWord>{item.engWord}</EngWord>
             <KorWord>{item.korWord}</KorWord>
-          </WordContainer>
+          </ItemContainer>
         ))}
-      </WordListContainer>
+      </ListContainer>
     </SelectWordContainer>
   );
 }
