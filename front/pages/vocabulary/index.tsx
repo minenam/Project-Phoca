@@ -1,11 +1,6 @@
 import { NextPage } from "next";
-import {
-  HeadWrapper,
-  VocabularyWrapper,
-  Avatar,
-  AvatarImage,
-  MainText,
-} from "./Vocabulary.styles";
+import { HeadWrapper, VocabularyWrapper, MainText } from "./Vocabulary.styles";
+import { Avatar, AvatarImage } from "../myPage/MyPage.style";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -32,4 +27,4 @@ const Vocabulary: NextPage = () => {
   );
 };
 
-export default Vocabulary;
+export default VocabSulary;

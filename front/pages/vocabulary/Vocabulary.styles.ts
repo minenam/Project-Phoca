@@ -18,22 +18,7 @@ export const HeadWrapper = styled("div", {
   flexDirection: "row",
 });
 
-export const Avatar = styled("div", {
-  borderRadius: "50%",
-  width: "100px",
-  height: "100px",
-  marginTop: "1.5rem",
-  border: "5px solid orange",
-});
-
-export const AvatarImage = styled("img", {
-  width: "95%",
-  height: "95%",
-  display: "block",
-  margin: "0 auto",
-  objectFit: "contain",
-});
-
 export const MainText = styled("p", {
   fontSize: "2rem",
+  lineHeight: "2rem",
 });

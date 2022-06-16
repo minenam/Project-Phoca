@@ -52,6 +52,16 @@ const myPage: NextPage = () => {
             <UserInfoDetail>테스트 코멘트</UserInfoDetail>
           </UserDetailWrapper>
         </UserInfoWrapper>
+        <UserInfoWrapper>
+          <UserDetailWrapper>
+            <EmailRoundedBox>내 단어장</EmailRoundedBox>
+            <UserInfoDetail>4개</UserInfoDetail>
+          </UserDetailWrapper>
+          <UserDetailWrapper>
+            <EmailRoundedBox>북마크한 단어장</EmailRoundedBox>
+            <UserInfoDetail>10개</UserInfoDetail>
+          </UserDetailWrapper>
+        </UserInfoWrapper>
         <ImgWrapper>
           <Seal src="/logo.png" alt="seal" />
           <Branch src="/branch.png" alt="branch" />

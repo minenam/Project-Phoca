@@ -15,17 +15,34 @@ export const MyPageWrapper = styled(
 
 export const Browser = styled("a", {
   display: "flex",
-  justifyContent: "center",
   position: "relative",
-  textAlign: "center",
-  fontSize: "1.8rem",
+  paddingTop: "1.2rem",
+  justifyContent: "center",
+  textAlign: "start",
+  fontSize: "2.3rem",
   backgroundImage: "url(/note.png)",
   backgroundRepeat: "round",
-  height: "350px",
-  width: "350px",
+  height: "450px",
+  width: "450px",
   whiteSpace: "pre-wrap",
   alignItems: "center",
   cursor: "pointer",
+  ":hover": {
+    ":before": {
+      position: "absolute",
+      top: "2rem",
+      right: "1.5rem",
+      display: "block",
+      width: "107px",
+      height: "107px",
+      backgroundSize: "contain",
+      zIndex: 1,
+      content: "''",
+      backgroundImage: "url(/pencil.png)",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+    },
+  },
 });
 
 export const UserInfoEdit = styled(
@@ -37,7 +54,8 @@ export const UserInfoEdit = styled(
     backgroundColor: "#FE8C55",
     height: "35px",
     width: `calc(100vw - ${props.$sideBarWidth})`,
-    marginTop: "1.2rem",
+    marginTop: "1.4rem",
+    paddingRight: "1.5rem",
   }),
 );
 
@@ -73,8 +91,8 @@ export const Triangle = styled("div", {
   width: "0px",
   height: "0px",
   position: "absolute",
-  right: "85px",
-  top: "170px",
+  right: "4rem",
+  top: "11.5rem",
   borderBottom: "30px solid #F4AA3B",
   borderLeft: "15px solid transparent",
   borderRight: "15px solid transparent",
@@ -94,6 +112,7 @@ export const EmailRoundedBox = styled("div", {
   width: "4.5rem",
   borderRadius: "25px",
 });
+
 export const UserDetailWrapper = styled("div", {
   display: "flex",
   justifySelf: "flex-start",
@@ -102,6 +121,7 @@ export const UserDetailWrapper = styled("div", {
   marginLeft: "50px",
   marginTop: "20px",
 });
+
 export const UserInfoDetail = styled("p", {
   lineHeight: "2rem",
   marginLeft: "10px",
@@ -112,9 +132,10 @@ export const UserWrapper = styled("div", (props: { $box?: Boolean }) => ({
   display: "flex",
   width: "100%",
   justifyContent: props.$box ? "space-evenly" : "space-between",
+
   alignContent: "center",
   flexDirection: "row",
-  marginTop: props.$box ? "1.5rem" : "",
+  marginTop: props.$box ? "4rem" : "",
 }));
 
 export const Branch = styled("img", {
