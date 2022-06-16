@@ -2,12 +2,12 @@ import { styled } from "styletron-react";
 
 export const Container = styled(
   "div",
-  (props: { $isOpen: boolean; $width: string }) => ({
+  (props: { $isOpen: boolean; $width: string; $large: boolean }) => ({
     position: "absolute",
     width: props.$width,
-    top: "45%",
+    top: props.$large ? "45%" : "50%",
     left: "60%",
-    transform: "translate(-60%, -35%)",
+    transform: props.$large ? "translate(-60%, -35%)" : "translate(-60%, -50%)",
     backgroundColor: "#fff",
     zIndex: 3,
     visibility: props.$isOpen ? "visible" : "hidden",

@@ -69,7 +69,7 @@ function Results() {
           <Button>단어장 저장하기</Button>
         </BtnContainer>
       </ResultsContainer>
-      <Modal open={open} width="800px" onClose={modalCloseHandler}>
+      <Modal open={open} width="800px" onClose={modalCloseHandler} large={true}>
         <EditForm imageUrl={imageUrl} onClose={modalCloseHandler} />
       </Modal>
     </>
