@@ -5,12 +5,13 @@ export const Container = styled(
   (props: { $isOpen: boolean; $width: string }) => ({
     position: "absolute",
     width: props.$width,
-    top: "35%",
+    top: "45%",
     left: "60%",
     transform: "translate(-60%, -35%)",
     backgroundColor: "#fff",
     zIndex: 3,
     visibility: props.$isOpen ? "visible" : "hidden",
+    transition: "visibility 0.15s ease-out",
     animationDuration: "0.2s",
     animationTimingFunction: "ease-out",
     animationName: {
@@ -42,3 +43,15 @@ export const CloseBtn = styled("button", {
   cursor: "pointer",
   fontSize: "1.2rem",
 });
+
+export const Background = styled("div", (props: { $isOpen: boolean }) => ({
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
+  position: "fixed",
+  backgroundColor: "rgba(0,0,0,0.5)",
+  visibility: props.$isOpen ? "visible" : "hidden",
+  zIndex: 3,
+  transition: "visibility 0.15s ease-out",
+}));

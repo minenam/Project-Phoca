@@ -1,4 +1,10 @@
-import { Container, ModalHeader, Line, CloseBtn } from "./Modal.style";
+import {
+  Container,
+  ModalHeader,
+  Line,
+  CloseBtn,
+  Background,
+} from "./Modal.style";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -12,13 +18,16 @@ function Modal({ children, open, width, onClose }: ModalProps) {
     return null;
   }
   return (
-    <Container $isOpen={open} $width={width}>
-      <ModalHeader>
-        <Line />
-        <CloseBtn onClick={onClose}>X</CloseBtn>
-      </ModalHeader>
-      {children}
-    </Container>
+    <>
+      <Background $isOpen={open} onClick={onClose} />
+      <Container $isOpen={open} $width={width}>
+        <ModalHeader>
+          <Line />
+          <CloseBtn onClick={onClose}>X</CloseBtn>
+        </ModalHeader>
+        {children}
+      </Container>
+    </>
   );
 }
 
