@@ -4,7 +4,7 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 @Entity("users", { schema: "public" })
 export class Users {
   @PrimaryGeneratedColumn("uuid")
-  @Column("uuid", { primary: true, name: "userid" })
+  @Column("uuid", { primary: true, name: "user_id" })
   userid: string;
 
   @Column("character varying", { name: "username" })
@@ -19,10 +19,10 @@ export class Users {
   @Column("character varying", { name: "provider", default: "local" })
   provider: string;
 
-  @Column("date", { name: "joinedat", default: new Date() })
+  @Column("timestamp", { name: "joined_at", default: new Date() })
   joinedAt: string;
 
-  @Column("date", { name: "lastloginedat", default: new Date() })
+  @Column("timestamp", { name: "last_logined_at", default: new Date() })
   lastloginedAt: string;
 
   @Column("boolean", { name: "activated", default: true })
