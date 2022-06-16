@@ -16,7 +16,7 @@ import {
 } from "./Results.style";
 import { FaVolumeUp, FaEdit } from "react-icons/fa";
 import Modal from "../../../common/modal/Modal";
-import EditForm from "./EditForm";
+import EditForm from "./EditForm/EditForm";
 
 interface Word {
   word?: string;
