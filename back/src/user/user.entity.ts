@@ -20,10 +20,10 @@ export class Users {
   provider: string;
 
   @Column("timestamp", { name: "joined_at", default: new Date() })
-  joinedAt: string;
+  joinedAt: Date;
 
   @Column("timestamp", { name: "last_logined_at", default: new Date() })
-  lastloginedAt: string;
+  lastloginedAt: Date;
 
   @Column("boolean", { name: "activated", default: true })
   activated: boolean;
