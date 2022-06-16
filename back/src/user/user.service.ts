@@ -37,7 +37,15 @@ export class UserService {
   async login(
     authcredntialDto: AuthCredentialDto,
   ): Promise<{ accessToken: string }> {
-    return await this.authService.validateUser(authcredntialDto);
+    const { email } = authcredntialDto;
+    const user = await this.userRepository.findOneBy({ email });
+    // 마지막 로그인일자 업데이트
+    const now = new Date();
+    user.lastloginedAt = now;
+    await this.userRepository.save(user);
+    // 토큰 생성
+    const token = await this.authService.validateUser(authcredntialDto);
+    return token;
   }
 
   // 유저 ID로 조회
