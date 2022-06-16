@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { Wordbook } from "../wordbook/wordbook.entity";
 
-@Index("word_pkey", ["word_Id"], { unique: true })
+//@Index("word_pkey", ["word_id"], { unique: true })
 @Entity("word", { schema: "public" })
 export class Word {
   @Column("uuid", { primary: true, name: "word_id" })
@@ -27,10 +27,10 @@ export class Word {
   @Column("uuid", { name: "wordbook_id" })
   wordbookId: string;
 
-  @ManyToOne(() => Wordbook, (wordbook) => wordbook.word, {
+  @ManyToOne(() => Wordbook, (wordbook) => wordbook.words, {
     onDelete: "CASCADE",
     eager: true,
   })
-  @JoinColumn([{ name: "wordbook_id", referencedColumnName: "wordbook_id" }])
+  @JoinColumn({ name: "wordbook_id" })
   wordbook: Wordbook;
 }

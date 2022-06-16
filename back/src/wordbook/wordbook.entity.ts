@@ -5,7 +5,7 @@ export enum Security {
   PUBLIC = "public",
   PRIVATE = "private",
 }
-@Index("wordbook_pkey", ["wordbook_id"], { unique: true })
+//@Index("wordbook_pkey", ["wordbook_id"], { unique: true })
 @Entity("wordbook", { schema: "public" })
 export class Wordbook {
   @Column("uuid", { primary: true, name: "wordbook_id" })
@@ -25,5 +25,5 @@ export class Wordbook {
   createDate: Date;
 
   @OneToMany(() => Word, (word) => word.wordbook)
-  word: Word[];
+  words: Word[];
 }
