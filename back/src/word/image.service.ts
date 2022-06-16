@@ -33,29 +33,23 @@ export class ImageService {
       const response = await this.s3.upload(params).promise();
       console.log(response);
       const wordImage = response.Location;
-      return wordImage;
+      const wordKey = response.Key;
+      return { wordImage, wordKey };
     } catch (e) {
       console.log(e);
     }
   }
-
-  // async deleteImage(wordId: string) {
-  //   const word = await this.wordRepository.findOne({ where: { wordId } });
-  //   if (!word) {
-  //     throw new NotFoundException("word not found");
-  //   }
-  //   const remove = this.wordRepository.remove(word);
-  //   const key = word.key;
-  //   const response = await this.s3
-  //     .deleteObject({
-  //       Bucket: process.env.AWS_BUCKET_NAME,
-  //       Key: key,
-  //     })
-  //     .promise();
-  //   console.log(response);
-  //   return response;
-  // }
-  // catch(e) {
-  //   console.log(e);
-  // }
+  async deleteImage(key: string) {
+    const response = await this.s3
+      .deleteObject({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: key,
+      })
+      .promise();
+    console.log(response);
+    return response;
+  }
+  catch(e) {
+    console.log(e);
+  }
 }

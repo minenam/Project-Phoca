@@ -15,5 +15,9 @@ export class CreateWordDto {
 
   @IsString()
   @IsNotEmpty()
+  wordKey: string;
+
+  @IsString()
+  @IsNotEmpty()
   wordbookId: string;
 }

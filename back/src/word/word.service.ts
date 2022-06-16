@@ -13,6 +13,7 @@ export class WordService {
   ) {}
   //단어 생성
   async create(word: CreateWordDto) {
+    console.log("1", word);
     const newWord = this.wordRepository.create(word);
     return await this.wordRepository.save(newWord);
   }
@@ -38,5 +39,15 @@ export class WordService {
     }
     Object.assign(word, updateWordDto);
     return this.wordRepository.save(word);
+  }
+
+  async deleteWord(wordId: string): Promise<string> {
+    const word = await this.wordRepository.findOne({ where: { wordId } });
+    if (!word) {
+      throw new NotFoundException("word not found");
+    }
+    await this.wordRepository.remove(word);
+    const key = word.wordKey;
+    return key;
   }
 }

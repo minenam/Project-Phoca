@@ -17,6 +17,9 @@ export class Word {
   @Column("character varying", { name: "word_image" })
   wordImage: string;
 
+  @Column("character varying", { name: "word_key" })
+  wordKey: string;
+
   @Column("uuid", { name: "wordbook_id" })
   wordbookId: string;
 
