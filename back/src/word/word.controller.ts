@@ -26,25 +26,25 @@ export class WordController {
     private readonly translateService: TranslateService,
   ) {}
 
-  // 이미지 넣기
-  // @Post("/:wordEng")
-  // @UseInterceptors(FileInterceptor("file"))
-  // @UsePipes(new ValidationPipe({ transform: true }))
-  // async uploadWord(
-  //   @UploadedFile() file: Express.Multer.File,
-  //   @Param("wordEng") wordEng: string,
-  // ) {
-  //   const { wordImage, wordKey } = await this.imageService.uploadImage(file);
-  //   const wordKor = await this.translateService.translate(wordEng, "ko", "en");
-  //   const eng = [wordEng, wordEng, wordEng];
-  //   const kor = [wordKor, wordKor, wordKor];
-  //   return { eng, kor, wordImage, wordKey };
-  // }
-
   //단어장에 단어 저장
   @Post("/upload")
   async chooseWord(@Body() createWordDto: CreateWordDto) {
     return await this.wordService.create(createWordDto);
+  }
+
+  //이미지 넣기
+  @Post("/:wordEng")
+  @UseInterceptors(FileInterceptor("file"))
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async uploadWord(
+    @UploadedFile() file: Express.Multer.File,
+    @Param("wordEng") wordEng: string,
+  ) {
+    const { wordImage, wordKey } = await this.imageService.uploadImage(file);
+    const wordKor = await this.translateService.translate(wordEng, "ko", "en");
+    const eng = [wordEng, wordEng, wordEng];
+    const kor = [wordKor, wordKor, wordKor];
+    return { eng, kor, wordImage, wordKey };
   }
 
   // 단어장의 단어 전체 조회
