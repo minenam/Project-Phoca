@@ -24,7 +24,38 @@ export class WordController {
     private readonly translateService: TranslateService,
   ) {}
 
-  // 단어 전체 조회
+  // 이미지 넣기
+  @Post("/:wordEng")
+  @UseInterceptors(FileInterceptor("file"))
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async uploadWord(
+    @UploadedFile() file: Express.Multer.File,
+    @Param("wordEng") wordEng: string,
+  ) {
+    const wordImage = await this.imageService.uploadImage(file);
+    const wordKor = await this.translateService.translate(wordEng, "ko", "en");
+    const eng = [wordEng, wordEng, wordEng];
+    const kor = [wordKor, wordKor, wordKor];
+    return { eng, kor, wordImage };
+  }
+
+  //단어장에 단어 저장
+  @Post("/upload")
+  async chooseWord(
+    @Body() wordEng: string,
+    wordKor: string,
+    wordImage: string,
+    wordbookId: string,
+  ) {
+    return await this.wordService.create({
+      wordEng,
+      wordKor,
+      wordImage,
+      wordbookId,
+    });
+  }
+
+  // 단어장의 단어 전체 조회
   @Get("all/:wordbookId")
   getAll(@Param("wordbookId") wordbookId: string) {
     return this.wordService.getAll(wordbookId);
@@ -34,22 +65,6 @@ export class WordController {
   @Get("/:wordId")
   get(@Param("wordId") wordId: string) {
     return this.wordService.get(wordId);
-  }
-
-  // 단어 생성
-  @Post("/:wordbookId/:wordEng")
-  @UseInterceptors(FileInterceptor("file"))
-  @UsePipes(new ValidationPipe({ transform: true }))
-  async uploadWord(
-    @UploadedFile() file: Express.Multer.File,
-    @Param("wordbookId") wordbookId: string,
-    @Param("wordEng") wordEng: string,
-  ) {
-    const wordImage = await this.imageService.uploadImage(file);
-    //const wordEng = "test";
-    const wordKor = await this.translateService.translate(wordEng, "ko", "en");
-    const word = { wordbookId, wordEng, wordKor, wordImage };
-    return this.wordService.create(word);
   }
 
   // 단어 수정
