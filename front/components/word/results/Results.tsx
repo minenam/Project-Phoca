@@ -70,7 +70,7 @@ function Results() {
         </BtnContainer>
       </ResultsContainer>
       <Modal open={open} width="800px" onClose={modalCloseHandler}>
-        <EditForm imageUrl={imageUrl} />
+        <EditForm imageUrl={imageUrl} onClose={modalCloseHandler} />
       </Modal>
     </>
   );
