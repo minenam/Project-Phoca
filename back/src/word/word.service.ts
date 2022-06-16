@@ -70,7 +70,7 @@ export class WordService {
     //   console.log(e);
     // }
   }
-  async create(wordbookId, createWordDto: CreateWordDto) {
+  async create(wordbookId: string, createWordDto: CreateWordDto) {
     const data = { ...createWordDto, wordbookId };
     const word = this.wordRepository.create(data);
     return await this.wordRepository.save(word);
