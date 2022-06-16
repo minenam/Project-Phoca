@@ -4,7 +4,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Users } from "src/user/user.entity";
 import { Repository } from "typeorm";
-import { JWTConstants } from "./constants";
 
 @Injectable()
 export class JWTStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +13,7 @@ export class JWTStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: JWTConstants.secret,
+      secretOrKey: process.env.JWTsecret,
     });
   }
 
