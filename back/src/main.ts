@@ -3,10 +3,13 @@ import { NestFactory } from "@nestjs/core";
 import { SwaggerModule } from "@nestjs/swagger";
 import { BaseAPIDocumentation } from "./api/base.document";
 import { AppModule } from "./app.module";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const port = 5000;
+  const port = process.env.PORT || 5001;
 
   // SWagger API
   const documentOption = new BaseAPIDocumentation().initializaeOptions();
