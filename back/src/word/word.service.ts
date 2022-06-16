@@ -76,7 +76,7 @@ export class WordService {
     return await this.wordRepository.save(word);
   }
 
-  async getAll(wordbookId) {
+  async getAll(wordbookId: string) {
     const wordbook = await this.wordRepository.find({
       where: { wordbookId },
     });
