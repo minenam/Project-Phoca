@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TranslateController } from "./translate.controller";
-import { TranslateService } from "./translate.service";
+import { TranslateService } from "../word/translate.service";
 
 @Module({
   controllers: [TranslateController],

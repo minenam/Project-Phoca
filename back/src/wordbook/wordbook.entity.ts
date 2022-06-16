@@ -1,4 +1,4 @@
-import { Column, Entity, Generated, Index, OneToMany } from "typeorm";
+import { Column, Entity, Generated, OneToMany } from "typeorm";
 import { Word } from "../word/word.entity";
 
 export enum Security {

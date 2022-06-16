@@ -5,8 +5,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { TranslateService } from "./translate.service";
-import { TranslateDto } from "./dto/translate.dto";
+import { TranslateService } from "../word/translate.service";
+import { TranslateDto } from "../word/dto/translate.dto";
 
 @Controller("translate")
 export class TranslateController {
