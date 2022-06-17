@@ -17,6 +17,7 @@ import {
 import { FaVolumeUp, FaEdit } from "react-icons/fa";
 import Modal from "../../../common/modal/Modal";
 import EditForm from "./EditForm/EditForm";
+import SaveForm from "./SaveForm/SaveForm";
 
 interface Word {
   word?: string;
@@ -28,6 +29,7 @@ function Results() {
   const { word, imageUrl }: Word = router.query;
 
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [saveModalOpen, setSaveModalOpen] = useState(false);
 
   const ttsBtnClickHandler = () => {
     const temp: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(word);
@@ -40,8 +42,13 @@ function Results() {
     setEditModalOpen(true);
   };
 
+  const saveBtnClickHandler = () => {
+    setSaveModalOpen(true);
+  };
+
   const modalCloseHandler = () => {
     setEditModalOpen(false);
+    setSaveModalOpen(false);
   };
 
   return (
@@ -66,16 +73,27 @@ function Results() {
           <Link href="/word/upload">
             <Button>사진 다시 찍기</Button>
           </Link>
-          <Button>단어장 저장하기</Button>
+          <Button onClick={saveBtnClickHandler}>단어장 저장하기</Button>
         </BtnContainer>
       </ResultsContainer>
-      <Modal
-        open={editModalOpen}
-        width="800px"
-        onClose={modalCloseHandler}
-        large={true}>
-        <EditForm imageUrl={imageUrl} onClose={modalCloseHandler} />
-      </Modal>
+      {editModalOpen && (
+        <Modal
+          open={editModalOpen}
+          width="800px"
+          onClose={modalCloseHandler}
+          large={true}>
+          <EditForm imageUrl={imageUrl} onClose={modalCloseHandler} />
+        </Modal>
+      )}
+      {saveModalOpen && (
+        <Modal
+          open={saveModalOpen}
+          width="400px"
+          onClose={modalCloseHandler}
+          large={false}>
+          <SaveForm onClose={modalCloseHandler} />
+        </Modal>
+      )}
     </>
   );
 }

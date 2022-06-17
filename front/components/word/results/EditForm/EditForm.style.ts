@@ -51,7 +51,7 @@ export const ListContainer = styled("div", (props: { $height: string }) => ({
     backgroundColor: "#FFAA2A",
     borderRadius: "20px",
   },
-  paddingTop: "2rem",
+  paddingTop: "1rem",
 }));
 
 export const ItemContainer = styled("div", {
