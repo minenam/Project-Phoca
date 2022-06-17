@@ -17,7 +17,7 @@ import {
 } from "./AccountPage.style";
 
 interface RegisterValues {
-  id: string;
+  email: string;
   name: string;
   password: string;
   confirmPassword?: string;
@@ -27,7 +27,7 @@ function RegisterPage() {
   const router = useRouter();
 
   const initialValue: RegisterValues = {
-    id: "",
+    email: "",
     name: "",
     password: "",
     confirmPassword: "",
@@ -36,7 +36,7 @@ function RegisterPage() {
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: Yup.object({
-      id: Yup.string()
+      email: Yup.string()
         .email("아이디를 다시 확인해 주세요.")
         .required("아이디를 입력해 주세요."),
       name: Yup.string()
@@ -50,8 +50,8 @@ function RegisterPage() {
         .required("비밀번호를 한 번 더 입력해 주세요."),
     }),
     onSubmit: async (values, actions) => {
-      const { id, name, password } = values;
-      const newAccount = { email: id, userName: name, password };
+      const { email, name, password } = values;
+      const newAccount = { email, userName: name, password };
 
       const res = await axios.post<RegisterValues>(
         `${process.env.NEXT_PUBLIC_SERVER_URL}user/register`,
@@ -69,17 +69,17 @@ function RegisterPage() {
       <Form onSubmit={formik.handleSubmit}>
         <ContentContainer>
           <Field>
-            <Label htmlFor="id">아이디</Label>
+            <Label htmlFor="email">이메일</Label>
             <Input
-              id="id"
-              name="id"
+              id="email"
+              name="email"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.id}
+              value={formik.values.email}
             />
-            {formik.touched.id && formik.errors.id ? (
-              <ErrorMsg>{formik.errors.id}</ErrorMsg>
+            {formik.touched.email && formik.errors.email ? (
+              <ErrorMsg>{formik.errors.email}</ErrorMsg>
             ) : null}
           </Field>
           <Field>
