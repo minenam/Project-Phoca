@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import * as Api from "../../common/utils/api";
 import {
   Form,
   ContentContainer,
@@ -17,24 +19,35 @@ import {
 } from "./AccountPage.style";
 
 interface LoginValues {
-  id: string;
+  email: string;
   password: string;
 }
 
 function LoginPage() {
-  const initialValue: LoginValues = { id: "", password: "" };
+  const router = useRouter();
+
+  const initialValue: LoginValues = { email: "", password: "" };
+
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: Yup.object({
-      id: Yup.string()
-        .email("아이디를 다시 확인해 주세요.")
-        .required("아이디를 입력해 주세요."),
+      email: Yup.string()
+        .email("이메일을 다시 확인해 주세요.")
+        .required("이메일을 입력해 주세요."),
       password: Yup.string()
         .min(4, "비밀번호는 4자 이상입니다.")
         .required("비밀번호를 입력해 주세요."),
     }),
-    onSubmit: (values, actions) => {
-      console.log({ values, actions });
+    onSubmit: async (values, actions) => {
+      const { email, password } = values;
+      const dataToSubmit: LoginValues = { email, password };
+
+      try {
+        const res = await Api.post("user/login", dataToSubmit);
+        sessionStorage.setItem("userToken", res.data.accessToken);
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
 
@@ -43,17 +56,17 @@ function LoginPage() {
       <Form onSubmit={formik.handleSubmit}>
         <ContentContainer>
           <Field>
-            <Label htmlFor="id">아이디</Label>
+            <Label htmlFor="email">이메일</Label>
             <Input
-              id="id"
-              name="id"
+              id="email"
+              name="email"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.id}
+              value={formik.values.email}
             />
-            {formik.touched.id && formik.errors.id ? (
-              <ErrorMsg>{formik.errors.id}</ErrorMsg>
+            {formik.touched.email && formik.errors.email ? (
+              <ErrorMsg>{formik.errors.email}</ErrorMsg>
             ) : null}
           </Field>
           <Field>
