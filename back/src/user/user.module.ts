@@ -6,9 +6,9 @@ import { AuthService } from "../auth/auth.service";
 import { UserController } from "./user.controller";
 import { Users } from "./user.entity";
 import { UserService } from "./user.service";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
 @Module({
   imports: [

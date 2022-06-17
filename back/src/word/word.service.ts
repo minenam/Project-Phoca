@@ -13,7 +13,6 @@ export class WordService {
   ) {}
   //단어 생성
   async create(word: CreateWordDto) {
-    console.log("1", word);
     const newWord = this.wordRepository.create(word);
     return await this.wordRepository.save(newWord);
   }

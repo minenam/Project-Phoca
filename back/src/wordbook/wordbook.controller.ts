@@ -20,9 +20,17 @@ export class WordbookController {
     return this.wordbookService.getAll();
   }
   // 단어장 생성
-  @Post("create")
-  create(@Body() createWordbookDto: CreateWordbookDto) {
-    return this.wordbookService.create(createWordbookDto);
+  @Post("create/:userId")
+  create(
+    @Param("userId") userId: string,
+    @Body() createWordbookDto: CreateWordbookDto,
+  ) {
+    return this.wordbookService.create({ userId, ...createWordbookDto });
+  }
+  // 유저의 단어장 조희
+  @Get("user/:id")
+  findById(@Param("id") id: string) {
+    return this.wordbookService.getById(id);
   }
   // 단어장 개별 조회
   @Get(":id")

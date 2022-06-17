@@ -1,4 +1,13 @@
-import { Column, Entity, Generated, OneToMany } from "typeorm";
+import {
+  Column,
+  Entity,
+  Generated,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { Bookmark } from "../bookmark/bookmark.entity";
+import { Users } from "../user/user.entity";
 import { Word } from "../word/word.entity";
 
 export enum Security {
@@ -24,6 +33,19 @@ export class Wordbook {
   })
   createDate: Date;
 
+  @Column("uuid", { name: "user_id" })
+  userId: string;
+
   @OneToMany(() => Word, (word) => word.wordbook)
   words: Word[];
+
+  @ManyToOne(() => Users, (user) => user.wordbook, {
+    onDelete: "CASCADE",
+    //eager: true,
+  })
+  @JoinColumn({ name: "user_id" })
+  user: Users;
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.wordbook)
+  bookmark: Bookmark[];
 }

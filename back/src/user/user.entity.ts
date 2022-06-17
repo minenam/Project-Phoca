@@ -1,4 +1,12 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Bookmark } from "../bookmark/bookmark.entity";
+import { Wordbook } from "../wordbook/wordbook.entity";
 
 @Index("users_pkey", ["userid"], { unique: true })
 @Entity("users", { schema: "public" })
@@ -27,4 +35,10 @@ export class Users {
 
   @Column("boolean", { name: "activated", default: true })
   activated: boolean;
+
+  @OneToMany(() => Wordbook, (wordbook) => wordbook.user)
+  wordbook: Wordbook[];
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.user)
+  bookmark: Bookmark[];
 }
