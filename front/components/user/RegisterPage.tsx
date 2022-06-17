@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 import {
   Form,
   ContentContainer,
@@ -18,16 +20,19 @@ interface RegisterValues {
   id: string;
   name: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 
 function RegisterPage() {
+  const router = useRouter();
+
   const initialValue: RegisterValues = {
     id: "",
     name: "",
     password: "",
     confirmPassword: "",
   };
+
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: Yup.object({
@@ -44,10 +49,21 @@ function RegisterPage() {
         .oneOf([Yup.ref("password"), null], "비밀번호가 일치하지 않습니다.")
         .required("비밀번호를 한 번 더 입력해 주세요."),
     }),
-    onSubmit: (values, actions) => {
-      console.log({ values, actions });
+    onSubmit: async (values, actions) => {
+      const { id, name, password } = values;
+      const newAccount = { email: id, userName: name, password };
+
+      const res = await axios.post<RegisterValues>(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}user/register`,
+        newAccount,
+      );
+
+      if (res.status === 201) {
+        router.push("/login");
+      }
     },
   });
+
   return (
     <>
       <Form onSubmit={formik.handleSubmit}>
