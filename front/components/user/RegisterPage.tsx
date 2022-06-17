@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import * as Api from "../../common/utils/api";
 import {
   Form,
   ContentContainer,
@@ -54,7 +53,17 @@ function RegisterPage() {
       const newAccount: RegisterValues = { email, userName, password };
 
       try {
-        const res = await Api.post("user/register", newAccount);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newAccount),
+          },
+        );
+        const result = await res.text();
         router.push("/login");
       } catch (err) {
         console.log(err);

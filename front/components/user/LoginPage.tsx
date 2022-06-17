@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import * as Api from "../../common/utils/api";
 import {
   Form,
   ContentContainer,
@@ -43,8 +42,18 @@ function LoginPage() {
       const dataToSubmit: LoginValues = { email, password };
 
       try {
-        const res = await Api.post("user/login", dataToSubmit);
-        sessionStorage.setItem("userToken", res.data.accessToken);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(dataToSubmit),
+          },
+        );
+        const result = await res.json();
       } catch (err) {
         console.log(err);
       }
