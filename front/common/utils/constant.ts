@@ -1,9 +1,9 @@
-interface button_arr {
+interface Button {
   buttonName: string;
   buttonColor: string;
 }
 
-export const MAIN_BUTTON: button_arr[] = [
+export const MAIN_BUTTON: Button[] = [
   {
     buttonName: "단어장 만들기",
     buttonColor: "#AF93FF",
