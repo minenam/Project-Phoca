@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import * as Api from "../../common/utils/api";
 import {
   Form,
   ContentContainer,
@@ -18,7 +18,7 @@ import {
 
 interface RegisterValues {
   email: string;
-  name: string;
+  userName: string;
   password: string;
   confirmPassword?: string;
 }
@@ -28,7 +28,7 @@ function RegisterPage() {
 
   const initialValue: RegisterValues = {
     email: "",
-    name: "",
+    userName: "",
     password: "",
     confirmPassword: "",
   };
@@ -39,7 +39,7 @@ function RegisterPage() {
       email: Yup.string()
         .email("아이디를 다시 확인해 주세요.")
         .required("아이디를 입력해 주세요."),
-      name: Yup.string()
+      userName: Yup.string()
         .min(2, "이름은 2자 이상입니다.")
         .required("이름을 입력해 주세요."),
       password: Yup.string()
@@ -50,13 +50,10 @@ function RegisterPage() {
         .required("비밀번호를 한 번 더 입력해 주세요."),
     }),
     onSubmit: async (values, actions) => {
-      const { email, name, password } = values;
-      const newAccount = { email, userName: name, password };
+      const { email, userName, password } = values;
+      const newAccount: RegisterValues = { email, userName, password };
 
-      const res = await axios.post<RegisterValues>(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}user/register`,
-        newAccount,
-      );
+      const res = await Api.post("user/register", newAccount);
 
       if (res.status === 201) {
         router.push("/login");
@@ -83,16 +80,16 @@ function RegisterPage() {
             ) : null}
           </Field>
           <Field>
-            <Label htmlFor="name">이름</Label>
+            <Label htmlFor="userName">이름</Label>
             <Input
-              id="name"
-              name="name"
+              id="userName"
+              name="userName"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.userName}
             />
-            {formik.touched.name && formik.errors.name ? (
-              <ErrorMsg>{formik.errors.name}</ErrorMsg>
+            {formik.touched.userName && formik.errors.userName ? (
+              <ErrorMsg>{formik.errors.userName}</ErrorMsg>
             ) : null}
           </Field>
           <Field>
