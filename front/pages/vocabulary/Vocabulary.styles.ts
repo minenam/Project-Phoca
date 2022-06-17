@@ -75,7 +75,7 @@ export const SwitchButton = styled("label", (props: { $checked: Boolean }) => ({
     zIndex: 20,
     top: "-10px",
     left: "-10px",
-    lineHeight: "30px",
+    lineHeight: "2.5rem",
     textAlign: "center",
     fontSize: "24px",
     fontWeight: "bold",
@@ -106,12 +106,13 @@ export const GridTextItem = styled("p", {
   paddingBottom: "2.5rem",
 });
 
-export const GridWrapper = styled("div", {
+export const GridWrapper = styled("div", (props: { $lapTop?: Boolean }) => ({
   display: "grid",
-  width: "87%",
+  width: props.$lapTop ? "87%" : "97%",
+  alignSelf: "flex-start",
   gridTemplateColumns: "repeat(4, 300px)",
   gridTemplateRows: "repeat(2, 1fr)",
-  gap: "30px 15px",
+  gap: props.$lapTop ? "30px 15px" : "30px 10px",
   borderRadius: "30px",
   marginTop: "20px",
   paddingBottom: "15px",
@@ -128,7 +129,7 @@ export const GridWrapper = styled("div", {
     backgroundColor: "darkgray",
     borderRadius: "20px",
   },
-});
+}));
 
 export const BtnWrapper = styled("div", {
   display: "flex",

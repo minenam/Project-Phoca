@@ -9,7 +9,6 @@ import {
   Wrapper,
   Triangle,
   UserName,
-  EmailRoundedBox,
   UserInfoDetail,
   UserInfoWrapper,
   UserDetailWrapper,
@@ -17,9 +16,10 @@ import {
   Branch,
   ImgWrapper,
   Seal,
+  RoundedBox,
 } from "./MyPage.style";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const myPage: NextPage = () => {
   const [userToken, setUserToken] = useState();
@@ -44,21 +44,21 @@ const myPage: NextPage = () => {
         </UserInfoWrapper>
         <UserInfoWrapper>
           <UserDetailWrapper>
-            <EmailRoundedBox>이메일</EmailRoundedBox>
+            <RoundedBox>이메일</RoundedBox>
             <UserInfoDetail>test@test.com</UserInfoDetail>
           </UserDetailWrapper>
           <UserDetailWrapper>
-            <EmailRoundedBox>코멘트</EmailRoundedBox>
+            <RoundedBox>코멘트</RoundedBox>
             <UserInfoDetail>테스트 코멘트</UserInfoDetail>
           </UserDetailWrapper>
         </UserInfoWrapper>
         <UserInfoWrapper>
           <UserDetailWrapper>
-            <EmailRoundedBox>내 단어장</EmailRoundedBox>
+            <RoundedBox>내 단어장</RoundedBox>
             <UserInfoDetail>4개</UserInfoDetail>
           </UserDetailWrapper>
           <UserDetailWrapper>
-            <EmailRoundedBox>북마크한 단어장</EmailRoundedBox>
+            <RoundedBox>북마크한 단어장</RoundedBox>
             <UserInfoDetail>10개</UserInfoDetail>
           </UserDetailWrapper>
         </UserInfoWrapper>

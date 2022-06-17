@@ -27,5 +27,15 @@ export const MAIN_BUTTON: Button[] = [
   },
 ];
 
+export const WORD_IMAGES: string[] = [
+  "/celebrate.svg",
+  "/contemplating.svg",
+  "/faq.svg",
+  "/monster_artist.svg",
+  "/playing_cards.svg",
+  "/popularity.svg",
+  "/updated.svg",
+];
+
 export const HEADER_HEIGHT: string = "130px";
 export const SIDEBAR_WIDTH: string = "300px";

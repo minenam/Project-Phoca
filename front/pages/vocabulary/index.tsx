@@ -13,19 +13,24 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { FaLock, FaLockOpen, FaShareSquare } from "react-icons/fa";
 import BookMarkHeader from "./BookMarkHeader";
+import { useMediaQuery } from "react-responsive";
+import { useIsLapTop } from "../../common/utils/useIsLapTop";
 
 const Vocabulary: NextPage = () => {
   const router = useRouter();
+  const isLapTop = useIsLapTop();
 
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
   const headerHeight = parseInt(HEADER_HEIGHT.substring(0, 3)) + 30;
-
+  useEffect(() => {
+    console.log("height====+>", isLapTop);
+  }, []);
   return (
     <VocabularyWrapper
       $sideBarWidth={`${sideBarWidth}px`}
       $headerHeight={`${headerHeight}px`}>
       <BookMarkHeader />
-      <GridWrapper>
+      <GridWrapper $lapTop={isLapTop}>
         <GridItem>
           <BtnWrapper>
             <LockBtn>

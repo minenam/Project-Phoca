@@ -105,12 +105,12 @@ export const UserName = styled("p", {
   marginTop: "10px",
 });
 
-export const EmailRoundedBox = styled("div", {
+export const RoundedBox = styled("div", {
   backgroundColor: "#FFAA2A",
   textAlign: "center",
-  lineHeight: "2rem",
+  padding: "10px",
   height: "2rem",
-  width: "4.5rem",
+  width: "auto",
   borderRadius: "25px",
 });
 
