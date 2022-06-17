@@ -53,10 +53,11 @@ function RegisterPage() {
       const { email, userName, password } = values;
       const newAccount: RegisterValues = { email, userName, password };
 
-      const res = await Api.post("user/register", newAccount);
-
-      if (res.status === 201) {
+      try {
+        const res = await Api.post("user/register", newAccount);
         router.push("/login");
+      } catch (err) {
+        console.log(err);
       }
     },
   });
