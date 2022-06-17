@@ -91,19 +91,19 @@ export const GridItem = styled("div", {
   alignItems: "center",
   backgroundColor: "white",
   borderRadius: "25px",
-  marginTop: "1.2rem",
   width: "250px",
   height: "250px",
   cursor: "pointer",
-  margin: "0 auto",
+  margin: "20px auto",
 });
 
 export const GridTextItem = styled("p", {
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "flex-end",
   height: "100%",
-  paddingBottom: "2.5rem",
+  fontSize: "1.5rem",
+  paddingBottom: "1.5rem",
 });
 
 export const GridWrapper = styled("div", (props: { $lapTop?: Boolean }) => ({
@@ -115,7 +115,6 @@ export const GridWrapper = styled("div", (props: { $lapTop?: Boolean }) => ({
   gap: props.$lapTop ? "30px 15px" : "30px 10px",
   borderRadius: "30px",
   marginTop: "20px",
-  paddingBottom: "15px",
   backgroundColor: "#fedda6",
   overflowY: "auto",
   "::-webkit-scrollbar": {

@@ -10,7 +10,7 @@ import {
 } from "./Vocabulary.styles";
 import { Avatar, AvatarImage, UserName } from "../myPage/MyPage.style";
 
-const BookMarkHeader: FC = () => {
+const VocabularyMarkHeader: FC = () => {
   const [mainText, setMainText] = useState("내 단어장");
   const [checked, setChecked] = useState(false);
   const checkHandler = () => {
@@ -43,4 +43,4 @@ const BookMarkHeader: FC = () => {
   );
 };
 
-export default BookMarkHeader;
+export default VocabularyMarkHeader;
