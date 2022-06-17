@@ -23,16 +23,17 @@ export class AuthService {
   }
 
   // 로그인시 유저 비밀번호 확인 및 JWT 생성
-  async validateUser(
-    authcredntialDto: AuthCredentialDto,
-  ): Promise<{ accessToken: string }> {
+  async validateUser(authcredntialDto: AuthCredentialDto): Promise<any> {
     const { email, password } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload = { email: user.email, sub: user.userid };
       const accessToken = await this.jwtService.sign(payload);
-      return { accessToken };
+
+      const { password, ...result } = user;
+      result["token"] = accessToken;
+      return result;
     } else {
       throw new UnauthorizedException("Login Failed");
     }

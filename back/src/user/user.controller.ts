@@ -37,7 +37,7 @@ export class UserController {
   @Post("/register")
   @ApiOperation({ summary: "회원가입 API" })
   @UsePipes(ValidationPipe)
-  register(@Body() createUserDto: CreateUserDto): Promise<Users> {
+  register(@Body() createUserDto: CreateUserDto): Promise<string> {
     this.logger.verbose(`Try to Register: Username ${createUserDto.userName}`);
     return this.userService.register(createUserDto);
   }
