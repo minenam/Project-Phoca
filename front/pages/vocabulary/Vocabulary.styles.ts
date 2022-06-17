@@ -9,6 +9,7 @@ export const VocabularyWrapper = styled(
     marginLeft: props.$sideBarWidth,
     width: `calc(100vw - ${props.$sideBarWidth}px`,
     flexDirection: "column",
+    padding: "20px",
   }),
 );
 
@@ -19,10 +20,16 @@ export const HeadWrapper = styled("div", {
   justifyContent: "start",
 });
 
+export const HeadUserWrapper = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+});
+
 export const MainText = styled("p", {
   display: "flex",
   fontSize: "2rem",
   alignItems: "center",
+  marginLeft: "1.6rem",
 });
 
 export const SwitchWrapper = styled("div", {
@@ -54,7 +61,7 @@ export const SwitchButton = styled("label", (props: { $checked: Boolean }) => ({
   padding: 0,
   margin: "10px auto",
   cursor: "pointer",
-  backgroundColor: "#ffeba7",
+  backgroundColor: "#ffaa2a",
   ":before": {
     position: "absolute",
     display: "block",
@@ -73,6 +80,67 @@ export const SwitchButton = styled("label", (props: { $checked: Boolean }) => ({
     fontSize: "24px",
     fontWeight: "bold",
     transition: "all 0.5s ease",
-    transform: props.$checked ? "translateX(44px) rotate(-180deg)" : "",
+    transform: props.$checked ? "translateX(44px) rotate(180deg)" : "",
   },
 }));
+
+export const GridItem = styled("div", {
+  display: "flex",
+  justifyContent: "flex-start",
+  flexDirection: "column",
+  alignItems: "center",
+  backgroundColor: "white",
+  borderRadius: "25px",
+  marginTop: "1.2rem",
+  width: "250px",
+  height: "250px",
+  cursor: "pointer",
+  margin: "0 auto",
+});
+
+export const GridTextItem = styled("p", {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100%",
+  paddingBottom: "2.5rem",
+});
+
+export const GridWrapper = styled("div", {
+  display: "grid",
+  width: "87%",
+  gridTemplateColumns: "repeat(4, 300px)",
+  gridTemplateRows: "repeat(2, 1fr)",
+  gap: "30px 15px",
+  borderRadius: "30px",
+  marginTop: "20px",
+  paddingBottom: "15px",
+  backgroundColor: "#fedda6",
+  overflowY: "auto",
+  "::-webkit-scrollbar": {
+    backgroundColor: "#FFECD0",
+  },
+  "::-webkit-scrollbar-thumb": {
+    backgroundColor: "#FFAA2A",
+    borderRadius: "20px",
+  },
+  "::-webkit-scrollbar-track": {
+    backgroundColor: "darkgray",
+    borderRadius: "20px",
+  },
+});
+
+export const BtnWrapper = styled("div", {
+  display: "flex",
+  width: "100%",
+  flexDirection: "row",
+  justifyContent: "flex-end",
+  alignSelf: "start",
+  marginTop: "1.2rem",
+});
+
+export const LockBtn = styled("div", {
+  cursor: "pointer",
+  marginRight: "1.2rem",
+  fontSize: "1.6rem",
+});

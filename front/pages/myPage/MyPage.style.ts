@@ -49,6 +49,7 @@ export const UserInfoEdit = styled(
   "div",
   (props: { $sideBarWidth: string }) => ({
     display: "flex",
+    cursor: "pointer",
     justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "#FE8C55",
@@ -91,8 +92,8 @@ export const Triangle = styled("div", {
   width: "0px",
   height: "0px",
   position: "absolute",
-  right: "4rem",
-  top: "11.5rem",
+  right: "7rem",
+  top: "15rem",
   borderBottom: "30px solid #F4AA3B",
   borderLeft: "15px solid transparent",
   borderRight: "15px solid transparent",
@@ -157,6 +158,6 @@ export const Seal = styled("img", {
   position: "absolute",
   width: "5rem",
   right: "1.2rem",
-  top: "11rem",
+  top: "13rem",
   zIndex: 1,
 });

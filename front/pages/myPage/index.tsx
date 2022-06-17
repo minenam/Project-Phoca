@@ -22,7 +22,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const myPage: NextPage = () => {
-  const [userToken, setUserToken] = useState("");
+  const [userToken, setUserToken] = useState();
   const [user, setUser] = useState();
 
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;

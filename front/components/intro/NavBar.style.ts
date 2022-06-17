@@ -23,7 +23,7 @@ export const Nav = styled("nav", {
   display: "flex",
   flexDirection: "row",
   width: "100%",
-  height: "100px",
+  height: "130px",
 });
 
 export const Anchor = styled("a", {

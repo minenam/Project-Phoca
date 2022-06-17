@@ -27,5 +27,5 @@ export const MAIN_BUTTON: Button[] = [
   },
 ];
 
-export const HEADER_HEIGHT: string = "100px";
+export const HEADER_HEIGHT: string = "130px";
 export const SIDEBAR_WIDTH: string = "300px";
