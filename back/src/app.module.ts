@@ -7,12 +7,13 @@ import { configAsync } from "./orm.config";
 import { ConfigModule } from "@nestjs/config";
 import { WordbookModule } from "./wordbook/wordbook.module";
 import { WordModule } from "./word/word.module";
-import { BookmarkModule } from './bookmark/bookmark.module';
+import { BookmarkModule } from "./bookmark/bookmark.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: [".env"],
     }),
     TypeOrmModule.forRootAsync(configAsync),
     // TypeOrmModule.forRoot(typeORMconfig),
