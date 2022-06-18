@@ -12,12 +12,19 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from "@nestjs/swagger";
 import { CreateWordDto } from "./dto/create-word.dto";
 import { UpdateWordDto } from "./dto/update-word.dto";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
 import { WordService } from "./word.service";
-
+@ApiTags("단어 API")
 @Controller("word")
 export class WordController {
   constructor(
@@ -28,12 +35,34 @@ export class WordController {
 
   //단어장에 단어 저장
   @Post("/upload")
+  @ApiOperation({
+    summary: "단어 생성 API",
+    description: "단어 정보를 입력받아 단어를 생성해서 DB에 저장한다.",
+  })
   async chooseWord(@Body() createWordDto: CreateWordDto) {
     return await this.wordService.create(createWordDto);
   }
 
   //이미지 넣기
   @Post("/:wordEng")
+  @ApiParam({
+    name: "wordEng",
+    type: "string",
+    description: "영어 단어",
+    required: true,
+  })
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({
+    schema: {
+      type: "object",
+      properties: {
+        file: {
+          type: "string",
+          format: "binary",
+        },
+      },
+    },
+  })
   @UseInterceptors(FileInterceptor("file"))
   @UsePipes(new ValidationPipe({ transform: true }))
   async uploadWord(
