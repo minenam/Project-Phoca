@@ -5,6 +5,7 @@ export class AuthCredentialDto {
   @ApiProperty({
     description: "이메일(아이디)",
     required: true,
+    type: "string",
   })
   @IsString()
   @MinLength(4)
@@ -17,6 +18,7 @@ export class AuthCredentialDto {
   @ApiProperty({
     description: "비밀번호",
     required: true,
+    type: "string",
   })
   @IsString()
   @MinLength(4)

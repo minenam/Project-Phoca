@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   HttpException,
   HttpStatus,
+  Logger,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { JwtService } from "@nestjs/jwt";
@@ -37,6 +38,7 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
       const verify = this.jwtService.verify(token, { secret: secretKey });
       return verify;
     } catch (e) {
+      Logger.debug(`에러 메시지: ${e.mssage}`);
       switch (e.message) {
         // 토큰 오류 메시지
         case "INVALID_TOKEN":

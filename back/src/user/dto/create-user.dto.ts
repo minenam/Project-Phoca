@@ -5,6 +5,7 @@ export class CreateUserDto {
   @ApiProperty({
     description: "유저 이름",
     required: true,
+    type: "string",
   })
   @IsString()
   @MinLength(2)
@@ -14,6 +15,7 @@ export class CreateUserDto {
   @ApiProperty({
     description: "이메일(아이디)",
     required: true,
+    type: "string",
   })
   @IsString()
   @MinLength(4)
@@ -26,6 +28,7 @@ export class CreateUserDto {
   @ApiProperty({
     description: "비밀번호",
     required: true,
+    type: "string",
   })
   @IsString()
   @MinLength(4)
