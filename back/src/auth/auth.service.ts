@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Users } from "../user/user.entity";
 import { Repository } from "typeorm";
@@ -33,6 +33,11 @@ export class AuthService {
 
       const { password, ...result } = user;
       result["token"] = accessToken;
+
+      Logger.debug(
+        `Generated JWT token with payload ${JSON.stringify(payload)}`,
+      );
+
       return result;
     } else {
       throw new UnauthorizedException("Login Failed");
