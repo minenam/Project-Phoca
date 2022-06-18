@@ -16,19 +16,25 @@ import { Data } from "./EditForm";
 interface SelectWordProps {
   data: Data[];
   imageUrl?: string;
-  setEngWord: Dispatch<SetStateAction<string>>;
-  setKorWord: Dispatch<SetStateAction<string>>;
-  engWord: string;
+  setSelectedEngWord: Dispatch<SetStateAction<string>>;
+  setSelectedKorWord: Dispatch<SetStateAction<string>>;
+  selectedEngWord: string;
 }
 function SelectWord(props: SelectWordProps) {
-  const { data, imageUrl, setEngWord, setKorWord, engWord } = props;
+  const {
+    data,
+    imageUrl,
+    setSelectedEngWord,
+    setSelectedKorWord,
+    selectedEngWord,
+  } = props;
 
   const checkboxClickHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     const selected = data.filter((item, idx) => idx === Number(value));
     if (selected) {
-      setEngWord(selected[0].engWord);
-      setKorWord(selected[0].korWord);
+      setSelectedEngWord(selected[0].engWord);
+      setSelectedKorWord(selected[0].korWord);
     }
   };
 
@@ -48,7 +54,7 @@ function SelectWord(props: SelectWordProps) {
               type="checkbox"
               name="word"
               value={idx}
-              checked={item.engWord === engWord}
+              checked={item.engWord === selectedEngWord}
               onChange={checkboxClickHandler}
             />
             <EngWord>{item.engWord}</EngWord>

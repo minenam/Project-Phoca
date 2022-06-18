@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { BtnContainer, Button } from "./EditForm.style";
 import SelectWord from "./SelectWord";
 import WriteWord from "./WriteWord";
@@ -6,6 +6,8 @@ import WriteWord from "./WriteWord";
 interface EditFormProps {
   imageUrl?: string;
   onClose: () => void;
+  setEngWord: Dispatch<SetStateAction<string>>;
+  setKorWord: Dispatch<SetStateAction<string>>;
 }
 
 export interface Data {
@@ -13,9 +15,14 @@ export interface Data {
   korWord: string;
 }
 
-function EditForm({ imageUrl, onClose }: EditFormProps) {
-  const [engWord, setEngWord] = useState("");
-  const [korWord, setKorWord] = useState("");
+function EditForm({
+  imageUrl,
+  onClose,
+  setEngWord,
+  setKorWord,
+}: EditFormProps) {
+  const [selectedEngWord, setSelectedEngWord] = useState("");
+  const [selectedKorWord, setSelectedKorWord] = useState("");
 
   const fakeData: Data[] = [
     {
@@ -38,7 +45,9 @@ function EditForm({ imageUrl, onClose }: EditFormProps) {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(engWord, korWord);
+    setEngWord(selectedEngWord);
+    setKorWord(selectedKorWord);
+    onClose();
   };
 
   return (
@@ -46,21 +55,21 @@ function EditForm({ imageUrl, onClose }: EditFormProps) {
       <SelectWord
         data={fakeData}
         imageUrl={imageUrl}
-        setEngWord={setEngWord}
-        setKorWord={setKorWord}
-        engWord={engWord}
+        setSelectedEngWord={setSelectedEngWord}
+        setSelectedKorWord={setSelectedKorWord}
+        selectedEngWord={selectedEngWord}
       />
       <WriteWord
-        setEngWord={setEngWord}
-        setKorWord={setKorWord}
-        engWord={engWord}
-        korWord={korWord}
+        setSelectedEngWord={setSelectedEngWord}
+        setSelectedKorWord={setSelectedKorWord}
+        selectedEngWord={selectedEngWord}
+        selectedKorWord={selectedKorWord}
       />
       <BtnContainer>
         <Button
           type="submit"
           onClick={handleSubmit}
-          disabled={engWord === "" || korWord === ""}>
+          disabled={selectedEngWord === "" || selectedKorWord === ""}>
           저장하기
         </Button>
         <Button onClick={onClose}>취소하기</Button>
