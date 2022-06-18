@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
-import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
 import { BookmarkService } from "./bookmark.service";
 import { CreateBookmarkDto } from "./dto/create-bookmark.dto";
 @ApiTags("북마크 API")
@@ -8,9 +8,14 @@ export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
   @Get("/:userId")
+  @ApiOperation({
+    summary: "유저의 북마크 조회 API",
+    description: "유저 아이디를 입력받아 유저가 북마크한 단어장 조회.",
+  })
   @ApiParam({
     name: "userId",
-    type: "uuid",
+    type: "string",
+    format: "uuid",
     description: "유저 아이디",
     required: true,
   })
@@ -19,6 +24,11 @@ export class BookmarkController {
   }
 
   @Post("/")
+  @ApiOperation({
+    summary: "북마크 생성 API",
+    description:
+      "북마크를 누른 유저의 아이디와 북마크한 단어장의 아이디를 입력 받아 북마크를 생성.",
+  })
   @ApiBody({
     schema: {
       type: "object",
@@ -39,6 +49,11 @@ export class BookmarkController {
     return this.bookmarkService.create(createBookmarkDto);
   }
   @Delete("/")
+  @ApiOperation({
+    summary: "북마크 삭제 API",
+    description:
+      "북마크를 누른 유저의 아이디와 북마크한 단어장의 아이디를 입력 받아 북마크를 삭제.",
+  })
   @ApiBody({
     schema: {
       type: "object",

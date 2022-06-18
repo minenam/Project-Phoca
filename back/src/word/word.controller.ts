@@ -44,12 +44,10 @@ export class WordController {
   }
 
   //이미지 넣기
-  @Post("/:wordEng")
-  @ApiParam({
-    name: "wordEng",
-    type: "string",
-    description: "영어 단어",
-    required: true,
+  @Post()
+  @ApiOperation({
+    summary: "이미지 저장 API",
+    description: "이미지를 입력받아 단어 데이터를 생성해서 반환한다.",
   })
   @ApiConsumes("multipart/form-data")
   @ApiBody({
@@ -65,11 +63,9 @@ export class WordController {
   })
   @UseInterceptors(FileInterceptor("file"))
   @UsePipes(new ValidationPipe({ transform: true }))
-  async uploadWord(
-    @UploadedFile() file: Express.Multer.File,
-    @Param("wordEng") wordEng: string,
-  ) {
+  async uploadWord(@UploadedFile() file: Express.Multer.File) {
     const { wordImage, wordKey } = await this.imageService.uploadImage(file);
+    const wordEng = "random";
     const wordKor = await this.translateService.translate(wordEng, "ko", "en");
     const eng = [wordEng, wordEng, wordEng];
     const kor = [wordKor, wordKor, wordKor];
@@ -78,6 +74,10 @@ export class WordController {
 
   // 단어장의 단어 전체 조회
   @Get("all/:wordbookId")
+  @ApiOperation({
+    summary: "단어장 단어 조회 API",
+    description: "단어장 아이디를 입력받아 단어들을 조회.",
+  })
   @ApiParam({
     name: "wordbookId",
     type: "uuid",
@@ -90,6 +90,10 @@ export class WordController {
 
   // 단어 개별 조회
   @Get("/:wordId")
+  @ApiOperation({
+    summary: "단어 조회 API",
+    description: "단어 아이디를 입력받아 단어 정보를 조회.",
+  })
   @ApiParam({
     name: "wordId",
     type: "uuid",
@@ -102,6 +106,10 @@ export class WordController {
 
   // 단어 수정
   @Patch("/:wordId")
+  @ApiOperation({
+    summary: "단어 수정 API",
+    description: "단어 아이디와 수정 내용을 입력받아 단어 내용을 수정한다.",
+  })
   @ApiParam({
     name: "wordId",
     type: "uuid",
@@ -132,6 +140,10 @@ export class WordController {
 
   // 이미지 삭제
   @Delete("image/:key")
+  @ApiOperation({
+    summary: "이미지 삭제 API",
+    description: "이미지 키를 입력받아 버킷의 이미지를 삭제한다.",
+  })
   @ApiParam({
     name: "key",
     type: "string",
@@ -143,6 +155,10 @@ export class WordController {
   }
   // 단어 삭제
   @Delete("/:wordId")
+  @ApiOperation({
+    summary: "단어 삭제 API",
+    description: "단어 아이디를 입력받아 단어 정보를 삭제한다.",
+  })
   @ApiParam({
     name: "wordId",
     type: "uuid",

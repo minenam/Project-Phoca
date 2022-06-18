@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import {
   Column,
   Entity,
@@ -19,21 +20,36 @@ export enum Security {
 export class Wordbook {
   @Column("uuid", { primary: true, name: "wordbook_id" })
   @Generated("uuid")
+  @ApiProperty({
+    description: "단어장 ID",
+  })
   wordbookId: string;
 
   @Column("character varying", { name: "wordbook_name", length: 15 })
+  @ApiProperty({
+    description: "단어장 이름",
+  })
   wordbookName: string;
 
   @Column({ type: "enum", enum: Security, default: Security.PUBLIC })
+  @ApiProperty({
+    description: "단어장 공개 여부",
+  })
   security: Security;
 
   @Column("timestamp without time zone", {
     name: "createDate",
     default: () => "CURRENT_TIMESTAMP",
   })
+  @ApiProperty({
+    description: "생성일",
+  })
   createDate: Date;
 
   @Column("uuid", { name: "user_id" })
+  @ApiProperty({
+    description: "유저 ID",
+  })
   userId: string;
 
   @OneToMany(() => Word, (word) => word.wordbook)
