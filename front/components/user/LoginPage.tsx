@@ -1,6 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "react-query";
 import {
   Form,
   ContentContainer,
@@ -15,26 +18,54 @@ import {
   SnsTitle,
   KakaoBtn,
 } from "./AccountPage.style";
+import { userStore } from "../../zustand/store";
 
 interface LoginValues {
-  id: string;
+  email: string;
   password: string;
 }
 
+const initialValue: LoginValues = { email: "", password: "" };
+
+const loginHandler = async (data: LoginValues) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const result = res.json();
+  return result;
+};
+
 function LoginPage() {
-  const initialValue: LoginValues = { id: "", password: "" };
+  const router = useRouter();
+  const loginMutation = useMutation(loginHandler, {
+    onSuccess: (data, variables) => {
+      console.log("Login 성공 ", data);
+      sessionStorage.setItem("userToken", data.token);
+      userStore.setState({ user: data });
+      router.push("/");
+    },
+    onError: (err, variables) => {
+      console.log("Login 실패 ", err);
+    },
+  });
+
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: Yup.object({
-      id: Yup.string()
-        .email("아이디를 다시 확인해 주세요.")
-        .required("아이디를 입력해 주세요."),
+      email: Yup.string()
+        .email("이메일을 다시 확인해 주세요.")
+        .required("이메일을 입력해 주세요."),
       password: Yup.string()
         .min(4, "비밀번호는 4자 이상입니다.")
         .required("비밀번호를 입력해 주세요."),
     }),
-    onSubmit: (values, actions) => {
-      console.log({ values, actions });
+    onSubmit: async (values, actions) => {
+      loginMutation.mutate(values);
     },
   });
 
@@ -43,17 +74,17 @@ function LoginPage() {
       <Form onSubmit={formik.handleSubmit}>
         <ContentContainer>
           <Field>
-            <Label htmlFor="id">아이디</Label>
+            <Label htmlFor="email">이메일</Label>
             <Input
-              id="id"
-              name="id"
+              id="email"
+              name="email"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.id}
+              value={formik.values.email}
             />
-            {formik.touched.id && formik.errors.id ? (
-              <ErrorMsg>{formik.errors.id}</ErrorMsg>
+            {formik.touched.email && formik.errors.email ? (
+              <ErrorMsg>{formik.errors.email}</ErrorMsg>
             ) : null}
           </Field>
           <Field>
@@ -82,7 +113,12 @@ function LoginPage() {
         <SnsTitle>SNS 로그인</SnsTitle>
         <BtnContainer>
           <KakaoBtn>
-            <img src="/images/kakaoLogin.png" alt="kakao-login-btn" />
+            <Image
+              src="/images/kakaoLogin.png"
+              alt="kakao-login-btn"
+              width="183"
+              height="45"
+            />
           </KakaoBtn>
         </BtnContainer>
       </Form>

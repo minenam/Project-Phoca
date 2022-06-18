@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import * as Api from "../../common/utils/api";
+import { useMutation } from "react-query";
 import {
   Form,
   ContentContainer,
@@ -23,9 +23,32 @@ interface RegisterValues {
   confirmPassword?: string;
 }
 
+const registerHandler = async (data: RegisterValues) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/user/register`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  );
+  const result = await res.text();
+  return result;
+};
+
 function RegisterPage() {
   const router = useRouter();
-
+  const registerMutation = useMutation(registerHandler, {
+    onSuccess: (data, variables) => {
+      console.log("Register 성공 ", data);
+      router.push("/login");
+    },
+    onError: (err, variables) => {
+      console.log("Register 실패 ", err);
+    },
+  });
   const initialValue: RegisterValues = {
     email: "",
     userName: "",
@@ -50,14 +73,7 @@ function RegisterPage() {
         .required("비밀번호를 한 번 더 입력해 주세요."),
     }),
     onSubmit: async (values, actions) => {
-      const { email, userName, password } = values;
-      const newAccount: RegisterValues = { email, userName, password };
-
-      const res = await Api.post("user/register", newAccount);
-
-      if (res.status === 201) {
-        router.push("/login");
-      }
+      registerMutation.mutate(values);
     },
   });
 
