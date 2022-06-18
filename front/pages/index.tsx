@@ -41,7 +41,7 @@ const Home: NextPage = () => {
 
       <MainButtonWrapper>
         <Link href={MAIN_BUTTON[0].link} passHref>
-          <MainButtonHoverWrapper>
+          <MainButtonHoverWrapper $guide>
             <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
               학습가이드
             </MainButton>
