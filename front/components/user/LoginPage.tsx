@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -17,11 +18,14 @@ import {
   SnsTitle,
   KakaoBtn,
 } from "./AccountPage.style";
+import { userStore } from "../../zustand/store";
 
 interface LoginValues {
   email: string;
   password: string;
 }
+
+const initialValue: LoginValues = { email: "", password: "" };
 
 const loginHandler = async (data: LoginValues) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
@@ -41,13 +45,14 @@ function LoginPage() {
   const loginMutation = useMutation(loginHandler, {
     onSuccess: (data, variables) => {
       console.log("Login 성공 ", data);
+      sessionStorage.setItem("userToken", data.token);
+      userStore.setState({ user: data });
       router.push("/");
     },
     onError: (err, variables) => {
       console.log("Login 실패 ", err);
     },
   });
-  const initialValue: LoginValues = { email: "", password: "" };
 
   const formik = useFormik({
     initialValues: initialValue,
@@ -108,7 +113,12 @@ function LoginPage() {
         <SnsTitle>SNS 로그인</SnsTitle>
         <BtnContainer>
           <KakaoBtn>
-            <img src="/images/kakaoLogin.png" alt="kakao-login-btn" />
+            <Image
+              src="/images/kakaoLogin.png"
+              alt="kakao-login-btn"
+              width="183"
+              height="45"
+            />
           </KakaoBtn>
         </BtnContainer>
       </Form>
