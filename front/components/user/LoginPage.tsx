@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "react-query";
 import {
   Form,
   ContentContainer,
@@ -22,9 +23,30 @@ interface LoginValues {
   password: string;
 }
 
+const loginHandler = async (data: LoginValues) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const result = res.json();
+  return result;
+};
+
 function LoginPage() {
   const router = useRouter();
-
+  const loginMutation = useMutation(loginHandler, {
+    onSuccess: (data, variables) => {
+      console.log("Login 성공 ", data);
+      router.push("/");
+    },
+    onError: (err, variables) => {
+      console.log("Login 실패 ", err);
+    },
+  });
   const initialValue: LoginValues = { email: "", password: "" };
 
   const formik = useFormik({
@@ -38,25 +60,7 @@ function LoginPage() {
         .required("비밀번호를 입력해 주세요."),
     }),
     onSubmit: async (values, actions) => {
-      const { email, password } = values;
-      const dataToSubmit: LoginValues = { email, password };
-
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(dataToSubmit),
-          },
-        );
-        const result = await res.json();
-      } catch (err) {
-        console.log(err);
-      }
+      loginMutation.mutate(values);
     },
   });
 
