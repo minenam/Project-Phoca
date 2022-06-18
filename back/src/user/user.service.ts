@@ -20,7 +20,7 @@ export class UserService {
   }
 
   // 유저 생성 (회원가입)
-  async register(createUserDto: CreateUserDto): Promise<Users> {
+  async register(createUserDto: CreateUserDto): Promise<string> {
     const { userName, email, password } = createUserDto;
     const hashedPassword = await this.authService.hashedUser(password);
     const user = this.userRepository.create({
@@ -28,15 +28,16 @@ export class UserService {
       email,
       password: hashedPassword,
     });
+    if (!user) {
+      throw new NotFoundException(`can't find username ${userName}`);
+    }
     await this.userRepository.save(user);
 
-    return user;
+    return `Welcome to Phoca, ${user.username}`;
   }
 
   // 유저 검증 (로그인)
-  async login(
-    authcredntialDto: AuthCredentialDto,
-  ): Promise<{ accessToken: string }> {
+  async login(authcredntialDto: AuthCredentialDto): Promise<any> {
     const { email } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
     // 마지막 로그인일자 업데이트

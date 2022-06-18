@@ -12,6 +12,7 @@ import { WordModule } from "./word/word.module";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: [".env"],
     }),
     TypeOrmModule.forRootAsync(configAsync),
     // TypeOrmModule.forRoot(typeORMconfig),
