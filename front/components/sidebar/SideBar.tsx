@@ -1,6 +1,6 @@
 import React from "react";
 import { useStyletron } from "styletron-react";
-import { MAIN_BUTTON, HEADER_HEIGHT } from "../../common/utils/constant";
+import { MAIN_BUTTON } from "../../common/utils/uils";
 import { SideBarContainer, SideBarBtn } from "./SideBar.style";
 
 function SideBar() {
@@ -10,11 +10,10 @@ function SideBar() {
     <SideBarContainer>
       {MAIN_BUTTON.map((item, idx) => (
         <SideBarBtn
-          key={item.buttonName}
+          key={idx}
           className={css({
             backgroundColor: item.buttonColor,
-          })}
-          $headerHeight={HEADER_HEIGHT}>
+          })}>
           {item.buttonName}
         </SideBarBtn>
       ))}
