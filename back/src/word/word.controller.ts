@@ -78,18 +78,51 @@ export class WordController {
 
   // 단어장의 단어 전체 조회
   @Get("all/:wordbookId")
+  @ApiParam({
+    name: "wordbookId",
+    type: "uuid",
+    description: "단어장 아이디",
+    required: true,
+  })
   getAll(@Param("wordbookId") wordbookId: string) {
     return this.wordService.getAll(wordbookId);
   }
 
   // 단어 개별 조회
   @Get("/:wordId")
+  @ApiParam({
+    name: "wordId",
+    type: "uuid",
+    description: "단어 아이디",
+    required: true,
+  })
   get(@Param("wordId") wordId: string) {
     return this.wordService.get(wordId);
   }
 
   // 단어 수정
   @Patch("/:wordId")
+  @ApiParam({
+    name: "wordId",
+    type: "uuid",
+    description: "단어 아이디",
+    required: true,
+  })
+  @ApiBody({
+    schema: {
+      type: "object",
+      properties: {
+        wordEng: {
+          type: "string",
+          description: "영어 단어",
+        },
+        wordKor: {
+          type: "string",
+          description: "한글 단어",
+        },
+      },
+    },
+  })
   updateWord(
     @Param("wordId") wordId: string,
     @Body() updateWordDto: UpdateWordDto,
@@ -99,11 +132,23 @@ export class WordController {
 
   // 이미지 삭제
   @Delete("image/:key")
+  @ApiParam({
+    name: "key",
+    type: "string",
+    description: "AWS S3 이미지 키(삭제 시 필요)",
+    required: true,
+  })
   async deleteImage(@Param("key") key: string) {
     return await this.imageService.deleteImage(key);
   }
   // 단어 삭제
   @Delete("/:wordId")
+  @ApiParam({
+    name: "wordId",
+    type: "uuid",
+    description: "영어 아이디",
+    required: true,
+  })
   async deleteWord(@Param("wordId") wordId: string) {
     const key = await this.wordService.deleteWord(wordId);
     return await this.imageService.deleteImage(key);
