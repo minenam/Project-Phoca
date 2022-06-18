@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useIsLapTop } from "../../common/utils/useIsLapTop";
 import {
   BtnWrapper,
@@ -12,6 +12,7 @@ import { FaLock, FaShareSquare } from "react-icons/fa";
 import { MOCKUP_DATA } from "../../common/utils/constant";
 
 const VocabularyItem: FC = () => {
+  const [vocaList, setVocaList] = useState([]);
   const isLapTop = useIsLapTop();
 
   return (

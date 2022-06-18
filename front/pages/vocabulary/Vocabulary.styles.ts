@@ -116,6 +116,7 @@ export const GridWrapper = styled("div", (props: { $lapTop?: Boolean }) => ({
   borderRadius: "30px",
   marginTop: "20px",
   backgroundColor: "#fedda6",
+  scrollbarWidth: "thin",
   overflowY: "auto",
   "::-webkit-scrollbar": {
     backgroundColor: "#FFECD0",

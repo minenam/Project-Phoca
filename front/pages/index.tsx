@@ -4,6 +4,7 @@ import { MAIN_BUTTON } from "../common/utils/constant";
 import { useStyletron } from "styletron-react";
 import {
   MainButton,
+  MainButtonHoverWrapper,
   MainButtonWrapper,
   MainPhrase,
 } from "../components/intro/Main.style";
@@ -17,38 +18,46 @@ const Home: NextPage = () => {
     console.log(btnRef);
     btnRef.current.forEach((btn: any) => {
       btn.addEventListener("mousemove", (e: MouseEvent) => {
-        if (e.offsetX < 285) {
-          const size = parseInt(getComputedStyle(btn).width);
+        const bound = btn.getBoundingClientRect();
+        console.log(bound);
+        console.log("e", e);
+        const size = parseInt(getComputedStyle(btn).width);
 
-          const x = size * 0.3 * 0.7 + 0.7 * e.offsetX;
-          const y = size * 0.3 * 0.7 + 0.7 * e.offsetY;
+        const x = size * 0.3 * 0.7 + 0.7 * e.offsetX;
+        const y = size * 0.3 * 0.7 + 0.7 * e.offsetY;
 
-          btn.style.setProperty("--x", x.toString());
-          btn.style.setProperty("--y", y.toString());
-          btn.style.setProperty("--size", size.toString());
-        }
+        btn.style.setProperty("--x", x.toString());
+        btn.style.setProperty("--y", y.toString());
+        btn.style.setProperty("--size", size.toString());
       });
     });
-  }, []);
+  }, [btnRef]);
 
   return (
     <div>
-      <MainPhrase>메인 문구 들어갈 자리입니다.</MainPhrase>
+      <MainPhrase>
+        아이들 영여 교육, Phoca와 함께 주변 사물부터 시작해봐요.
+      </MainPhrase>
+
       <MainButtonWrapper>
-        <Link href={MAIN_BUTTON[0].link}>
-          <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
-            학습가이드
-          </MainButton>
+        <Link href={MAIN_BUTTON[0].link} passHref>
+          <MainButtonHoverWrapper>
+            <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
+              학습가이드
+            </MainButton>
+          </MainButtonHoverWrapper>
         </Link>
 
         {MAIN_BUTTON.map((item, idx) => {
           return (
-            <Link href={item.link} key={idx}>
-              <MainButton
-                ref={(ref) => (btnRef.current[idx + 1] = ref)}
-                className={css({ backgroundColor: item.buttonColor })}>
-                {item.buttonName}
-              </MainButton>
+            <Link href={item.link} key={idx} passHref>
+              <MainButtonHoverWrapper>
+                <MainButton
+                  ref={(ref) => (btnRef.current[idx + 1] = ref)}
+                  className={css({ backgroundColor: item.buttonColor })}>
+                  {item.buttonName}
+                </MainButton>
+              </MainButtonHoverWrapper>
             </Link>
           );
         })}
