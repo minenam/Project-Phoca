@@ -36,7 +36,7 @@ export class UserService {
     return `Welcome to Phoca, ${user.username}`;
   }
 
-  // 유저 검증 (로그인)
+  // 유저 로그인 (토큰 생성)
   async login(authcredntialDto: AuthCredentialDto): Promise<any> {
     const { email } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
