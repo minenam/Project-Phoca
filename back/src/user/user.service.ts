@@ -1,10 +1,16 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { Users } from "./user.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthService } from "../auth/auth.service";
 import { AuthCredentialDto } from "../auth/dto/auth.credential.dto";
+import { LoginUserInfo } from "../user/dto/login-user.dto";
+type LoginInfo = LoginUserInfo;
 
 @Injectable()
 export class UserService {
@@ -23,21 +29,24 @@ export class UserService {
   async register(createUserDto: CreateUserDto): Promise<string> {
     const { userName, email, password } = createUserDto;
     const hashedPassword = await this.authService.hashedUser(password);
+    // 이메일 중복확인
+    const foundEmail = await this.userRepository.findOneBy({ email });
+    if (foundEmail) {
+      throw new ConflictException(`Already exist ${email}`);
+    }
+    // 새로운 유저 저장
     const user = this.userRepository.create({
       username: userName,
       email,
       password: hashedPassword,
     });
-    if (!user) {
-      throw new NotFoundException(`can't find username ${userName}`);
-    }
     await this.userRepository.save(user);
 
     return `Welcome to Phoca, ${user.username}`;
   }
 
-  // 유저 검증 (로그인)
-  async login(authcredntialDto: AuthCredentialDto): Promise<any> {
+  // 유저 로그인 (토큰 생성)
+  async login(authcredntialDto: AuthCredentialDto): Promise<LoginInfo> {
     const { email } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
     // 마지막 로그인일자 업데이트

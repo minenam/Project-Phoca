@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Index("users_pkey", ["userid"], { unique: true })
 @Entity("users", { schema: "public" })
@@ -17,6 +17,7 @@ export class Users {
   @Column("character varying", { name: "username" })
   username: string;
 
+  @Unique(["email"])
   @ApiProperty({
     description: "이메일(아이디)",
   })
