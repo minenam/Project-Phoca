@@ -20,6 +20,8 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
 import { GetUser } from "./user.decorator";
 import { ParamUserDto } from "./dto/param-user.dto";
+import { LoginUserInfo } from "../user/dto/login-user.dto";
+type LoginInfo = LoginUserInfo;
 
 @Controller("user")
 @ApiTags("회원(유저) API")
@@ -45,9 +47,7 @@ export class UserController {
   // 유저 로그인 /user/login
   @Post("/login")
   @ApiOperation({ summary: "로그인 API (토큰발급)" })
-  login(
-    @Body() authCredentialDto: AuthCredentialDto,
-  ): Promise<{ accessToken: string }> {
+  login(@Body() authCredentialDto: AuthCredentialDto): Promise<LoginInfo> {
     this.logger.verbose(`Try to Login: User Email ${authCredentialDto.email}`);
     return this.userService.login(authCredentialDto);
   }
