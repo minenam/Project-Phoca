@@ -24,8 +24,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StyletronProvider value={styletron}>
       <QueryClientProvider client={queryClient}>
-        {urlWithoutNavbar.indexOf(router.pathname) === -1 && <NavBar />}
-        {urlWithoutSidebar.indexOf(router.pathname) === -1 && <SideBar />}
+        {!urlWithoutNavbar.includes(router.pathname) && <NavBar />}
+        {!urlWithoutSidebar.includes(router.pathname) && <SideBar />}
         <Component {...pageProps} />
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
