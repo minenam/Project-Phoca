@@ -1,5 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsEmail, MaxLength, MinLength } from "class-validator";
+import {
+  IsString,
+  IsEmail,
+  MaxLength,
+  MinLength,
+  Matches,
+} from "class-validator";
 
 export class AuthCredentialDto {
   @ApiProperty({
@@ -20,6 +26,8 @@ export class AuthCredentialDto {
   })
   @IsString()
   @MinLength(4)
-  @IsEmail()
+  @Matches(/^[a-zA-Z0-9!@#$%^&*]*$/, {
+    message: "password only accpets english, number and !@#$%^&*.",
+  })
   password: string;
 }

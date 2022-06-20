@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Index("users_pkey", ["userid"], { unique: true })
+@Index("users_pkey", ["userId"], { unique: true })
 @Entity("users", { schema: "public" })
 export class Users {
   @PrimaryGeneratedColumn("uuid")
