@@ -9,13 +9,13 @@ export class Users {
     description: "유저 ID",
   })
   @Column("uuid", { primary: true, name: "user_id" })
-  userid: string;
+  userId: string;
 
   @ApiProperty({
     description: "유저 이름",
   })
   @Column("character varying", { name: "username" })
-  username: string;
+  userName: string;
 
   @Unique(["email"])
   @ApiProperty({
