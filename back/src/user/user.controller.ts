@@ -37,7 +37,7 @@ export class UserController {
   }
 
   // 유저 회원가입 /user/register
-  @Post("/register")
+  @Post("register")
   @ApiOperation({ summary: "회원가입 API" })
   register(@Body() createUserDto: CreateUserDto): Promise<string> {
     this.logger.verbose(`Try to Register: Username ${createUserDto.userName}`);
@@ -45,7 +45,7 @@ export class UserController {
   }
 
   // 유저 로그인 /user/login
-  @Post("/login")
+  @Post("login")
   @ApiOperation({ summary: "로그인 API (토큰발급)" })
   login(@Body() authCredentialDto: AuthCredentialDto): Promise<LoginInfo> {
     this.logger.verbose(`Try to Login: User Email ${authCredentialDto.email}`);
@@ -54,7 +54,7 @@ export class UserController {
 
   // 특정 유저 정보 조회 user/:userId
   @UseGuards(JwtAuthGuard)
-  @Get("/:userId")
+  @Get(":userId")
   @ApiOperation({ summary: "특정 유저 정보 조회 API" })
   @ApiBearerAuth("accesskey")
   getUserById(
@@ -71,13 +71,13 @@ export class UserController {
 
   // 유저 계정 삭제 user/:userId
   @UseGuards(JwtAuthGuard)
-  @Delete("/:userId")
+  @Delete(":userId")
   @ApiOperation({ summary: "특정 유저 삭제 API" })
   @ApiBearerAuth("accesskey")
   withdraw(
     @Param() paramUserDto: ParamUserDto,
     @GetUser() user,
-  ): Promise<void> {
+  ): Promise<string> {
     const { userId } = paramUserDto;
     if (userId !== user.sub) {
       throw new BadRequestException(`Wrong Token`);
@@ -88,7 +88,7 @@ export class UserController {
 
   // 유저 정보 수정 user/:userId
   @UseGuards(JwtAuthGuard)
-  @Patch("/:userId")
+  @Patch(":userId")
   @ApiOperation({ summary: "특정 유저 정보 수정 API" })
   @ApiBearerAuth("accesskey")
   updateUser(
@@ -107,7 +107,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "[테스트용] 토큰 만료 API" })
   @ApiBearerAuth("accesskey")
-  @Post("/token")
+  @Post("token")
   async token(@GetUser() user) {
     try {
       this.logger.verbose(`Try to Confirm: User ${user.email}`);
