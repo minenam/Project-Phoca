@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as AWS from "aws-sdk";
 import * as dotenv from "dotenv";
@@ -18,14 +19,15 @@ AWS.config.update({
 export class ImageService {
   constructor(
     @InjectRepository(Word) private wordRepository: Repository<Word>,
+    private configService: ConfigService,
   ) {}
   s3 = new AWS.S3();
 
   async uploadImage(file: Express.Multer.File) {
-    const AWS_S3_BUCKET = process.env.AWS_BUCKET_NAME;
+    const AWS_S3_BUCKET = this.configService.get("AWS_BUCKET_NAME");
     const params = {
       Bucket: AWS_S3_BUCKET,
-      Key: String(file.originalname),
+      Key: String(Date.now() + "_" + file.originalname),
       Body: file.buffer,
       ACL: "public-read",
     };
@@ -42,14 +44,13 @@ export class ImageService {
   async deleteImage(key: string) {
     const response = await this.s3
       .deleteObject({
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: this.configService.get("AWS_BUCKET_NAME"),
         Key: key,
       })
       .promise();
-    console.log(response);
     return response;
   }
-  catch(e) {
-    console.log(e);
+  catch() {
+    return `삭제에 실패했습니다`;
   }
 }
