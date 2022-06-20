@@ -1,16 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsArray, IsNotEmpty, IsString, IsUUID } from "class-validator";
 
 export class CreateWordDto {
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
   @ApiProperty({ description: "영어 단어" })
-  wordEng: string;
+  wordEng: string[];
 
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
   @ApiProperty({ description: "한글 단어" })
-  wordKor: string;
+  wordKor: string[];
 
   @IsString()
   @IsNotEmpty()

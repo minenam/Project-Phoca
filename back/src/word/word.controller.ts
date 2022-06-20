@@ -44,10 +44,17 @@ export class WordController {
   }
 
   //이미지 넣기
-  @Post()
+  @Post("/upload/:wordbookId")
   @ApiOperation({
-    summary: "이미지 저장 API",
-    description: "이미지를 입력받아 단어 데이터를 생성해서 반환한다.",
+    summary: "단어 저장 API",
+    description: "이미지를 입력받아 단어 데이터를 생성해서 저장한다.",
+  })
+  @ApiParam({
+    name: "wordbookId",
+    type: "string",
+    format: "uuid",
+    description: "단어장 아이디",
+    required: true,
   })
   @ApiConsumes("multipart/form-data")
   @ApiBody({
@@ -63,13 +70,24 @@ export class WordController {
   })
   @UseInterceptors(FileInterceptor("file"))
   @UsePipes(new ValidationPipe({ transform: true }))
-  async uploadWord(@UploadedFile() file: Express.Multer.File) {
+  async uploadWord(
+    @Param("wordbookId") wordbookId: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     const { wordImage, wordKey } = await this.imageService.uploadImage(file);
-    const wordEng = "random";
-    const wordKor = await this.translateService.translate(wordEng, "ko", "en");
-    const eng = [wordEng, wordEng, wordEng];
-    const kor = [wordKor, wordKor, wordKor];
-    return { eng, kor, wordImage, wordKey };
+    const wordEng = ["random", "good", "hello"];
+    const wordKor = [];
+    for (const word of wordEng) {
+      const kor = await this.translateService.translate(word, "ko", "en");
+      wordKor.push(kor);
+    }
+    return await this.wordService.create({
+      wordbookId,
+      wordEng,
+      wordKor,
+      wordImage,
+      wordKey,
+    });
   }
 
   // 단어장의 단어 전체 조회
@@ -80,7 +98,8 @@ export class WordController {
   })
   @ApiParam({
     name: "wordbookId",
-    type: "uuid",
+    type: "string",
+    format: "uuid",
     description: "단어장 아이디",
     required: true,
   })
@@ -96,7 +115,8 @@ export class WordController {
   })
   @ApiParam({
     name: "wordId",
-    type: "uuid",
+    type: "string",
+    format: "uuid",
     description: "단어 아이디",
     required: true,
   })
@@ -112,7 +132,8 @@ export class WordController {
   })
   @ApiParam({
     name: "wordId",
-    type: "uuid",
+    type: "string",
+    format: "uuid",
     description: "단어 아이디",
     required: true,
   })
@@ -121,11 +142,11 @@ export class WordController {
       type: "object",
       properties: {
         wordEng: {
-          type: "string",
+          type: "array",
           description: "영어 단어",
         },
         wordKor: {
-          type: "string",
+          type: "array",
           description: "한글 단어",
         },
       },
@@ -161,7 +182,8 @@ export class WordController {
   })
   @ApiParam({
     name: "wordId",
-    type: "uuid",
+    type: "string",
+    format: "uuid",
     description: "영어 아이디",
     required: true,
   })
