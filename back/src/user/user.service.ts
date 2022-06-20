@@ -28,21 +28,21 @@ export class UserService {
   // 유저 생성 (회원가입)
   async register(createUserDto: CreateUserDto): Promise<string> {
     const { userName, email, password } = createUserDto;
-    const hashedPassword = await this.authService.hashedUser(password);
     // 이메일 중복확인
     const foundEmail = await this.userRepository.findOneBy({ email });
     if (foundEmail) {
       throw new ConflictException(`Already exist ${email}`);
     }
     // 새로운 유저 저장
+    const hashedPassword = await this.authService.hashedUser(password);
     const user = this.userRepository.create({
-      username: userName,
+      userName,
       email,
       password: hashedPassword,
     });
     await this.userRepository.save(user);
 
-    return `Welcome to Phoca, ${user.username}`;
+    return `Welcome to Phoca, ${user.userName}`;
   }
 
   // 유저 로그인 (토큰 생성)
@@ -60,7 +60,7 @@ export class UserService {
 
   // 유저 ID로 조회
   async getUserById(userId: string): Promise<Users> {
-    const getUser = await this.userRepository.findOneBy({ userid: userId });
+    const getUser = await this.userRepository.findOneBy({ userId });
 
     if (!getUser) {
       throw new NotFoundException(`can't find userid ${userId}`);
@@ -69,11 +69,12 @@ export class UserService {
   }
 
   // 유저 계정 삭제
-  async deleteUser(userId: string): Promise<void> {
-    const result = await this.userRepository.delete({ userid: userId });
+  async deleteUser(userId: string): Promise<string> {
+    const result = await this.userRepository.delete({ userId });
     if (result.affected === 0) {
       throw new NotFoundException(`Can't fond Board with userid ${userId}`);
     }
+    return `Good Bye, User ID : ${userId}`;
   }
 
   // 유저 정보 (이름, 이메일, 비밀번호) 수정
@@ -81,7 +82,7 @@ export class UserService {
     const { userName, email, password } = createUserDto;
     const user = await this.getUserById(userId);
 
-    user.username = userName;
+    user.userName = userName;
     user.email = email;
     user.password = password;
     await this.userRepository.save(user);
