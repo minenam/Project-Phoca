@@ -20,13 +20,12 @@ import {
 } from "./MyPage.style";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { userStore } from "../../zustand/store";
 
-const myPage: NextPage = () => {
-  const [userToken, setUserToken] = useState();
-  const [user, setUser] = useState();
+const MyPage: NextPage = () => {
+  const { user } = userStore();
 
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
-  // useCallback으로 Api가서 유저정보 가져오고 페이지 세팅하기 useEffect(() => {}, []);
 
   return (
     <MyPageWrapper $sideBarWidth={`${sideBarWidth}px`}>
@@ -40,12 +39,12 @@ const myPage: NextPage = () => {
           <Avatar>
             <AvatarImage src="/vercel.svg" alt="avatar" />
           </Avatar>
-          <UserName>OOO님</UserName>
+          <UserName>{user.userName}님</UserName>
         </UserInfoWrapper>
         <UserInfoWrapper>
           <UserDetailWrapper>
             <RoundedBox>이메일</RoundedBox>
-            <UserInfoDetail>test@test.com</UserInfoDetail>
+            <UserInfoDetail>{user.email}</UserInfoDetail>
           </UserDetailWrapper>
           <UserDetailWrapper>
             <RoundedBox>코멘트</RoundedBox>
@@ -86,4 +85,4 @@ const myPage: NextPage = () => {
   );
 };
 
-export default myPage;
+export default MyPage;
