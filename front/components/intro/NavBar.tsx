@@ -5,7 +5,6 @@ import {
   Anchor,
   Login,
   Logo,
-  LogoText,
   Nav,
   RightMenuWrapper,
   Welcome,
@@ -14,14 +13,14 @@ import {
 const NavBar: FC = () => {
   return (
     <Nav>
-      <Link href={"/"} passHref>
+      <Link href={"/"}>
         <Anchor>
           <Logo src="/logo.png" alt="logo" />
-          <LogoText>포카</LogoText>
+          포카
         </Anchor>
       </Link>
       <RightMenuWrapper>
-        <Link href={"/login"} passHref>
+        <Link href={"/login"}>
           <Login>Login</Login>
         </Link>
         <Welcome>Hi! I&apos;m Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>

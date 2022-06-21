@@ -53,4 +53,10 @@ export class Users {
   })
   @Column("boolean", { name: "activated", default: true })
   activated: boolean;
+
+  @OneToMany(() => Wordbook, (wordbook) => wordbook.user)
+  wordbook: Wordbook[];
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.user)
+  bookmark: Bookmark[];
 }

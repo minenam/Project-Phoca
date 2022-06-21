@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import "../styles/reset.css";
 import type { AppProps } from "next/app";
 import { Provider as StyletronProvider } from "styletron-react";
-import { styletron } from "../common/utils/styletron";
+import { styletron } from "../styletron";
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
