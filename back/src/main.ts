@@ -5,9 +5,6 @@ import { NestFactory } from "@nestjs/core";
 import { SwaggerModule } from "@nestjs/swagger";
 import { BaseAPIDocumentation } from "./api/base.document";
 import { AppModule } from "./app.module";
-// import dotenv from "dotenv";
-
-// dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,6 +21,7 @@ async function bootstrap() {
   );
 
   Logger.log(`Application running on port ${port}`);
+  app.enableCors();
   await app.listen(port);
 }
 bootstrap();

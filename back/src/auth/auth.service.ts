@@ -1,10 +1,12 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Users } from "../user/user.entity";
 import { Repository } from "typeorm";
 import { AuthCredentialDto } from "./dto/auth.credential.dto";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
+import { LoginUserInfo } from "../user/dto/login-user.dto";
+type LoginInfo = LoginUserInfo;
 
 @Injectable()
 export class AuthService {
@@ -23,16 +25,16 @@ export class AuthService {
   }
 
   // 로그인시 유저 비밀번호 확인 및 JWT 생성
-  async validateUser(
-    authcredntialDto: AuthCredentialDto,
-  ): Promise<{ accessToken: string }> {
+  async validateUser(authcredntialDto: AuthCredentialDto): Promise<LoginInfo> {
     const { email, password } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const payload = { email: user.email, sub: user.userid };
-      const accessToken = await this.jwtService.sign(payload);
-      return { accessToken };
+      const payload = { email: user.email, sub: user.userId };
+      const accessToken = this.jwtService.sign(payload);
+
+      const { password, ...userInfo } = user;
+      return { ...userInfo, token: accessToken };
     } else {
       throw new UnauthorizedException("Login Failed");
     }
