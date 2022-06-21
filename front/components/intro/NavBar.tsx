@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Anchor,
@@ -8,8 +8,11 @@ import {
   RightMenuWrapper,
   Welcome,
 } from "./NavBar.style";
+import { userStore } from "../../zustand/store";
 
 const NavBar: FC = () => {
+  const user = userStore();
+
   return (
     <Nav>
       <Link href={"/"} passHref>
@@ -20,7 +23,7 @@ const NavBar: FC = () => {
       </Link>
       <RightMenuWrapper>
         <Link href={"/login"} passHref>
-          <Login>Login</Login>
+          <Login>{user ? "Logout" : "Login"}</Login>
         </Link>
         <Welcome>Hi! I&apos;m Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
       </RightMenuWrapper>

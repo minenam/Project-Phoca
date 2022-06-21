@@ -10,13 +10,17 @@ import {
 } from "./Vocabulary.styles";
 import { Avatar, AvatarImage, UserName } from "../myPage/MyPage.style";
 
-const VocabularyMarkHeader: FC = () => {
-  const [mainText, setMainText] = useState("내 단어장");
-  const [checked, setChecked] = useState(false);
-  const checkHandler = () => {
-    setChecked(!checked);
-    checked ? setMainText("내 단어장") : setMainText("북마크한 단어장");
-  };
+interface Iprops {
+  checkHandler: () => void;
+  mainText: string;
+  inputChecked: boolean;
+}
+
+function VocabularyMarkHeader({
+  checkHandler,
+  mainText,
+  inputChecked,
+}: Iprops): JSX.Element {
   return (
     <>
       <SwitchWrapper>
@@ -24,10 +28,10 @@ const VocabularyMarkHeader: FC = () => {
         <SwitchButtonInput
           type={"checkbox"}
           id={"switch"}
-          checked={checked}
+          checked={inputChecked}
           onChange={checkHandler}
         />
-        <SwitchButton htmlFor={"switch"} $checked={checked}></SwitchButton>
+        <SwitchButton htmlFor={"switch"} $checked={inputChecked}></SwitchButton>
         <SwitchButtonText>북마크한 단어장 </SwitchButtonText>
       </SwitchWrapper>
       <HeadWrapper>
@@ -41,6 +45,6 @@ const VocabularyMarkHeader: FC = () => {
       </HeadWrapper>
     </>
   );
-};
+}
 
 export default VocabularyMarkHeader;

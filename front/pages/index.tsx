@@ -1,4 +1,4 @@
-import { Ref, useEffect, useRef } from "react";
+import { Ref, useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
 import { MAIN_BUTTON } from "../common/utils/constant";
 import { useStyletron } from "styletron-react";
@@ -9,20 +9,16 @@ import {
   MainPhrase,
 } from "../components/intro/Main.style";
 import Link from "next/link";
+import { userStore } from "../zustand/store";
 
 const Home: NextPage = () => {
   const [css] = useStyletron();
   const btnRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    console.log(btnRef);
     btnRef.current.forEach((btn: any) => {
       btn.addEventListener("mousemove", (e: MouseEvent) => {
-        const bound = btn.getBoundingClientRect();
-        console.log(bound);
-        console.log("e", e);
         const size = parseInt(getComputedStyle(btn).width);
-
         const x = size * 0.3 * 0.7 + 0.7 * e.offsetX;
         const y = size * 0.3 * 0.7 + 0.7 * e.offsetY;
 

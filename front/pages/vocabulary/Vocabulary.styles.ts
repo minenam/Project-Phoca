@@ -75,7 +75,7 @@ export const SwitchButton = styled("label", (props: { $checked: Boolean }) => ({
     zIndex: 20,
     top: "-10px",
     left: "-10px",
-    lineHeight: "2.5rem",
+    lineHeight: "2rem",
     textAlign: "center",
     fontSize: "24px",
     fontWeight: "bold",
@@ -94,7 +94,7 @@ export const GridItem = styled("div", {
   width: "250px",
   height: "250px",
   cursor: "pointer",
-  margin: "20px auto",
+  margin: "25px auto",
 });
 
 export const GridTextItem = styled("p", {
@@ -107,16 +107,16 @@ export const GridTextItem = styled("p", {
 });
 
 export const GridWrapper = styled("div", (props: { $lapTop?: Boolean }) => ({
-  display: "grid",
+  display: "flex",
   width: props.$lapTop ? "87%" : "97%",
   alignSelf: "flex-start",
-  gridTemplateColumns: "repeat(4, 300px)",
-  gridTemplateRows: "repeat(2, 1fr)",
-  gap: props.$lapTop ? "30px 15px" : "30px 10px",
+  justifyContent: "center",
   borderRadius: "30px",
   marginTop: "20px",
+  flexWrap: "wrap",
   backgroundColor: "#fedda6",
   scrollbarWidth: "thin",
+  padding: "25px",
   overflowY: "auto",
   "::-webkit-scrollbar": {
     backgroundColor: "#FFECD0",
