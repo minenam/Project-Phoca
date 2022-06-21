@@ -6,11 +6,16 @@ import {
   Param,
   Delete,
   Patch,
+  UseGuards,
 } from "@nestjs/common";
 import { WordbookService } from "./wordbook.service";
 import { UpdateWordbookDto } from "./dto/update-wordbook.dto";
 import { CreateWordbookDto } from "./dto/create-wordbook.dto";
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
+import { ApiBody, ApiOperation, ApiParam, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import { JwtAuthGuard } from "../auth/auth.guard";
+
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth("accesskey")
 @ApiTags("단어장 API")
 @Controller("wordbook")
 export class WordbookController {

@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -18,12 +19,17 @@ import {
   ApiOperation,
   ApiParam,
   ApiTags,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
+import { JwtAuthGuard } from "../auth/auth.guard";
 import { CreateWordDto } from "./dto/create-word.dto";
 import { UpdateWordDto } from "./dto/update-word.dto";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
 import { WordService } from "./word.service";
+
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth("accesskey")
 @ApiTags("단어 API")
 @Controller("word")
 export class WordController {
