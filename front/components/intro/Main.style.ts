@@ -36,7 +36,6 @@ export const MainButton = styled(
     width: "300px",
     margin: "0 auto",
     cursor: "pointer",
-    fontFamily: "Nanum Gothic Coding, monospace",
     fontWeight: "bold",
     fontSize: "1.5rem",
     height: props.$guide ? "100%" : "300px",
