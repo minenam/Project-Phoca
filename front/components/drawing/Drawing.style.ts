@@ -35,6 +35,6 @@ export const SubmitBtn = styled("button", {
   fontSize: "1.5rem",
   color: "#fff",
   width: "30%",
-  padding: "1rem 0",
+  padding: "0.5rem",
   cursor: "pointer",
 });
