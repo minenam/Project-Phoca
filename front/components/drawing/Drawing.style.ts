@@ -15,15 +15,19 @@ export const Question = styled("h1", {
   margin: "1rem 0",
 });
 
+export const CanvasContainer = styled("div", {
+  width: "100%",
+  height: "100%",
+  overflow: "hidden",
+});
+
 export const Canvas = styled("canvas", {
   backgroundColor: "#fff",
-  width: "90%",
-  height: "75%",
 });
 
 export const BtnContainer = styled("div", {
   width: "100%",
-  height: "100%",
+  height: "20%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
