@@ -1,22 +1,34 @@
+import { useState } from "react";
 import CanvasComp from "./Canvas";
 import {
   DrawingContainer,
   Question,
   CanvasContainer,
-  BtnContainer,
+  SubmitBtnContainer,
   SubmitBtn,
+  ResetBtnContainer,
+  ResetBtn,
 } from "./Drawing.style";
 
 function Drawing() {
+  const [resetBtnClick, setResetBtnClick] = useState(false);
   return (
     <DrawingContainer>
       <Question>Apple</Question>
+      <ResetBtnContainer>
+        <ResetBtn onClick={() => setResetBtnClick(true)}>모두 지우기</ResetBtn>
+      </ResetBtnContainer>
+
       <CanvasContainer>
-        <CanvasComp />
+        <CanvasComp
+          resetBtnClick={resetBtnClick}
+          setResetBtnClick={setResetBtnClick}
+        />
       </CanvasContainer>
-      <BtnContainer>
+
+      <SubmitBtnContainer>
         <SubmitBtn>제출하기</SubmitBtn>
-      </BtnContainer>
+      </SubmitBtnContainer>
     </DrawingContainer>
   );
 }

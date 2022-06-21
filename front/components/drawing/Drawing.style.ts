@@ -4,8 +4,8 @@ export const DrawingContainer = styled("div", {
   width: "100%",
   height: "90%",
   display: "flex",
-  alignItems: "center",
   flexDirection: "column",
+  alignItems: "center",
   textAlign: "center",
   boxSizing: "border-box",
 });
@@ -25,7 +25,7 @@ export const Canvas = styled("canvas", {
   backgroundColor: "#fff",
 });
 
-export const BtnContainer = styled("div", {
+export const SubmitBtnContainer = styled("div", {
   width: "100%",
   height: "20%",
   display: "flex",
@@ -41,4 +41,18 @@ export const SubmitBtn = styled("button", {
   width: "30%",
   padding: "0.5rem",
   cursor: "pointer",
+});
+
+export const ResetBtnContainer = styled("div", {
+  width: "90%",
+});
+
+export const ResetBtn = styled("button", {
+  border: 0,
+  backgroundColor: "#FFAA2A",
+  color: "#fff",
+  borderRadius: "20px",
+  padding: "0.5rem 2rem",
+  display: "flex",
+  marginLeft: "auto",
 });
