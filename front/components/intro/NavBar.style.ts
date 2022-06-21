@@ -32,7 +32,6 @@ export const Anchor = styled("a", {
   justifyContent: "flex-end",
   fontWeight: "bold",
   width: "53%",
-  fontFamily: "Nanum Gothic Coding, monospace",
   fontSize: "2em",
 });
 
