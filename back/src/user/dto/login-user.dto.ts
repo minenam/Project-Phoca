@@ -1,6 +1,6 @@
 export class LoginUserInfo {
-  userid: string;
-  username: string;
+  userId: string;
+  userName: string;
   email: string;
   provider: string;
   joinedAt: Date;
