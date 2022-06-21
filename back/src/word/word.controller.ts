@@ -39,16 +39,6 @@ export class WordController {
     private readonly translateService: TranslateService,
   ) {}
 
-  //단어장에 단어 저장
-  @Post("/upload")
-  @ApiOperation({
-    summary: "단어 생성 API",
-    description: "단어 정보를 입력받아 단어를 생성해서 DB에 저장한다.",
-  })
-  async chooseWord(@Body() createWordDto: CreateWordDto) {
-    return await this.wordService.create(createWordDto);
-  }
-
   //이미지 넣기
   @Post("/upload/:wordbookId")
   @ApiOperation({
@@ -80,7 +70,7 @@ export class WordController {
     @Param("wordbookId") wordbookId: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const { wordImage, wordKey } = await this.imageService.uploadImage(file);
+    const { wordKey } = await this.imageService.uploadImage(file);
     const wordEng = ["random", "good", "hello"];
     const wordKor = [];
     for (const word of wordEng) {
@@ -91,7 +81,6 @@ export class WordController {
       wordbookId,
       wordEng,
       wordKor,
-      wordImage,
       wordKey,
     });
   }
@@ -163,6 +152,16 @@ export class WordController {
     @Body() updateWordDto: UpdateWordDto,
   ) {
     return this.wordService.update(wordId, updateWordDto);
+  }
+
+  //단어장에 단어 저장
+  @Patch("/upload")
+  @ApiOperation({
+    summary: "단어 생성 API",
+    description: "단어 정보를 입력받아 단어를 생성해서 DB에 저장한다.",
+  })
+  async chooseWord(@Body() createWordDto: CreateWordDto) {
+    return await this.wordService.create(createWordDto);
   }
 
   // 이미지 삭제

@@ -14,11 +14,6 @@ export class CreateWordDto {
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: "이미지 링크" })
-  wordImage: string;
-
-  @IsString()
-  @IsNotEmpty()
   @ApiProperty({ description: "이미지 키(이미지 삭제 시 필요)" })
   wordKey: string;
 

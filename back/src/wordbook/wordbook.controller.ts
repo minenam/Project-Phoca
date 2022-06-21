@@ -11,7 +11,13 @@ import {
 import { WordbookService } from "./wordbook.service";
 import { UpdateWordbookDto } from "./dto/update-wordbook.dto";
 import { CreateWordbookDto } from "./dto/create-wordbook.dto";
-import { ApiBody, ApiOperation, ApiParam, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+  ApiBearerAuth,
+} from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
 
 @UseGuards(JwtAuthGuard)

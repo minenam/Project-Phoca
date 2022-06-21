@@ -14,7 +14,6 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_KEY,
   region: process.env.AWS_BUCKET_REGION,
 });
-
 @Injectable()
 export class ImageService {
   constructor(
@@ -34,8 +33,9 @@ export class ImageService {
     try {
       const response = await this.s3.upload(params).promise();
       console.log(response);
-      const wordImage = response.Location;
       const wordKey = response.Key;
+      const wordImage = this.configService.get("IMAGE") + `/${wordKey}`;
+      console.log(wordImage, wordKey);
       return { wordImage, wordKey };
     } catch (e) {
       console.log(e);
