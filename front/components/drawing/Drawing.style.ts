@@ -7,6 +7,7 @@ export const DrawingContainer = styled("div", {
   alignItems: "center",
   flexDirection: "column",
   textAlign: "center",
+  boxSizing: "border-box",
 });
 
 export const Question = styled("h1", {
@@ -20,6 +21,14 @@ export const Canvas = styled("canvas", {
   height: "75%",
 });
 
+export const BtnContainer = styled("div", {
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
 export const SubmitBtn = styled("button", {
   border: 0,
   backgroundColor: "#fe8c55",
@@ -27,6 +36,5 @@ export const SubmitBtn = styled("button", {
   color: "#fff",
   width: "30%",
   padding: "1rem 0",
-  marginTop: "1rem",
   cursor: "pointer",
 });
