@@ -40,6 +40,24 @@ export class Users {
   password: string;
 
   @ApiProperty({
+    description: "코멘트(자기소개)",
+  })
+  @Column("character varying", {
+    name: "comment",
+    default: "자기소개를 입력해주세요.",
+  })
+  comment: string;
+
+  @ApiProperty({
+    description: "유저 이미지",
+  })
+  @Column("character varying", {
+    name: "user_image",
+    default: "https://cdn-icons-png.flaticon.com/512/1464/1464799.png",
+  })
+  userImage: string;
+
+  @ApiProperty({
     description: "가입경로",
   })
   @Column("character varying", { name: "provider", default: "local" })
