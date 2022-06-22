@@ -8,18 +8,20 @@ import {
   SwitchButtonInput,
   SwitchButtonText,
 } from "./Vocabulary.styles";
-import { Avatar, AvatarImage, UserName } from "../myPage/MyPage.style";
+import { Avatar, AvatarImage, UserName } from "../../pages/myPage/MyPage.style";
 
 interface Iprops {
   checkHandler: () => void;
   mainText: string;
   inputChecked: boolean;
+  userName: string | undefined;
 }
 
 function VocabularyMarkHeader({
   checkHandler,
   mainText,
   inputChecked,
+  userName,
 }: Iprops): JSX.Element {
   return (
     <>
@@ -39,7 +41,7 @@ function VocabularyMarkHeader({
           <Avatar>
             <AvatarImage src="/logo.png" alt="Avatar" />
           </Avatar>
-          <UserName>000님</UserName>
+          <UserName>{userName}님</UserName>
         </HeadUserWrapper>
         <MainText>{mainText}</MainText>
       </HeadWrapper>
