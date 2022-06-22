@@ -11,7 +11,6 @@ import { AuthService } from "../auth/auth.service";
 import { AuthCredentialDto } from "../auth/dto/auth.credential.dto";
 import { LoginUserInfo } from "../user/dto/login-user.dto";
 import { ImageMiddleware } from "../middleware/image.middleware";
-import { UpdateUserDto } from "./dto/update-user.dto";
 type LoginInfo = LoginUserInfo;
 
 @Injectable()
@@ -73,11 +72,15 @@ export class UserService {
 
   // 유저 계정 삭제
   async deleteUser(userId: string): Promise<string> {
+    const found = await this.getUserById(userId);
+    if (found) {
+      await this.imageMiddleware.deleteImage(found.userImage);
+    }
     const result = await this.userRepository.delete({ userId });
     if (result.affected === 0) {
-      throw new NotFoundException(`Can't find Board with userid ${userId}`);
+      throw new NotFoundException(`Can't find user`);
     }
-    return `Good Bye, User ID : ${userId}`;
+    return `Good Bye, User :${found.userName}`;
   }
 
   // 유저 정보 (이름, 코멘트, 이미지) 수정
