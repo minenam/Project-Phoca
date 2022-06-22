@@ -4,6 +4,11 @@ export const Logo = styled("img", {
   width: "75px",
   display: "inline-block",
   marginRight: "30px",
+  cursor: "pointer",
+});
+
+export const LogoText = styled("p", {
+  cursor: "pointer",
 });
 
 export const RightMenuWrapper = styled("div", {
@@ -18,17 +23,15 @@ export const Nav = styled("nav", {
   display: "flex",
   flexDirection: "row",
   width: "100%",
-  height: "100px",
+  height: "130px",
 });
 
 export const Anchor = styled("a", {
   display: "flex",
   alignItems: "center",
-  cursor: "pointer",
   justifyContent: "flex-end",
   fontWeight: "bold",
-  width: "50%",
-  fontFamily: "Nanum Gothic Coding, monospace",
+  width: "53%",
   fontSize: "2em",
 });
 
@@ -50,4 +53,5 @@ export const Welcome = styled("p", {
   fontFamily: "Quicksand, sans-serif",
   borderBottom: "2.5px solid white",
   paddingBottom: "2px",
+  marginBottom: "15px",
 });
