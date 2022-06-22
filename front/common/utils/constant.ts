@@ -451,4 +451,7 @@ export const MOCKUP_DATA: MockUP[] = [
 ];
 
 export const HEADER_HEIGHT: string = "130px";
-export const SIDEBAR_WIDTH: string = "300px";
+export const SIDEBAR_WIDTH: string = "400px";
+
+export const WORD_NOTE_WIDTH: string = "650px";
+export const WORD_NOTE_HEIGHT: string = "70vh";
