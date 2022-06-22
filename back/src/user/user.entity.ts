@@ -1,5 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from "typeorm";
+import { Bookmark } from "../bookmark/bookmark.entity";
+import { Wordbook } from "../wordbook/wordbook.entity";
 
 @Index("users_pkey", ["userId"], { unique: true })
 @Entity("users", { schema: "public" })

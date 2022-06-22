@@ -37,6 +37,11 @@ const loginHandler = async (data: LoginValues) => {
     },
     body: JSON.stringify(data),
   });
+
+  if (!res.ok) {
+    throw new Error(res.statusText);
+  }
+
   const result = res.json();
   return result;
 };

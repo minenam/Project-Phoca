@@ -1,7 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { ApiBody, ApiOperation, ApiParam, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import { JwtAuthGuard } from "../auth/auth.guard";
 import { BookmarkService } from "./bookmark.service";
 import { CreateBookmarkDto } from "./dto/create-bookmark.dto";
+
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth("accesskey")
 @ApiTags("북마크 API")
 @Controller("bookmark")
 export class BookmarkController {

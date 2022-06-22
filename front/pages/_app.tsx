@@ -1,11 +1,15 @@
 import "../styles/globals.css";
 import "../styles/reset.css";
+
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import { Provider as StyletronProvider } from "styletron-react";
 import { styletron } from "../common/utils/styletron";
-import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { useEffect } from "react";
+import { userStore } from "../zustand/store";
+
 import NavBar from "../components/intro/NavBar";
 import SideBar from "../components/sidebar/SideBar";
 
@@ -21,11 +25,39 @@ function MyApp({ Component, pageProps }: AppProps) {
   const urlWithoutSidebar: string[] = ["/", "/login", "/register"];
   const queryClient = new QueryClient();
 
+  // 유저 정보 userStore에 저장
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/current`,
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+            },
+          },
+        );
+
+        if (!res.ok) {
+          throw new Error("토큰 만료");
+        }
+
+        const user = await res.json();
+        userStore.setState({ user });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (sessionStorage.getItem("userToken")) {
+      getUser();
+    }
+  }, []);
+
   return (
     <StyletronProvider value={styletron}>
       <QueryClientProvider client={queryClient}>
-        {urlWithoutNavbar.indexOf(router.pathname) === -1 && <NavBar />}
-        {urlWithoutSidebar.indexOf(router.pathname) === -1 && <SideBar />}
+        {!urlWithoutNavbar.includes(router.pathname) && <NavBar />}
+        {!urlWithoutSidebar.includes(router.pathname) && <SideBar />}
         <Component {...pageProps} />
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
