@@ -52,6 +52,18 @@ export class UserController {
     return this.userService.login(authCredentialDto);
   }
 
+  // 현재 로그인 유저 정보 조회 user/current
+  @UseGuards(JwtAuthGuard)
+  @Get("current")
+  @ApiOperation({ summary: "현재 로그인 유저 정보 조회 API" })
+  @ApiBearerAuth("accesskey")
+  getCurrentUser(@GetUser() user): Promise<Users> {
+    const userId = user.sub;
+    if (userId) {
+      return this.userService.getUserById(userId);
+    }
+  }
+
   // 특정 유저 정보 조회 user/:userId
   @UseGuards(JwtAuthGuard)
   @Get(":userId")

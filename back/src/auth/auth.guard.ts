@@ -38,15 +38,13 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
       const verify = this.jwtService.verify(token, { secret: secretKey });
       return verify;
     } catch (e) {
-      Logger.debug(`에러 메시지: ${e.mssage}`);
-      switch (e.message) {
+      Logger.debug(`에러 메시지: ${e}`);
+      switch (e.name) {
         // 토큰 오류 메시지
-        case "INVALID_TOKEN":
-        case "TOKEN_IS_ARRAY":
-        case "NO_USER":
+        case "JsonWebTokenError":
           throw new HttpException("유효하지 않은 토큰", 401);
 
-        case "EXPIRED_TOKEN":
+        case "TokenExpiredError":
           throw new HttpException("토큰 만료", 410);
 
         default:
