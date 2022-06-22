@@ -55,4 +55,5 @@ export const ResetBtn = styled("button", {
   padding: "0.5rem 2rem",
   display: "flex",
   marginLeft: "auto",
+  cursor: "pointer",
 });
