@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -154,16 +155,6 @@ export class WordController {
     return this.wordService.update(wordId, updateWordDto);
   }
 
-  //단어장에 단어 저장
-  @Patch("/upload")
-  @ApiOperation({
-    summary: "단어 생성 API",
-    description: "단어 정보를 입력받아 단어를 생성해서 DB에 저장한다.",
-  })
-  async chooseWord(@Body() createWordDto: CreateWordDto) {
-    return await this.wordService.create(createWordDto);
-  }
-
   // 이미지 삭제
   @Delete("image/:key")
   @ApiOperation({
@@ -194,6 +185,12 @@ export class WordController {
   })
   async deleteWord(@Param("wordId") wordId: string) {
     const key = await this.wordService.deleteWord(wordId);
-    return await this.imageService.deleteImage(key);
+    try {
+      await this.imageService.deleteImage(key);
+    } catch (e) {
+      console.log(e);
+      return new BadRequestException("이미지 삭제 실패");
+    }
+    return "단어가 삭제되었습니다.";
   }
 }
