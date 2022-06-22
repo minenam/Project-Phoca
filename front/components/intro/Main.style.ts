@@ -47,9 +47,9 @@ export const MainButton = styled(
 
 export const MainButtonWrapper = styled("div", {
   display: "grid",
-  gridTemplateColumns: "repeat(3, 300px)",
-  gridTemplateRows: "repeat(2, 1fr)",
+  gridTemplateColumns: "repeat(2, 300px)",
   justifyContent: "center",
+  gridTemplateRows: "repeat(2, 1fr)",
   gap: "50px 50px",
 });
 

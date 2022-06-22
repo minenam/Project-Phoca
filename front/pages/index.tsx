@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { NextPage } from "next";
-import { MAIN_BUTTON } from "../common/utils/constant";
+import { MAIN_BUTTON } from "../common/utils/uils";
 import { useStyletron } from "styletron-react";
 import {
   MainButton,
@@ -34,7 +34,6 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <MainPhrase>메인 문구 들어갈 자리입니다.</MainPhrase>
       <MainButtonWrapper>
         <Link href={"/guide"} passHref>
           <MainButton

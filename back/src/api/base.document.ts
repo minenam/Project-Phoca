@@ -8,6 +8,17 @@ export class BaseAPIDocumentation {
       .setTitle("Phoca API")
       .setDescription("The Phoca API description")
       .setVersion("1.0")
+      .addBearerAuth(
+        {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          name: "JWT",
+          description: "JWT Token",
+          in: "header",
+        },
+        "accesskey",
+      )
       .build();
   }
 }
