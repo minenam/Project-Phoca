@@ -28,6 +28,7 @@ interface LoginValues {
 const initialValue: LoginValues = { email: "", password: "" };
 
 const loginHandler = async (data: LoginValues) => {
+  console.log("process", process.env.NEXT_PUBLIC_SERVER_URL);
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
     method: "POST",
     headers: {
@@ -36,6 +37,11 @@ const loginHandler = async (data: LoginValues) => {
     },
     body: JSON.stringify(data),
   });
+
+  if (!res.ok) {
+    throw new Error(res.statusText);
+  }
+
   const result = res.json();
   return result;
 };
