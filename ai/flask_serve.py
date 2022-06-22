@@ -19,7 +19,7 @@ PORT = os.getenv('PORT')
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_REGION_NAME = os.getenv('AWS_REGION_NAME')
-AWS_BUCKET_NAME = os.getenv('AWS_BUCKET')
+AWS_BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
 s3 = boto3.resource('s3', 
                     aws_access_key_id=AWS_ACCESS_KEY_ID,
                     aws_secret_access_key= AWS_SECRET_ACCESS_KEY, 
@@ -31,7 +31,7 @@ def s3_load_image(img_url):
 
 # Object Detection file path
 OD_ROOT_PATH = "./object-detection"
-OD_MODEL_PATH = os.path.join(OD_ROOT_PATH, "yolov3-tf2/serving/yolov3/1")
+OD_MODEL_PATH = os.path.join(OD_ROOT_PATH, "saved_model")
 OD_CLASS_NAME_PATH = os.path.join(OD_ROOT_PATH, "yolov3-tf2/data/coco.names")
 
 # Object Detection Model API
