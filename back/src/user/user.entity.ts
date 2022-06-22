@@ -1,15 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  Column,
-  Entity,
-  Index,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { Bookmark } from "../bookmark/bookmark.entity";
-import { Wordbook } from "../wordbook/wordbook.entity";
+import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Index("users_pkey", ["userid"], { unique: true })
+@Index("users_pkey", ["userId"], { unique: true })
 @Entity("users", { schema: "public" })
 export class Users {
   @PrimaryGeneratedColumn("uuid")
@@ -17,14 +9,15 @@ export class Users {
     description: "유저 ID",
   })
   @Column("uuid", { primary: true, name: "user_id" })
-  userid: string;
+  userId: string;
 
   @ApiProperty({
     description: "유저 이름",
   })
   @Column("character varying", { name: "username" })
-  username: string;
+  userName: string;
 
+  @Unique(["email"])
   @ApiProperty({
     description: "이메일(아이디)",
   })

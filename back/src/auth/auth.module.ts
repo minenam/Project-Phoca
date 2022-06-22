@@ -14,9 +14,9 @@ import { JWTStrategy } from "./jwt.strategy";
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
-          secret: configService.get<string>("JWT_SECRET"),
+          secret: configService.get<string>("JWT_SECRET_KEY"),
           signOptions: {
-            expiresIn: configService.get<string>("JWT_expiresIn"),
+            expiresIn: configService.get<string>("JWT_EXPIRESIN"),
           },
         };
       },
@@ -25,6 +25,6 @@ import { JWTStrategy } from "./jwt.strategy";
     TypeOrmModule.forFeature([Users]),
   ],
   providers: [AuthService, JWTStrategy],
-  exports: [AuthModule, AuthService],
+  exports: [AuthService, PassportModule, JWTStrategy],
 })
 export class AuthModule {}

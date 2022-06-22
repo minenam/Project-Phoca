@@ -36,7 +36,7 @@ const Upload = () => {
     router.push(
       {
         pathname: "/word/results",
-        query: { word: "apple", imageUrl: preview },
+        query: { imageUrl: preview },
       },
       "/word/results",
     );

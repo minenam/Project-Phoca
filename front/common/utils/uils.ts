@@ -22,5 +22,8 @@ export const MAIN_BUTTON: button_arr[] = [
   },
 ];
 
-export const headerHeight: string = "100px";
-export const sidebarWidth: string = "300px";
+export const HEADER_HEIGHT: string = "130px";
+export const SIDEBAR_WIDTH: string = "400px";
+
+export const WORD_NOTE_WIDTH: string = "650px";
+export const WORD_NOTE_HEIGHT: string = "70vh";

@@ -19,20 +19,24 @@ import Modal from "../../../common/modal/Modal";
 import EditForm from "./EditForm/EditForm";
 import SaveForm from "./SaveForm/SaveForm";
 
-interface Word {
-  word?: string;
+interface ImageUrl {
   imageUrl?: string;
 }
 
 function Results() {
   const router = useRouter();
-  const { word, imageUrl }: Word = router.query;
+  const { imageUrl }: ImageUrl = router.query;
+
+  const [engWord, setEngWord] = useState("apple");
+  const [korWord, setKorWord] = useState("사과");
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
 
   const ttsBtnClickHandler = () => {
-    const temp: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(word);
+    const temp: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(
+      engWord,
+    );
     const voice: SpeechSynthesisVoice[] = window.speechSynthesis.getVoices();
     temp.voice = voice[2];
     window.speechSynthesis.speak(temp);
@@ -58,7 +62,7 @@ function Results() {
           <ThumbImage src={imageUrl} alt="submit-image" />
         </ImageContainer>
         <WordContainer>
-          <EngWord>{word}</EngWord>
+          <EngWord>{engWord}</EngWord>
           <IconContainer>
             <TtsBtn onClick={ttsBtnClickHandler}>
               <FaVolumeUp />
@@ -67,7 +71,7 @@ function Results() {
               <FaEdit />
             </EditBtn>
           </IconContainer>
-          <KorWord>사과</KorWord>
+          <KorWord>{korWord}</KorWord>
         </WordContainer>
         <BtnContainer>
           <Link href="/word/upload">
@@ -82,7 +86,12 @@ function Results() {
           width="800px"
           onClose={modalCloseHandler}
           large={true}>
-          <EditForm imageUrl={imageUrl} onClose={modalCloseHandler} />
+          <EditForm
+            imageUrl={imageUrl}
+            onClose={modalCloseHandler}
+            setEngWord={setEngWord}
+            setKorWord={setKorWord}
+          />
         </Modal>
       )}
       {saveModalOpen && (
