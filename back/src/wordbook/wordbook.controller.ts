@@ -26,6 +26,23 @@ import { JwtAuthGuard } from "../auth/auth.guard";
 @Controller("wordbook")
 export class WordbookController {
   constructor(private wordbookService: WordbookService) {}
+  //본인 단어장 제외하고 조회
+  @Get("/:userId")
+  @ApiOperation({
+    summary: "본인 제외 전체 단어장 조회 API",
+    description:
+      "본인 단어장 제외하고 단어장 공개 여부를 public으로 설정한 모든 단어장을 조회.",
+  })
+  @ApiParam({
+    name: "userId",
+    type: "string",
+    description: "유저 아이디",
+    required: true,
+  })
+  getExcept(@Param("userId") userId: string) {
+    return this.wordbookService.getExcept(userId);
+  }
+
   //전체 단어장 조회
   @Get()
   @ApiOperation({
