@@ -19,11 +19,10 @@ import {
   RoundedBox,
 } from "./MyPage.style";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { userStore } from "../../zustand/store";
 
 const MyPage: NextPage = () => {
-  const { user } = userStore();
+  const user = userStore((state) => state.user);
 
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
 
@@ -39,12 +38,12 @@ const MyPage: NextPage = () => {
           <Avatar>
             <AvatarImage src="/vercel.svg" alt="avatar" />
           </Avatar>
-          <UserName>{user.userName}님</UserName>
+          <UserName>{user?.userName}님</UserName>
         </UserInfoWrapper>
         <UserInfoWrapper>
           <UserDetailWrapper>
             <RoundedBox>이메일</RoundedBox>
-            <UserInfoDetail>{user.email}</UserInfoDetail>
+            <UserInfoDetail>{user?.email}</UserInfoDetail>
           </UserDetailWrapper>
           <UserDetailWrapper>
             <RoundedBox>코멘트</RoundedBox>

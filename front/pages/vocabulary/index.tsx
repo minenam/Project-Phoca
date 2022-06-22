@@ -28,8 +28,8 @@ const Vocabulary: NextPage = () => {
 
   return (
     <VocabularyWrapper
-      $sideBarWidth={`${sideBarWidth}px`}
-      $headerHeight={`${headerHeight}px`}>
+      $sideBarWidth={`${SIDEBAR_WIDTH}`}
+      $headerHeight={`${HEADER_HEIGHT}`}>
       <VocabularyMarkHeader
         checkHandler={checkHandler}
         mainText={mainText}
