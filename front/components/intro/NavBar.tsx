@@ -12,6 +12,9 @@ import { userStore } from "../../zustand/store";
 
 const NavBar: FC = () => {
   const user = userStore();
+  const loginHandler = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e.target);
+  };
 
   return (
     <Nav>
@@ -22,7 +25,7 @@ const NavBar: FC = () => {
         </Anchor>
       </Link>
       <RightMenuWrapper>
-        <Link href={"/login"} passHref>
+        <Link href={"/login"} onClick={loginHandler} passHref>
           <Login>{user ? "Logout" : "Login"}</Login>
         </Link>
         <Welcome>Hi! I&apos;m Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
