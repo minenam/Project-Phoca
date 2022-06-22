@@ -1,4 +1,3 @@
-import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
@@ -8,11 +7,13 @@ import { WordService } from "./word.service";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-
+import { HttpModule } from "@nestjs/axios";
+import { Module } from "@nestjs/common";
 @Module({
   controllers: [WordController],
   providers: [WordService, ImageService, TranslateService],
   imports: [
+    HttpModule,
     TypeOrmModule.forFeature([Word]),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({

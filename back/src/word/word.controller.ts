@@ -60,8 +60,9 @@ export class WordController {
   @UseInterceptors(FileInterceptor("file"))
   @UsePipes(new ValidationPipe({ transform: true }))
   async uploadWord(@UploadedFile() file: Express.Multer.File) {
-    const { wordKey } = await this.imageService.uploadImage(file);
-    const wordEng = ["random", "good", "hello"];
+    const { wordEng, wordImage, wordKey } = await this.imageService.uploadImage(
+      file,
+    );
     const wordKor = [];
     for (const word of wordEng) {
       const kor = await this.translateService.translate(word, "ko", "en");
