@@ -15,7 +15,6 @@ export class WordbookService {
   }
 
   async getById(userId: string): Promise<Wordbook[]> {
-    console.log(userId);
     return await this.wordbookRepository.find({ where: { userId } });
   }
 
@@ -49,8 +48,13 @@ export class WordbookService {
     return this.wordbookRepository.save(item);
   }
 
-  async delete(wordbookId: string): Promise<DeleteResult> {
-    await this.wordbookRepository.findOne({ where: { wordbookId } });
-    return await this.wordbookRepository.delete(wordbookId);
+  async delete(wordbookId: string): Promise<Wordbook> {
+    const wordbook = await this.wordbookRepository.findOne({
+      where: { wordbookId },
+    });
+    if (!wordbook) {
+      throw new NotFoundException("해당 단어장이 존재하지 않습니다.");
+    }
+    return await this.wordbookRepository.remove(wordbook);
   }
 }
