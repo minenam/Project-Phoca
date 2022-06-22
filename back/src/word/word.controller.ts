@@ -23,7 +23,6 @@ import {
   ApiBearerAuth,
 } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
-import { CreateWordDto } from "./dto/create-word.dto";
 import { UpdateWordDto } from "./dto/update-word.dto";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
@@ -41,17 +40,10 @@ export class WordController {
   ) {}
 
   //이미지 넣기
-  @Post("/upload/:wordbookId")
+  @Post("/upload")
   @ApiOperation({
     summary: "단어 저장 API",
     description: "이미지를 입력받아 단어 데이터를 생성해서 저장한다.",
-  })
-  @ApiParam({
-    name: "wordbookId",
-    type: "string",
-    format: "uuid",
-    description: "단어장 아이디",
-    required: true,
   })
   @ApiConsumes("multipart/form-data")
   @ApiBody({
@@ -67,10 +59,7 @@ export class WordController {
   })
   @UseInterceptors(FileInterceptor("file"))
   @UsePipes(new ValidationPipe({ transform: true }))
-  async uploadWord(
-    @Param("wordbookId") wordbookId: string,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
+  async uploadWord(@UploadedFile() file: Express.Multer.File) {
     const { wordKey } = await this.imageService.uploadImage(file);
     const wordEng = ["random", "good", "hello"];
     const wordKor = [];
@@ -79,7 +68,6 @@ export class WordController {
       wordKor.push(kor);
     }
     return await this.wordService.create({
-      wordbookId,
       wordEng,
       wordKor,
       wordKey,
@@ -144,6 +132,11 @@ export class WordController {
         wordKor: {
           type: "array",
           description: "한글 단어",
+        },
+        wordbookId: {
+          type: "string",
+          format: "uuid",
+          description: "단어장 아이디",
         },
       },
     },
