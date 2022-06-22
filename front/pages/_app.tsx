@@ -48,7 +48,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         console.log(err);
       }
     }
-    getUser();
+    if (sessionStorage.getItem("userToken")) {
+      getUser();
+    }
   }, []);
 
   return (
