@@ -148,18 +148,18 @@ export class WordController {
     return this.wordService.update(wordId, updateWordDto);
   }
 
-  // 이미지 삭제
-  @Delete("image/:key")
-  @ApiOperation({
-    summary: "이미지 삭제 API",
-    description: "이미지 키를 입력받아 버킷의 이미지를 삭제한다.",
-  })
-  @ApiParam({
-    name: "key",
-    type: "string",
-    description: "AWS S3 이미지 키(삭제 시 필요)",
-    required: true,
-  })
+  // // 이미지 삭제
+  // @Delete("image/:key")
+  // @ApiOperation({
+  //   summary: "이미지 삭제 API",
+  //   description: "이미지 키를 입력받아 버킷의 이미지를 삭제한다.",
+  // })
+  // @ApiParam({
+  //   name: "key",
+  //   type: "string",
+  //   description: "AWS S3 이미지 키(삭제 시 필요)",
+  //   required: true,
+  // })
   async deleteImage(@Param("key") key: string) {
     return await this.imageService.deleteImage(key);
   }
