@@ -30,7 +30,7 @@ export class Word {
   })
   wordKey: string;
 
-  @Column("uuid", { name: "wordbook_id" })
+  @Column("uuid", { name: "wordbook_id", nullable: true })
   @ApiProperty({
     description: "단어장 ID",
   })
