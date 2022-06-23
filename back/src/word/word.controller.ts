@@ -28,8 +28,6 @@ import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
 import { WordService } from "./word.service";
 
-@UseGuards(JwtAuthGuard)
-@ApiBearerAuth("accesskey")
 @ApiTags("단어 API")
 @Controller("word")
 export class WordController {
@@ -76,6 +74,9 @@ export class WordController {
   }
 
   // 단어장의 단어 전체 조회
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth("accesskey")
   @Get("all/:wordbookId")
   @ApiOperation({
     summary: "단어장 단어 조회 API",
@@ -93,6 +94,9 @@ export class WordController {
   }
 
   // 단어 개별 조회
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth("accesskey")
   @Get("/:wordId")
   @ApiOperation({
     summary: "단어 조회 API",
@@ -110,6 +114,9 @@ export class WordController {
   }
 
   // 단어 수정
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth("accesskey")
   @Patch("/:wordId")
   @ApiOperation({
     summary: "단어 수정 API",
@@ -161,10 +168,13 @@ export class WordController {
   //   description: "AWS S3 이미지 키(삭제 시 필요)",
   //   required: true,
   // })
-  async deleteImage(@Param("key") key: string) {
-    return await this.imageService.deleteImage(key);
-  }
+  // async deleteImage(@Param("key") key: string) {
+  //   return await this.imageService.deleteImage(key);
+  // }
+
   // 단어 삭제
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth("accesskey")
   @Delete("/:wordId")
   @ApiOperation({
     summary: "단어 삭제 API",
