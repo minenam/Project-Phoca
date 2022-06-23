@@ -4,7 +4,6 @@ import { Repository } from "typeorm";
 import { CreateWordDto } from "./dto/create-word.dto";
 import { UpdateWordDto } from "./dto/update-word.dto";
 import { Word } from "./word.entity";
-
 @Injectable()
 export class WordService {
   constructor(
