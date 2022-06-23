@@ -18,28 +18,21 @@ import { FaVolumeUp, FaEdit } from "react-icons/fa";
 import Modal from "../../../common/modal/Modal";
 import EditForm from "./EditForm/EditForm";
 import SaveForm from "./SaveForm/SaveForm";
+import { ResultProps } from "../../../common/types/resultsType";
 
-interface ImageUrl {
-  imageUrl?: string;
-}
-
-function Results() {
+function Results({ wordInfo }: ResultProps) {
   const router = useRouter();
-  const { imageUrl }: ImageUrl = router.query;
 
-  const [engWord, setEngWord] = useState("apple");
-  const [korWord, setKorWord] = useState("사과");
+  const [engWord, setEngWord] = useState(wordInfo.wordEng[0]);
+  const [korWord, setKorWord] = useState(wordInfo.wordKor[0]);
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
 
   const ttsBtnClickHandler = () => {
-    const temp: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(
-      engWord,
-    );
-    const voice: SpeechSynthesisVoice[] = window.speechSynthesis.getVoices();
-    temp.voice = voice[2];
-    window.speechSynthesis.speak(temp);
+    const tts: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(engWord);
+    tts.lang = "en-US";
+    window.speechSynthesis.speak(tts);
   };
 
   const editBtnClickHandler = () => {
@@ -47,7 +40,11 @@ function Results() {
   };
 
   const saveBtnClickHandler = () => {
-    setSaveModalOpen(true);
+    if (sessionStorage.getItem("userToken")) {
+      setSaveModalOpen(true);
+    } else {
+      router.push("/login");
+    }
   };
 
   const modalCloseHandler = () => {
@@ -59,7 +56,10 @@ function Results() {
     <>
       <ResultsContainer>
         <ImageContainer>
-          <ThumbImage src={imageUrl} alt="submit-image" />
+          <ThumbImage
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${wordInfo.wordKey}`}
+            alt="submit-image"
+          />
         </ImageContainer>
         <WordContainer>
           <EngWord>{engWord}</EngWord>
@@ -87,7 +87,7 @@ function Results() {
           onClose={modalCloseHandler}
           large={true}>
           <EditForm
-            imageUrl={imageUrl}
+            imageUrl={`${process.env.NEXT_PUBLIC_IMAGE_URL}${wordInfo.wordKey}`}
             onClose={modalCloseHandler}
             setEngWord={setEngWord}
             setKorWord={setKorWord}
