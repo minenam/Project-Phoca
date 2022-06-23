@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsArray, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateWordDto {
   @IsArray()
@@ -14,16 +14,6 @@ export class CreateWordDto {
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: "이미지 링크" })
-  wordImage: string;
-
-  @IsString()
-  @IsNotEmpty()
   @ApiProperty({ description: "이미지 키(이미지 삭제 시 필요)" })
   wordKey: string;
-
-  @IsUUID()
-  @IsNotEmpty()
-  @ApiProperty({ description: "단어장 아이디" })
-  wordbookId: string;
 }

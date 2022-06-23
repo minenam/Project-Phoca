@@ -1,6 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Security } from "../wordbook.entity";
 
 export class CreateWordbookDto {
   @IsString()
@@ -10,5 +9,5 @@ export class CreateWordbookDto {
 
   @IsOptional()
   @ApiProperty({ description: "단어장 공개 여부" })
-  security: Security;
+  secured: boolean;
 }
