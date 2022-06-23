@@ -15,9 +15,6 @@ import {
 const uploadImage = async (formData: FormData) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/word/upload`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
     body: formData,
   });
   const result = res.json();
