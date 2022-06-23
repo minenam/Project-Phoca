@@ -95,8 +95,6 @@ export class WordController {
 
   // 단어 개별 조회
 
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth("accesskey")
   @Get("/:wordId")
   @ApiOperation({
     summary: "단어 조회 API",

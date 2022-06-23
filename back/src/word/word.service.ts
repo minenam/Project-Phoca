@@ -36,7 +36,7 @@ export class WordService {
       throw new NotFoundException("word not found");
     }
     Object.assign(word, updateWordDto);
-    return this.wordRepository.save(word);
+    return await this.wordRepository.save(word);
   }
 
   async deleteWord(wordId: string): Promise<string> {
