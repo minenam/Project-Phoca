@@ -43,13 +43,19 @@ export class UserService {
       password: hashedPassword,
     });
     const result = await this.userRepository.save(user);
-    const { password, provider, joinedAt, lastloginedAt, activated, ...userInfo } = result;
+    const userInfo = {
+      userId: result.userId,
+      userName: result.userName,
+      email: result.email,
+      comment: result.comment,
+      userImage: result.userImage,
+    };
 
     return {
       statusCode: 201,
       message: "success",
       data: userInfo,
-      };
+    };
   }
 
   // 유저 로그인 (토큰 생성)
@@ -72,12 +78,19 @@ export class UserService {
     if (!getUser) {
       throw new NotFoundException(`can't find userid ${userId}`);
     }
-    const { password, provider, joinedAt, lastloginedAt, activated, ...userInfo } = getUser;
+    const {
+      password,
+      provider,
+      joinedAt,
+      lastloginedAt,
+      activated,
+      ...userInfo
+    } = getUser;
     return {
       statusCode: 200,
       message: "success",
       data: userInfo,
-      };
+    };
   }
 
   // 유저 계정 삭제
