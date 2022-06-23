@@ -9,8 +9,9 @@ import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthService } from "../auth/auth.service";
 import { AuthCredentialDto } from "../auth/dto/auth.credential.dto";
-import { LoginUserInfo } from "../user/dto/login-user.dto";
-type LoginInfo = LoginUserInfo;
+import { LoginUserInfoType } from "../user/dto/login-user.dto";
+import { ImageMiddleware } from "../middleware/image.middleware";
+import { UserInfoType } from "./dto/user-info.dto";
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
     private authService: AuthService,
+    private imageMiddleware: ImageMiddleware,
   ) {}
 
   async getAll(): Promise<Users[]> {
@@ -26,7 +28,7 @@ export class UserService {
   }
 
   // 유저 생성 (회원가입)
-  async register(createUserDto: CreateUserDto): Promise<string> {
+  async register(createUserDto: CreateUserDto): Promise<UserInfoType> {
     const { userName, email, password } = createUserDto;
     // 이메일 중복확인
     const foundEmail = await this.userRepository.findOneBy({ email });
@@ -40,13 +42,18 @@ export class UserService {
       email,
       password: hashedPassword,
     });
-    await this.userRepository.save(user);
+    const result = await this.userRepository.save(user);
+    const { password, provider, joinedAt, lastloginedAt, activated, ...userInfo } = result;
 
-    return `Welcome to Phoca, ${user.userName}`;
+    return {
+      statusCode: 201,
+      message: "success",
+      data: userInfo,
+      };
   }
 
   // 유저 로그인 (토큰 생성)
-  async login(authcredntialDto: AuthCredentialDto): Promise<LoginInfo> {
+  async login(authcredntialDto: AuthCredentialDto): Promise<LoginUserInfoType> {
     const { email } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
     // 마지막 로그인일자 업데이트
@@ -59,32 +66,51 @@ export class UserService {
   }
 
   // 유저 ID로 조회
-  async getUserById(userId: string): Promise<Users> {
+  async getUserById(userId: string): Promise<UserInfoType> {
     const getUser = await this.userRepository.findOneBy({ userId });
 
     if (!getUser) {
       throw new NotFoundException(`can't find userid ${userId}`);
     }
-    return getUser;
+    const { password, provider, joinedAt, lastloginedAt, activated, ...userInfo } = getUser;
+    return {
+      statusCode: 200,
+      message: "success",
+      data: userInfo,
+      };
   }
 
   // 유저 계정 삭제
   async deleteUser(userId: string): Promise<string> {
-    const result = await this.userRepository.delete({ userId });
-    if (result.affected === 0) {
-      throw new NotFoundException(`Can't fond Board with userid ${userId}`);
+    const found = await this.getUserById(userId);
+    if (found) {
+      await this.imageMiddleware.deleteImage(found.data.userImage);
     }
-    return `Good Bye, User ID : ${userId}`;
+    const result = await this.userRepository.delete({ userId });
+    console.log("result: ", result);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Can't find user`);
+    }
+    return `Good Bye, User :${found.data.userName}`;
   }
 
-  // 유저 정보 (이름, 이메일, 비밀번호) 수정
-  async updateUser(userId: string, createUserDto: CreateUserDto) {
-    const { userName, email, password } = createUserDto;
-    const user = await this.getUserById(userId);
-
-    user.userName = userName;
-    user.email = email;
-    user.password = password;
+  // 유저 정보 (이름, 코멘트, 이미지) 수정
+  async updateUser(userId: string, updateUserInfo) {
+    const user = await this.userRepository.findOneBy({ userId });
+    if (!user) {
+      throw new NotFoundException(`can't find user`);
+    }
+    const { userName, comment, file } = updateUserInfo;
+    if (userName) {
+      user.userName = userName;
+    }
+    if (comment) {
+      user.comment = comment;
+    }
+    if (file) {
+      const upload = await this.imageMiddleware.uploadImage(file);
+      user.userImage = upload.Key;
+    }
     await this.userRepository.save(user);
 
     return user;

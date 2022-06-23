@@ -14,7 +14,7 @@ export const MAIN_BUTTON: Button[] = [
   {
     buttonName: "단어장 만들기",
     buttonColor: "#AF93FF",
-    link: "/makeWord",
+    link: "/word/upload",
     backgroundImage: "/monster_artist.svg",
   },
   {
@@ -26,7 +26,7 @@ export const MAIN_BUTTON: Button[] = [
   {
     buttonName: "그림퀴즈 하러가기",
     buttonColor: "#48CFC8",
-    link: "/imageQuiz",
+    link: "/drawing",
     backgroundImage: "/playing_cards.svg",
   },
   {
