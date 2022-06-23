@@ -1,7 +1,6 @@
 import { Users } from "../user.entity";
-import { UserInfo } from "./user-info.dto";
 
-export class LoginUserInfo extends UserInfo {
+export class UserInfo {
   statusCode: number;
   message: string;
   data: {
@@ -11,7 +10,6 @@ export class LoginUserInfo extends UserInfo {
     comment: Users["comment"];
     userImage: Users["userImage"];
   };
-  token: string;
 }
 
-export type LoginUserInfoType = LoginUserInfo;
+export type UserInfoType = UserInfo;
