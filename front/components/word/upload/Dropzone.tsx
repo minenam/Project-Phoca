@@ -46,7 +46,6 @@ const Upload = () => {
   // image submit handler
   const imageSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(files[0]);
 
     const formData: FormData = new FormData();
     formData.append("file", files[0]);
