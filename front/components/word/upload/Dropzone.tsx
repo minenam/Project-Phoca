@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDropzone, DropzoneProps } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 import { AiOutlinePlus } from "react-icons/ai";
 import {
   Title,

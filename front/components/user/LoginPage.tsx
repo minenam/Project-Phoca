@@ -52,7 +52,7 @@ function LoginPage() {
     onSuccess: (data, variables) => {
       console.log("Login 성공 ", data);
       sessionStorage.setItem("userToken", data.token);
-      userStore.setState({ user: data });
+      userStore.setState({ user: data.data });
       router.push("/");
     },
     onError: (err, variables) => {
