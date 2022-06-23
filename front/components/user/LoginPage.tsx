@@ -18,12 +18,20 @@ import {
   SnsTitle,
   KakaoBtn,
 } from "./AccountPage.style";
-import { userStore } from "../../zustand/userStore";
+import { userStore, UserProperties } from "../../zustand/userStore";
 
 interface LoginValues {
   email: string;
   password: string;
 }
+
+interface ResponseType {
+  statusCode: number;
+  message: string;
+  data: UserProperties;
+  token: string;
+}
+
 const initialValue: LoginValues = { email: "", password: "" };
 
 const loginHandler = async (data: LoginValues) => {
@@ -35,7 +43,7 @@ const loginHandler = async (data: LoginValues) => {
     body: JSON.stringify(data),
   });
 
-  const result = await res.json();
+  const result: ResponseType = await res.json();
   if (result.statusCode !== 201) {
     throw new Error(result.message);
   }
@@ -46,7 +54,6 @@ function LoginPage() {
   const router = useRouter();
   const loginMutation = useMutation(loginHandler, {
     onSuccess: (result, variables) => {
-      console.log("Login 성공 ", result);
       sessionStorage.setItem("userToken", result.token);
       userStore.setState({ user: result.data });
       router.push("/");
