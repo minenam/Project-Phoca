@@ -8,7 +8,7 @@ import { styletron } from "../common/utils/styletron";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { useEffect } from "react";
-import { userStore } from "../zustand/userStore";
+import { userStore, UserProperties } from "../zustand/userStore";
 
 import NavBar from "../components/intro/NavBar";
 import SideBar from "../components/sidebar/SideBar";
@@ -17,6 +17,13 @@ declare module "react-query/types/react/QueryClientProvider" {
   interface QueryClientProviderProps {
     children?: React.ReactNode;
   }
+}
+
+interface ResponseType {
+  statusCode: number;
+  message: string;
+  data: UserProperties;
+  token: string;
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -42,8 +49,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           throw new Error("토큰 만료");
         }
 
-        const user = await res.json();
-        userStore.setState({ user });
+        const result: ResponseType = await res.json();
+        userStore.setState({ user: result.data });
       } catch (err) {
         console.log(err);
       }
