@@ -5,15 +5,12 @@ interface UserState {
   user: UserProperties | null;
 }
 
-interface UserProperties {
+export interface UserProperties {
   userId: string;
   userName: string;
+  userImage: string;
+  comment: string;
   email: string;
-  provider: string;
-  joinedAt: string;
-  lastloginedAt: string;
-  activated: boolean;
-  token: string;
 }
 
 export const userStore = create<UserState>()(
