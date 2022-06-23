@@ -5,7 +5,7 @@ interface UserState {
   user: UserProperties | null;
 }
 
-interface UserProperties {
+export interface UserProperties {
   userId: string;
   userName: string;
   email: string;
