@@ -91,6 +91,8 @@ function Results({ wordInfo }: ResultProps) {
             onClose={modalCloseHandler}
             setEngWord={setEngWord}
             setKorWord={setKorWord}
+            engWordList={wordInfo.wordEng}
+            korWordList={wordInfo.wordKor}
           />
         </Modal>
       )}

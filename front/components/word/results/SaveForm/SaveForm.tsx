@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { userStore } from "../../../../zustand/store";
+import { userStore } from "../../../../zustand/userStore";
 import {
   ListContainer,
   ItemContainer,
