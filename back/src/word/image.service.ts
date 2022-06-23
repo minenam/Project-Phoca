@@ -39,10 +39,11 @@ export class ImageService {
       console.log(response);
       const wordKey = response.Key;
       const wordImage = this.configService.get("IMAGE") + `/${wordKey}`;
-      const data = await lastValueFrom(
-        this.httpService.get(`http://192.168.55.60:5005/od/?img=${wordKey}`),
-      );
-      const wordEng = data.data.classes;
+      // const data = await lastValueFrom(
+      //   this.httpService.get(`http://192.168.55.60:5005/od/?img=${wordKey}`),
+      // );
+      // const wordEng = data.data.classes;
+      const wordEng = ["random", "test", "hello"];
       return { wordEng, wordImage, wordKey };
     } catch (e) {
       console.log(e);
