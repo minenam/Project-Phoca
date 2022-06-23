@@ -6,6 +6,7 @@ import {
   MinLength,
   Matches,
 } from "class-validator";
+import { Users } from "../../user/user.entity";
 
 export class AuthCredentialDto {
   @ApiProperty({
@@ -17,7 +18,7 @@ export class AuthCredentialDto {
   @MinLength(4)
   @MaxLength(40)
   @IsEmail()
-  email: string;
+  email: Users["email"];
 
   @ApiProperty({
     description: "비밀번호",
@@ -29,5 +30,5 @@ export class AuthCredentialDto {
   @Matches(/^[a-zA-Z0-9!@#$%^&*]*$/, {
     message: "password only accpets english, number and !@#$%^&*.",
   })
-  password: string;
+  password: Users["password"];
 }

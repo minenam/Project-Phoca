@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -22,7 +23,6 @@ import {
   ApiBearerAuth,
 } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
-import { CreateWordDto } from "./dto/create-word.dto";
 import { UpdateWordDto } from "./dto/update-word.dto";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
@@ -39,28 +39,11 @@ export class WordController {
     private readonly translateService: TranslateService,
   ) {}
 
-  //단어장에 단어 저장
-  @Post("/upload")
-  @ApiOperation({
-    summary: "단어 생성 API",
-    description: "단어 정보를 입력받아 단어를 생성해서 DB에 저장한다.",
-  })
-  async chooseWord(@Body() createWordDto: CreateWordDto) {
-    return await this.wordService.create(createWordDto);
-  }
-
   //이미지 넣기
-  @Post("/upload/:wordbookId")
+  @Post("/upload")
   @ApiOperation({
     summary: "단어 저장 API",
     description: "이미지를 입력받아 단어 데이터를 생성해서 저장한다.",
-  })
-  @ApiParam({
-    name: "wordbookId",
-    type: "string",
-    format: "uuid",
-    description: "단어장 아이디",
-    required: true,
   })
   @ApiConsumes("multipart/form-data")
   @ApiBody({
@@ -76,22 +59,18 @@ export class WordController {
   })
   @UseInterceptors(FileInterceptor("file"))
   @UsePipes(new ValidationPipe({ transform: true }))
-  async uploadWord(
-    @Param("wordbookId") wordbookId: string,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    const { wordImage, wordKey } = await this.imageService.uploadImage(file);
-    const wordEng = ["random", "good", "hello"];
+  async uploadWord(@UploadedFile() file: Express.Multer.File) {
+    const { wordEng, wordImage, wordKey } = await this.imageService.uploadImage(
+      file,
+    );
     const wordKor = [];
     for (const word of wordEng) {
       const kor = await this.translateService.translate(word, "ko", "en");
       wordKor.push(kor);
     }
     return await this.wordService.create({
-      wordbookId,
       wordEng,
       wordKor,
-      wordImage,
       wordKey,
     });
   }
@@ -155,6 +134,11 @@ export class WordController {
           type: "array",
           description: "한글 단어",
         },
+        wordbookId: {
+          type: "string",
+          format: "uuid",
+          description: "단어장 아이디",
+        },
       },
     },
   })
@@ -165,18 +149,18 @@ export class WordController {
     return this.wordService.update(wordId, updateWordDto);
   }
 
-  // 이미지 삭제
-  @Delete("image/:key")
-  @ApiOperation({
-    summary: "이미지 삭제 API",
-    description: "이미지 키를 입력받아 버킷의 이미지를 삭제한다.",
-  })
-  @ApiParam({
-    name: "key",
-    type: "string",
-    description: "AWS S3 이미지 키(삭제 시 필요)",
-    required: true,
-  })
+  // // 이미지 삭제
+  // @Delete("image/:key")
+  // @ApiOperation({
+  //   summary: "이미지 삭제 API",
+  //   description: "이미지 키를 입력받아 버킷의 이미지를 삭제한다.",
+  // })
+  // @ApiParam({
+  //   name: "key",
+  //   type: "string",
+  //   description: "AWS S3 이미지 키(삭제 시 필요)",
+  //   required: true,
+  // })
   async deleteImage(@Param("key") key: string) {
     return await this.imageService.deleteImage(key);
   }
@@ -195,6 +179,12 @@ export class WordController {
   })
   async deleteWord(@Param("wordId") wordId: string) {
     const key = await this.wordService.deleteWord(wordId);
-    return await this.imageService.deleteImage(key);
+    try {
+      await this.imageService.deleteImage(key);
+    } catch (e) {
+      console.log(e);
+      return new BadRequestException("이미지 삭제 실패");
+    }
+    return "단어가 삭제되었습니다.";
   }
 }

@@ -11,10 +11,6 @@ import { Bookmark } from "../bookmark/bookmark.entity";
 import { Users } from "../user/user.entity";
 import { Word } from "../word/word.entity";
 
-export enum Security {
-  PUBLIC = "public",
-  PRIVATE = "private",
-}
 //@Index("wordbook_pkey", ["wordbook_id"], { unique: true })
 @Entity("wordbook", { schema: "public" })
 export class Wordbook {
@@ -31,11 +27,11 @@ export class Wordbook {
   })
   wordbookName: string;
 
-  @Column({ type: "enum", enum: Security, default: Security.PUBLIC })
+  @Column({ default: false })
   @ApiProperty({
     description: "단어장 공개 여부",
   })
-  security: Security;
+  secured: boolean;
 
   @Column("timestamp without time zone", {
     name: "createDate",
