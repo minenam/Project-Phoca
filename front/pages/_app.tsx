@@ -8,7 +8,7 @@ import { styletron } from "../common/utils/styletron";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { useEffect } from "react";
-import { userStore } from "../zustand/store";
+import { userStore } from "../zustand/userStore";
 
 import NavBar from "../components/intro/NavBar";
 import SideBar from "../components/sidebar/SideBar";
