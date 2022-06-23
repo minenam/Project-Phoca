@@ -43,9 +43,9 @@ const getWordbookList = async (userId: string | undefined) => {
 
 function SaveForm({ onClose }: SaveFormProps) {
   const user = userStore((state) => state.user);
-  const { data } = useQuery("wordbookList", async () => {
-    return getWordbookList(user?.userId);
-  });
+  const { data } = useQuery("wordbookList", () =>
+    getWordbookList(user?.userId),
+  );
 
   const [wordbookList, setWordbookList] = useState<Wordbook[]>([]); // 단어장 리스트를 저장
   const [selectedWordbook, setSelectedWordbook] = useState<Wordbook>({
