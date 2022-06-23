@@ -11,28 +11,39 @@ import { MdPublic } from "react-icons/md";
 import { FaLock, FaShareSquare } from "react-icons/fa";
 import { MOCKUP_DATA } from "../../common/utils/constant";
 import { useRouter } from "next/router";
-
-const VocabularyItem: FC = () => {
+interface wordBook {
+  wordbookName: string;
+  security: string;
+  userId: string;
+  wordbookId: string;
+  createDate: string;
+}
+interface itemProps {
+  listItem: wordBook[] | undefined;
+}
+const VocabularyItem: FC<itemProps> = ({ listItem }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
 
   return (
     <GridWrapper $lapTop={isLapTop}>
-      {MOCKUP_DATA.map((item) => {
-        return (
-          <GridItem key={item.voc_name}>
-            <BtnWrapper>
-              <LockBtn>
-                <MdPublic />
-              </LockBtn>
-              <LockBtn>
-                <FaShareSquare />
-              </LockBtn>
-            </BtnWrapper>
-            <GridTextItem>{item.voc_name}</GridTextItem>
-          </GridItem>
-        );
-      })}
+      {listItem != undefined && listItem?.length > 0 ? (
+        listItem.map((item) => {
+          return (
+            <GridItem key={item.createDate}>
+              <BtnWrapper>
+                <LockBtn>{item.security ? <FaLock /> : <MdPublic />}</LockBtn>
+                <LockBtn>
+                  <FaShareSquare />
+                </LockBtn>
+              </BtnWrapper>
+              <GridTextItem>{item.wordbookName}</GridTextItem>
+            </GridItem>
+          );
+        })
+      ) : (
+        <GridWrapper $without>단어장이 아직 없습니다</GridWrapper>
+      )}
     </GridWrapper>
   );
 };
