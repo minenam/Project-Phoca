@@ -1,5 +1,8 @@
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useDropzone, DropzoneProps } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
+import { useMutation } from "react-query";
+import { wordStore } from "../../../zustand/wordStore";
 import { AiOutlinePlus } from "react-icons/ai";
 import {
   Title,
@@ -8,7 +11,18 @@ import {
   ImageContainer,
   ThumbImage,
 } from "./Dropzone.style";
-import { useRouter } from "next/router";
+
+const uploadImage = async (formData: FormData) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/word/upload`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+    body: formData,
+  });
+  const result = res.json();
+  return result;
+};
 
 const Upload = () => {
   const router = useRouter();
@@ -22,29 +36,30 @@ const Upload = () => {
   };
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+  const uploadImageMutation = useMutation(uploadImage, {
+    onSuccess: (data, variables) => {
+      wordStore.setState({ word: data });
+      router.push(`/word/results/${data.wordId}`);
+    },
+  });
+
+  // image submit handler
+  const imageSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log(files[0]);
+
+    const formData: FormData = new FormData();
+    formData.append("file", files[0]);
+
+    uploadImageMutation.mutate(formData);
+  };
+
   // 썸네일
   const thumbnail = files.map((file: File) => (
     <ImageContainer key={file.name}>
       <ThumbImage src={preview} alt={file.name} />
     </ImageContainer>
   ));
-
-  // image submit handler
-  const imageSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    router.push(
-      {
-        pathname: "/word/results",
-        query: { imageUrl: preview },
-      },
-      "/word/results",
-    );
-  };
-
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
 
   return (
     <>
