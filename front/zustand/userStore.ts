@@ -9,11 +9,8 @@ interface UserProperties {
   userId: string;
   userName: string;
   email: string;
-  provider: string;
-  joinedAt: string;
-  lastloginedAt: string;
-  activated: boolean;
-  token: string;
+  comment: string;
+  userImage: string;
 }
 
 export const userStore = create<UserState>()(

@@ -19,7 +19,7 @@ import {
   RoundedBox,
 } from "./MyPage.style";
 import Link from "next/link";
-import { userStore } from "../../zustand/store";
+import { userStore } from "../../zustand/userStore";
 
 const MyPage: NextPage = () => {
   const user = userStore((state) => state.user);
