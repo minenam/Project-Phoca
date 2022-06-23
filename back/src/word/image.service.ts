@@ -4,6 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import * as AWS from "aws-sdk";
 import * as dotenv from "dotenv";
 import { Repository } from "typeorm";
+import { HttpService } from "@nestjs/axios";
 // import { CreateWordDto } from "./dto/create-word.dto";
 // import { UpdateWordDto } from "./dto/update-word.dto";
 import { Word } from "./word.entity";
@@ -14,12 +15,12 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_KEY,
   region: process.env.AWS_BUCKET_REGION,
 });
-
 @Injectable()
 export class ImageService {
   constructor(
     @InjectRepository(Word) private wordRepository: Repository<Word>,
     private configService: ConfigService,
+    private readonly httpService: HttpService,
   ) {}
   s3 = new AWS.S3();
 
@@ -27,16 +28,22 @@ export class ImageService {
     const AWS_S3_BUCKET = this.configService.get("AWS_BUCKET_NAME");
     const params = {
       Bucket: AWS_S3_BUCKET,
-      Key: String(Date.now() + "_" + file.originalname),
+      //Key: String(Date.now() + "_" + file.originalname),
+      Key: file.originalname,
       Body: file.buffer,
       ACL: "public-read",
     };
     try {
       const response = await this.s3.upload(params).promise();
       console.log(response);
-      const wordImage = response.Location;
       const wordKey = response.Key;
-      return { wordImage, wordKey };
+      const wordImage = this.configService.get("IMAGE") + `/${wordKey}`;
+      // const data = await lastValueFrom(
+      //   this.httpService.get(`http://192.168.55.60:5005/od/?img=${wordKey}`),
+      // );
+      // const wordEng = data.data.classes;
+      const wordEng = ["random", "test", "hello"];
+      return { wordEng, wordImage, wordKey };
     } catch (e) {
       console.log(e);
     }

@@ -11,7 +11,13 @@ import {
 import { WordbookService } from "./wordbook.service";
 import { UpdateWordbookDto } from "./dto/update-wordbook.dto";
 import { CreateWordbookDto } from "./dto/create-wordbook.dto";
-import { ApiBody, ApiOperation, ApiParam, ApiTags, ApiBearerAuth } from "@nestjs/swagger";
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+  ApiBearerAuth,
+} from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
 
 @UseGuards(JwtAuthGuard)
@@ -20,6 +26,7 @@ import { JwtAuthGuard } from "../auth/auth.guard";
 @Controller("wordbook")
 export class WordbookController {
   constructor(private wordbookService: WordbookService) {}
+
   //전체 단어장 조회
   @Get()
   @ApiOperation({
@@ -50,10 +57,10 @@ export class WordbookController {
           type: "string",
           description: "단어장 이름",
         },
-        security: {
-          type: "string",
+        secured: {
+          type: "boolean",
           description: "단어장 공개 여부",
-          example: "private or public",
+          example: "true or false",
         },
       },
     },
@@ -63,6 +70,23 @@ export class WordbookController {
     @Body() createWordbookDto: CreateWordbookDto,
   ) {
     return this.wordbookService.create({ userId, ...createWordbookDto });
+  }
+  //본인 단어장 제외하고 조회
+  @Get("/:userId")
+  @ApiOperation({
+    summary: "본인 제외 전체 단어장 조회 API",
+    description:
+      "본인 단어장 제외하고 단어장 공개 여부를 public으로 설정한 모든 단어장을 조회.",
+  })
+  @ApiParam({
+    name: "userId",
+    type: "string",
+    description: "유저 아이디",
+    required: true,
+  })
+  getExcept(@Param("userId") userId: string) {
+    console.log("gege");
+    return this.wordbookService.getExcept(userId);
   }
   // 유저의 단어장 조희
   @Get("user/:userId")
@@ -77,10 +101,11 @@ export class WordbookController {
     required: true,
   })
   findById(@Param("userId") userId: string) {
+    console.log("hi");
     return this.wordbookService.getById(userId);
   }
   // 단어장 개별 조회
-  @Get(":wordbookId")
+  @Get("/single/:wordbookId")
   @ApiOperation({
     summary: "단어장 개별 조회 API",
     description: "단어장 아이디를 입력받아 단어장을 조회.",
@@ -93,6 +118,7 @@ export class WordbookController {
     required: true,
   })
   findOne(@Param("wordbookId") wordbookId: string) {
+    console.log(wordbookId);
     return this.wordbookService.get(wordbookId);
   }
   // 단어장 이름, 보안 수정
@@ -117,10 +143,10 @@ export class WordbookController {
           type: "string",
           description: "단어장 이름",
         },
-        security: {
-          type: "string",
+        secured: {
+          type: "boolean",
           description: "단어장 공개 여부",
-          example: "private or public",
+          example: "true or false",
         },
       },
     },
@@ -144,7 +170,7 @@ export class WordbookController {
     description: "단어장 아이디",
     required: true,
   })
-  delete(@Param("wordbookId") wordbookId: string) {
-    return this.wordbookService.delete(wordbookId);
+  async delete(@Param("wordbookId") wordbookId: string) {
+    return await this.wordbookService.delete(wordbookId);
   }
 }
