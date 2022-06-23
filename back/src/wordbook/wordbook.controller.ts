@@ -171,6 +171,6 @@ export class WordbookController {
     required: true,
   })
   async delete(@Param("wordbookId") wordbookId: string) {
-    await this.wordbookService.delete(wordbookId);
+    return await this.wordbookService.delete(wordbookId);
   }
 }

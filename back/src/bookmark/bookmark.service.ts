@@ -18,7 +18,7 @@ export class BookmarkService {
         wordbookId: createBookmarkDto.wordbookId,
       },
     });
-    if (bookmark) {
+    if (bookmark.length != 0) {
       return "이미 북마크가 되어 있습니다.";
     }
     const newBookmark = this.bookmarkRepository.create(createBookmarkDto);
