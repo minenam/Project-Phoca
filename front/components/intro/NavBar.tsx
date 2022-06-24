@@ -29,9 +29,7 @@ const NavBar: FC = () => {
       </Link>
       <RightMenuWrapper>
         <Link href={"/login"} passHref>
-          <Login onClick={loginHandler}>
-            {user.user != null ? "Logout" : "Login"}
-          </Login>
+          <Login>{user.user != null ? "Logout" : "Login"}</Login>
         </Link>
         <Welcome>Hi! I&apos;m Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
       </RightMenuWrapper>

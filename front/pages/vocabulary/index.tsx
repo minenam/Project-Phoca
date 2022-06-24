@@ -6,12 +6,12 @@ import { useRouter } from "next/router";
 import VocabularyMarkHeader from "../../components/vocabulary/VocabularyMarkHeader";
 import VocabularyItem from "../../components/vocabulary/VocabularyItem";
 import { useEffect, useState } from "react";
-import { userStore } from "../../zustand/store";
+import { userStore } from "../../zustand/userStore";
 import { useQuery } from "react-query";
 
 interface wordBook {
   wordbookName: string;
-  security: string;
+  secured: boolean;
   userId: string;
   wordbookId: string;
   createDate: string;
@@ -45,6 +45,7 @@ const Vocabulary: NextPage = () => {
 
   useEffect(() => {
     setVocaList(data);
+    console.log("data", data);
   }, [data]);
 
   const checkHandler = () => {
@@ -60,7 +61,7 @@ const Vocabulary: NextPage = () => {
         checkHandler={checkHandler}
         mainText={mainText}
         inputChecked={checked}
-        userName={user?.userName}
+        userInfo={user}
       />
       <VocabularyItem listItem={vocaList && vocaList} />
     </VocabularyWrapper>

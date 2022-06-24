@@ -1,4 +1,3 @@
-import { FC, useState } from "react";
 import {
   HeadUserWrapper,
   HeadWrapper,
@@ -9,19 +8,20 @@ import {
   SwitchButtonText,
 } from "./Vocabulary.styles";
 import { Avatar, AvatarImage, UserName } from "../../pages/myPage/MyPage.style";
+import { UserProperties } from "../../zustand/userStore";
 
 interface Iprops {
   checkHandler: () => void;
   mainText: string;
   inputChecked: boolean;
-  userName: string | undefined;
+  userInfo: UserProperties | null;
 }
 
 function VocabularyMarkHeader({
   checkHandler,
   mainText,
   inputChecked,
-  userName,
+  userInfo,
 }: Iprops): JSX.Element {
   return (
     <>
@@ -39,9 +39,12 @@ function VocabularyMarkHeader({
       <HeadWrapper>
         <HeadUserWrapper>
           <Avatar>
-            <AvatarImage src="/logo.png" alt="Avatar" />
+            <AvatarImage
+              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userInfo?.userImage}`}
+              alt="Avatar"
+            />
           </Avatar>
-          <UserName>{userName}님</UserName>
+          <UserName>{userInfo?.userName}님</UserName>
         </HeadUserWrapper>
         <MainText>{mainText}</MainText>
       </HeadWrapper>

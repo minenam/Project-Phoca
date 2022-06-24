@@ -11,9 +11,10 @@ import { MdPublic } from "react-icons/md";
 import { FaLock, FaShareSquare } from "react-icons/fa";
 import { MOCKUP_DATA } from "../../common/utils/constant";
 import { useRouter } from "next/router";
+import { useMutation } from "react-query";
 interface wordBook {
   wordbookName: string;
-  security: string;
+  secured: boolean;
   userId: string;
   wordbookId: string;
   createDate: string;
@@ -21,9 +22,50 @@ interface wordBook {
 interface itemProps {
   listItem: wordBook[] | undefined;
 }
+
+const wordBookChangeHandler = async (props: wordBook) => {
+  const data = {
+    wordbookName: props.wordbookName,
+    secured: props.secured ? false : true,
+  };
+  console.log(`${process.env.NEXT_PUBLIC_SERVER_URL}/${props.wordbookId}`);
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/${props.wordbookId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
+        body: JSON.stringify(data),
+      },
+    );
+    if (!res.ok) throw new Error(res.statusText);
+
+    const result = await res.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const VocabularyItem: FC<itemProps> = ({ listItem }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
+  const VocaMutation = useMutation(wordBookChangeHandler, {
+    onSuccess: (data) => {
+      console.log("단어장 수정 성공", data);
+      router.push("/vocabulary");
+    },
+    onError: (error) => {
+      console.error("단어장 수정 실패", error);
+    },
+  });
+
+  const vocaChangeHandler = (props: wordBook) => {
+    VocaMutation.mutate(props);
+  };
 
   return (
     <GridWrapper $lapTop={isLapTop}>
@@ -32,7 +74,9 @@ const VocabularyItem: FC<itemProps> = ({ listItem }) => {
           return (
             <GridItem key={item.createDate}>
               <BtnWrapper>
-                <LockBtn>{item.security ? <FaLock /> : <MdPublic />}</LockBtn>
+                <LockBtn onClick={() => vocaChangeHandler(item)}>
+                  {item.secured ? <FaLock /> : <MdPublic />}
+                </LockBtn>
                 <LockBtn>
                   <FaShareSquare />
                 </LockBtn>
