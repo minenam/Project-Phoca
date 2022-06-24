@@ -133,10 +133,12 @@ export class WordController {
         wordEng: {
           type: Word["wordEng"],
           description: "영어 단어",
+          example: ["word"],
         },
         wordKor: {
           type: Word["wordKor"],
           description: "한글 단어",
+          example: ["단어"],
         },
         wordbookId: {
           type: Word["wordbookId"],

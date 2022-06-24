@@ -12,13 +12,23 @@ export class Word {
   })
   wordId: string;
 
-  @Column("character varying", { name: "word_eng", length: 45, array: true })
+  @Column("character varying", {
+    name: "word_eng",
+    length: 45,
+    nullable: true,
+    array: true,
+  })
   @ApiProperty({
     description: "영어 단어",
   })
   wordEng: string[];
 
-  @Column("character varying", { name: "word_kor", length: 20, array: true })
+  @Column("character varying", {
+    name: "word_kor",
+    nullable: true,
+    length: 20,
+    array: true,
+  })
   @ApiProperty({
     description: "한글 단어",
   })
