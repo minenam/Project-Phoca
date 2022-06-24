@@ -1,5 +1,4 @@
-import React from "react";
-import Link from "next/Link";
+import Link from "next/link";
 import { useStyletron } from "styletron-react";
 import { MAIN_BUTTON, HEADER_HEIGHT } from "../../common/utils/constant";
 import { SideBarContainer, SideBarBtn } from "./SideBar.style";
