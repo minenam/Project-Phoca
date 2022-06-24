@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { WordCreatedEvent } from "../events/word-created.event";
 import { CreateWordDto } from "./dto/create-word.dto";
 import { UpdateWordDto } from "./dto/update-word.dto";
+import { ImageService } from "./image.service";
 import { Word } from "./word.entity";
 @Injectable()
 export class WordService {
@@ -12,6 +13,7 @@ export class WordService {
     @InjectRepository(Word)
     private wordRepository: Repository<Word>,
     private readonly eventEmitter: EventEmitter2,
+    private imageService: ImageService,
   ) {}
   //단어 생성
   async create(word: CreateWordDto) {
@@ -65,9 +67,11 @@ export class WordService {
     const { wordId } = payload;
     await new Promise<void>((resolve) => setTimeout(() => resolve(), 3600000));
     const word = await this.wordRepository.findOne({ where: { wordId } });
-    const { wordbookId } = word;
+    const { wordbookId, wordKey } = word;
     if (!wordbookId) {
-      await this.wordRepository.remove(word);
+      await this.imageService.deleteImage(wordKey);
+      await this.deleteWord(wordId);
+
       console.log("unsaved word deleted");
     }
   }
