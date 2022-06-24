@@ -55,7 +55,7 @@ export class UserService {
 
     return {
       statusCode: 201,
-      message: "success",
+      message: "회원가입 성공",
       data: userInfo,
     };
   }
@@ -90,7 +90,7 @@ export class UserService {
     } = getUser;
     return {
       statusCode: 200,
-      message: "success",
+      message: "회원 정보 수정 완료",
       data: userInfo,
     };
   }
@@ -106,7 +106,7 @@ export class UserService {
     if (result.affected === 0) {
       throw new NotFoundException(`존재하지 않는 회원입니다.`);
     }
-    return `Good Bye, User :${found.data.userName}`;
+    return `회원 정보가 삭제되었습니다.}`;
   }
 
   // 유저 정보 (이름, 코멘트, 이미지) 수정

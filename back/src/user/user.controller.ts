@@ -85,7 +85,7 @@ export class UserController {
   ): Promise<UserInfoType> {
     const { userId } = paramUserDto;
     if (userId !== user.sub) {
-      throw new BadRequestException(`Wrong Token`);
+      throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
     }
     const found = this.userService.getUserById(userId);
     return found;
@@ -102,7 +102,7 @@ export class UserController {
   ): Promise<string> {
     const { userId } = paramUserDto;
     if (userId !== user.sub) {
-      throw new BadRequestException(`Wrong Token`);
+      throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
     }
     this.logger.verbose(`Try to Withdraw: UserID ${userId}`);
     return this.userService.deleteUser(userId);
@@ -137,7 +137,7 @@ export class UserController {
   ): Promise<Users> {
     const { userId } = paramUserDto;
     if (userId !== user.sub) {
-      throw new BadRequestException(`Wrong Token`);
+      throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
     }
     const updateUserInfo = { userName, comment, file };
     this.logger.verbose("Try to update info :", updateUserInfo);
