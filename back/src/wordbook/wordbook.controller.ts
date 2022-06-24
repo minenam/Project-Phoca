@@ -85,7 +85,6 @@ export class WordbookController {
     required: true,
   })
   getExcept(@Param("userId") userId: string) {
-    console.log("gege");
     return this.wordbookService.getExcept(userId);
   }
   // 유저의 단어장 조희
@@ -101,7 +100,6 @@ export class WordbookController {
     required: true,
   })
   findById(@Param("userId") userId: string) {
-    console.log("hi");
     return this.wordbookService.getById(userId);
   }
   // 단어장 개별 조회
