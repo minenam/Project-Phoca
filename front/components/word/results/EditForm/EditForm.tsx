@@ -1,13 +1,15 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { BtnContainer, Button } from "./EditForm.style";
 import SelectWord from "./SelectWord";
 import WriteWord from "./WriteWord";
 
 interface EditFormProps {
-  imageUrl?: string;
+  imageUrl: string;
   onClose: () => void;
   setEngWord: Dispatch<SetStateAction<string>>;
   setKorWord: Dispatch<SetStateAction<string>>;
+  engWordList: string[];
+  korWordList: string[];
 }
 
 export interface Data {
@@ -20,28 +22,12 @@ function EditForm({
   onClose,
   setEngWord,
   setKorWord,
+  engWordList,
+  korWordList,
 }: EditFormProps) {
   const [selectedEngWord, setSelectedEngWord] = useState("");
   const [selectedKorWord, setSelectedKorWord] = useState("");
-
-  const fakeData: Data[] = [
-    {
-      engWord: "Hello1",
-      korWord: "안녕하세요",
-    },
-    {
-      engWord: "Hello2",
-      korWord: "안녕하세요",
-    },
-    {
-      engWord: "Hello3",
-      korWord: "안녕하세요",
-    },
-    {
-      engWord: "Hello4",
-      korWord: "안녕하세요",
-    },
-  ];
+  const [wordList, setWordList] = useState<Data[]>([]);
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -50,10 +36,18 @@ function EditForm({
     onClose();
   };
 
+  useEffect(() => {
+    const temp = [];
+    for (let i = 0; i < engWordList.length; i++) {
+      temp.push({ engWord: engWordList[i], korWord: korWordList[i] });
+    }
+    setWordList(temp);
+  }, []);
+
   return (
     <>
       <SelectWord
-        data={fakeData}
+        data={wordList}
         imageUrl={imageUrl}
         setSelectedEngWord={setSelectedEngWord}
         setSelectedKorWord={setSelectedKorWord}
