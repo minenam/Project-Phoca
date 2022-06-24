@@ -8,7 +8,7 @@ import { HttpService } from "@nestjs/axios";
 // import { CreateWordDto } from "./dto/create-word.dto";
 // import { UpdateWordDto } from "./dto/update-word.dto";
 import { Word } from "./word.entity";
-import { lastValueFrom, map } from "rxjs";
+import { lastValueFrom } from "rxjs";
 dotenv.config();
 
 AWS.config.update({
@@ -39,11 +39,11 @@ export class ImageService {
       console.log(response);
       const wordKey = response.Key;
       const wordImage = this.configService.get("IMAGE") + `/${wordKey}`;
-      // const data = await lastValueFrom(
-      //   this.httpService.get(`http://192.168.55.60:5005/od/?img=${wordKey}`),
-      // );
-      // const wordEng = data.data.classes;
-      const wordEng = ["random", "test", "hello"];
+      const data = await lastValueFrom(
+        this.httpService.get(`
+        http://kdt-ai4-team06.elicecoding.com:5005/od/?img=${wordKey}`),
+      );
+      const wordEng = data.data.classes;
       return { wordEng, wordImage, wordKey };
     } catch (e) {
       console.log(e);
