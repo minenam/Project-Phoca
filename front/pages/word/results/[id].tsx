@@ -6,6 +6,7 @@ import {
   WORD_NOTE_WIDTH,
   WORD_NOTE_HEIGHT,
 } from "../../../common/utils/constant";
+import Seo from "../../../common/Seo";
 import Note from "../../../common/note/Note";
 import Results from "../../../components/word/results/Results";
 import { ResultProps, WordInfo } from "../../../common/types/resultsType";
@@ -18,9 +19,12 @@ const ResultPage: NextPage<ResultProps> = (props) => {
   });
 
   return (
-    <Note width={WORD_NOTE_WIDTH} height={WORD_NOTE_HEIGHT}>
-      <Results wordInfo={data} />
-    </Note>
+    <>
+      <Seo title="단어장 만들기" />
+      <Note width={WORD_NOTE_WIDTH} height={WORD_NOTE_HEIGHT}>
+        <Results wordInfo={data} />
+      </Note>
+    </>
   );
 };
 
