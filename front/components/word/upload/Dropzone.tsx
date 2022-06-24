@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
-import { useDropzone, DropzoneProps } from "react-dropzone";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useMutation } from "react-query";
 import { AiOutlinePlus } from "react-icons/ai";
 import {
   Title,
@@ -8,7 +10,16 @@ import {
   ImageContainer,
   ThumbImage,
 } from "./Dropzone.style";
-import { useRouter } from "next/router";
+import { WordInfo } from "../../../common/types/resultsType";
+
+const uploadImage = async (formData: FormData) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/word/upload`, {
+    method: "POST",
+    body: formData,
+  });
+  const result: WordInfo = await res.json();
+  return result;
+};
 
 const Upload = () => {
   const router = useRouter();
@@ -22,29 +33,28 @@ const Upload = () => {
   };
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+  const uploadImageMutation = useMutation(uploadImage, {
+    onSuccess: (data, variables) => {
+      router.push(`/word/results/${data.wordId}`);
+    },
+  });
+
+  // image submit handler
+  const imageSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const formData: FormData = new FormData();
+    formData.append("file", files[0]);
+
+    uploadImageMutation.mutate(formData);
+  };
+
   // 썸네일
   const thumbnail = files.map((file: File) => (
     <ImageContainer key={file.name}>
       <ThumbImage src={preview} alt={file.name} />
     </ImageContainer>
   ));
-
-  // image submit handler
-  const imageSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    router.push(
-      {
-        pathname: "/word/results",
-        query: { imageUrl: preview },
-      },
-      "/word/results",
-    );
-  };
-
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
 
   return (
     <>

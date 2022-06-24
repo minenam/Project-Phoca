@@ -52,11 +52,18 @@ const loginHandler = async (data: LoginValues) => {
 
 function LoginPage() {
   const router = useRouter();
+
   const loginMutation = useMutation(loginHandler, {
     onSuccess: (result, variables) => {
       sessionStorage.setItem("userToken", result.token);
       userStore.setState({ user: result.data });
-      router.push("/");
+
+      if (router.query.returnUrl) {
+        const returnUrl = router.query.returnUrl as string;
+        router.push(returnUrl);
+      } else {
+        router.push("/");
+      }
     },
     onError: (err, variables) => {
       console.log("Login 실패 ", err);
