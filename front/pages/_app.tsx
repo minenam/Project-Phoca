@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       console.log("session", sessionStorage.getItem("userToken"));
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/current`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/currentTest`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

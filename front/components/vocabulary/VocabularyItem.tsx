@@ -56,7 +56,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
   const VocaMutation = useMutation(wordBookChangeHandler, {
     onSuccess: (data) => {
       console.log("단어장 수정 성공", data);
-      // trigger(true);
+      trigger(true);
       router.push("/vocabulary");
     },
     onError: (error) => {
