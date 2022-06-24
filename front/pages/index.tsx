@@ -9,7 +9,7 @@ import {
   MainPhrase,
 } from "../components/intro/Main.style";
 import Link from "next/link";
-import { userStore } from "../zustand/store";
+import { userStore } from "../zustand/userStore";
 
 const Home: NextPage = () => {
   const [css] = useStyletron();

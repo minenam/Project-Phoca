@@ -8,6 +8,7 @@ import { HttpService } from "@nestjs/axios";
 // import { CreateWordDto } from "./dto/create-word.dto";
 // import { UpdateWordDto } from "./dto/update-word.dto";
 import { Word } from "./word.entity";
+import { lastValueFrom, map } from "rxjs";
 dotenv.config();
 
 AWS.config.update({
