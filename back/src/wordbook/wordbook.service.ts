@@ -24,7 +24,12 @@ export class WordbookService {
   }
 
   async getById(userId: string): Promise<Wordbook[]> {
-    return await this.wordbookRepository.find({ where: { userId } });
+    return await this.wordbookRepository.find({
+      where: { userId },
+      order: {
+        createDate: "DESC",
+      },
+    });
   }
 
   async search(keyword: string): Promise<Wordbook[]> {
