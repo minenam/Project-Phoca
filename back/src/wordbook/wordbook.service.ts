@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Wordbook } from "./wordbook.entity";
-import { Repository, Not } from "typeorm";
+import { Repository, Not, Like } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 @Injectable()
 export class WordbookService {
@@ -22,6 +22,18 @@ export class WordbookService {
 
   async getById(userId: string): Promise<Wordbook[]> {
     return await this.wordbookRepository.find({ where: { userId } });
+  }
+
+  async search(keyword: string): Promise<Wordbook[]> {
+    return await this.wordbookRepository.find({
+      where: { wordbookName: Like(`${keyword}%`) },
+    });
+  }
+
+  async countWordbook(userId: string): Promise<number> {
+    return await this.wordbookRepository.count({
+      where: { userId },
+    });
   }
 
   async create(wordbook: Partial<Wordbook>): Promise<Wordbook> {
