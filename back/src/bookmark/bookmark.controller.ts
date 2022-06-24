@@ -41,6 +41,23 @@ export class BookmarkController {
     return this.bookmarkService.get(userId);
   }
 
+  // 내 북마크 개수 카운트
+  @Get("/count/:userId")
+  @ApiOperation({
+    summary: "북마크 개수 카운트 API",
+    description: "유저 아이디를 입력받아 북마크 개수 카운트.",
+  })
+  @ApiParam({
+    name: "userId",
+    type: "string",
+    format: "uuid",
+    description: "유저 아이디",
+    required: true,
+  })
+  countWordbook(@Param("userId") userId: string) {
+    return this.bookmarkService.countBookmark(userId);
+  }
+
   @Post("/")
   @ApiOperation({
     summary: "북마크 생성 API",

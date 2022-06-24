@@ -54,4 +54,10 @@ export class BookmarkService {
     await this.bookmarkRepository.remove(bookmark);
     return `북마크가 삭제되었습니다.`;
   }
+
+  async countBookmark(userId: string): Promise<number> {
+    return await this.bookmarkRepository.count({
+      where: { userId },
+    });
+  }
 }
