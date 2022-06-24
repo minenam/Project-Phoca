@@ -7,10 +7,14 @@ import {
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard("jwt") {
-  constructor(private jwtService: JwtService) {
+  constructor(
+    private configService: ConfigService,
+    private jwtService: JwtService,
+  ) {
     super();
   }
 
@@ -29,8 +33,8 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
   }
 
   validateToken(token: string) {
-    const secretKey = process.env.JWT_SECRET_KEY
-      ? process.env.JWT_SECRET_KEY
+    const secretKey = this.configService.get<string>("JWT_SECRET_KEY")
+      ? this.configService.get<string>("JWT_SECRET_KEY")
       : "dev";
 
     try {

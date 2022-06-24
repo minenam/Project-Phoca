@@ -1,2 +1,4 @@
 */.ipynb_checkpoints/*
 .env
+venv
+*/saved_model/*

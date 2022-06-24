@@ -4,7 +4,6 @@ import { Repository } from "typeorm";
 import { CreateWordDto } from "./dto/create-word.dto";
 import { UpdateWordDto } from "./dto/update-word.dto";
 import { Word } from "./word.entity";
-
 @Injectable()
 export class WordService {
   constructor(
@@ -37,7 +36,9 @@ export class WordService {
       throw new NotFoundException("word not found");
     }
     Object.assign(word, updateWordDto);
-    return this.wordRepository.save(word);
+
+    await this.wordRepository.save(word);
+    return await this.wordRepository.findOne({ where: { wordId } });
   }
 
   async deleteWord(wordId: string): Promise<string> {

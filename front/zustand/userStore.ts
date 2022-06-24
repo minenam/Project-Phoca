@@ -8,9 +8,9 @@ interface UserState {
 export interface UserProperties {
   userId: string;
   userName: string;
-  userImage: string;
-  comment: string;
   email: string;
+  comment: string;
+  userImage: string;
 }
 
 export const userStore = create<UserState>()(

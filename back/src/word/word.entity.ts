@@ -24,19 +24,13 @@ export class Word {
   })
   wordKor: string[];
 
-  @Column("character varying", { name: "word_image" })
-  @ApiProperty({
-    description: "단어 이미지",
-  })
-  wordImage: string;
-
   @Column("character varying", { name: "word_key" })
   @ApiProperty({
     description: "단어 키",
   })
   wordKey: string;
 
-  @Column("uuid", { name: "wordbook_id" })
+  @Column("uuid", { name: "wordbook_id", nullable: true })
   @ApiProperty({
     description: "단어장 ID",
   })

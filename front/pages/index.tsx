@@ -15,7 +15,7 @@ import {
   MainPhrase,
 } from "../components/intro/Main.style";
 import Link from "next/link";
-import { userStore } from "../zustand/store";
+import { userStore } from "../zustand/userStore";
 import SaveForm from "../components/word/results/SaveForm/SaveForm";
 import Modal from "../common/modal/Modal";
 import LoginRequiredModal from "../components/intro/LoginRequiredModal";

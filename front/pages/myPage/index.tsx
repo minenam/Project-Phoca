@@ -19,7 +19,7 @@ import {
   RoundedBox,
 } from "./MyPage.style";
 import Link from "next/link";
-import { userStore } from "../../zustand/store";
+import { userStore } from "../../zustand/userStore";
 import React, { useEffect, useState } from "react";
 import Modal from "../../common/modal/Modal";
 import LoginRequiredModal from "../../components/intro/LoginRequiredModal";
