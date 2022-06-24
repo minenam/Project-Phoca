@@ -10,21 +10,14 @@ import {
   ImageContainer,
   ThumbImage,
 } from "./Dropzone.style";
-
-interface WordProperties {
-  wordEng: string[];
-  wordKor: string[];
-  wordKey: string;
-  wordbookId: null | string;
-  wordId: string;
-}
+import { WordInfo } from "../../../common/types/resultsType";
 
 const uploadImage = async (formData: FormData) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/word/upload`, {
     method: "POST",
     body: formData,
   });
-  const result: WordProperties = await res.json();
+  const result: WordInfo = await res.json();
   return result;
 };
 
