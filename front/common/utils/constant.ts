@@ -5,7 +5,7 @@ interface Button {
 }
 
 interface MockUP {
-  voc_type: string;
+  voc_seq: string;
   voc_name: string;
 }
 
@@ -44,404 +44,404 @@ export const WORD_IMAGES: string[] = [
 
 export const MOCKUP_DATA: MockUP[] = [
   {
-    voc_type: "my",
-    voc_name: "Focus",
+    voc_seq: "445-54",
+    voc_name: "C70",
   },
   {
-    voc_type: "my",
-    voc_name: "612 Scaglietti",
+    voc_seq: "486-49",
+    voc_name: "90",
   },
   {
-    voc_type: "my",
-    voc_name: "V70",
+    voc_seq: "761-04",
+    voc_name: "6000",
   },
   {
-    voc_type: "my",
-    voc_name: "Thunderbird",
+    voc_seq: "419-27",
+    voc_name: "A8",
   },
   {
-    voc_type: "my",
-    voc_name: "Wrangler",
+    voc_seq: "842-28",
+    voc_name: "Pacifica",
   },
   {
-    voc_type: "my",
-    voc_name: "Town Car",
+    voc_seq: "837-60",
+    voc_name: "C8",
   },
   {
-    voc_type: "my",
-    voc_name: "B-Series",
+    voc_seq: "336-51",
+    voc_name: "Savana",
   },
   {
-    voc_type: "my",
-    voc_name: "Sienna",
+    voc_seq: "688-85",
+    voc_name: "HHR",
   },
   {
-    voc_type: "my",
-    voc_name: "Impreza",
-  },
-  {
-    voc_type: "my",
-    voc_name: "S-Class",
-  },
-  {
-    voc_type: "my",
-    voc_name: "D350 Club",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Diablo",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Sienna",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Envoy XUV",
-  },
-  {
-    voc_type: "my",
-    voc_name: "G",
-  },
-  {
-    voc_type: "my",
-    voc_name: "XK",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Neon",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Rally Wagon G3500",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Avalon",
-  },
-  {
-    voc_type: "my",
-    voc_name: "E-Class",
-  },
-  {
-    voc_type: "my",
-    voc_name: "S8",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Viper",
-  },
-  {
-    voc_type: "my",
-    voc_name: "DB9",
-  },
-  {
-    voc_type: "my",
-    voc_name: "RAV4",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Accent",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Yukon XL 2500",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Equator",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Tahoe",
-  },
-  {
-    voc_type: "my",
-    voc_name: "57",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Prelude",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Escape",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Fortwo",
-  },
-  {
-    voc_type: "my",
-    voc_name: "xB",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Silverado 1500",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Cabriolet",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Cooper",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Compass",
-  },
-  {
-    voc_type: "my",
+    voc_seq: "941-60",
     voc_name: "Expedition",
   },
   {
-    voc_type: "my",
-    voc_name: "Mirage",
+    voc_seq: "535-10",
+    voc_name: "Mazda5",
   },
   {
-    voc_type: "my",
-    voc_name: "Mustang",
+    voc_seq: "313-59",
+    voc_name: "612 Scaglietti",
   },
   {
-    voc_type: "my",
-    voc_name: "Viper",
+    voc_seq: "206-14",
+    voc_name: "62",
   },
   {
-    voc_type: "my",
-    voc_name: "Mirage",
+    voc_seq: "898-60",
+    voc_name: "E350",
   },
   {
-    voc_type: "my",
-    voc_name: "Century",
+    voc_seq: "798-57",
+    voc_name: "Eclipse",
   },
   {
-    voc_type: "my",
-    voc_name: "Aveo",
+    voc_seq: "787-60",
+    voc_name: "Protege",
   },
   {
-    voc_type: "my",
-    voc_name: "tC",
+    voc_seq: "394-67",
+    voc_name: "V8 Vantage",
   },
   {
-    voc_type: "my",
-    voc_name: "Vibe",
+    voc_seq: "983-61",
+    voc_name: "Ram 2500 Club",
   },
   {
-    voc_type: "my",
-    voc_name: "Chariot",
+    voc_seq: "945-66",
+    voc_name: "Special",
   },
   {
-    voc_type: "my",
-    voc_name: "1500",
+    voc_seq: "541-81",
+    voc_name: "Sportvan G30",
   },
   {
-    voc_type: "my",
-    voc_name: "750",
+    voc_seq: "576-87",
+    voc_name: "Navigator",
   },
   {
-    voc_type: "my",
-    voc_name: "Montero",
+    voc_seq: "201-28",
+    voc_name: "QX56",
   },
   {
-    voc_type: "my",
-    voc_name: "Silverado 2500",
+    voc_seq: "984-65",
+    voc_name: "S5",
   },
   {
-    voc_type: "my",
-    voc_name: "Equinox",
+    voc_seq: "110-35",
+    voc_name: "Veracruz",
   },
   {
-    voc_type: "my",
-    voc_name: "Galant",
+    voc_seq: "995-99",
+    voc_name: "Sierra 2500",
   },
   {
-    voc_type: "my",
-    voc_name: "Mirage",
+    voc_seq: "925-26",
+    voc_name: "Stratus",
   },
   {
-    voc_type: "my",
-    voc_name: "Eldorado",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Sunbird",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Colorado",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Spyder",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Range Rover Sport",
-  },
-  {
-    voc_type: "my",
-    voc_name: "DeVille",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Imperial",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Crown Victoria",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Windstar",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Lancer Evolution",
-  },
-  {
-    voc_type: "my",
-    voc_name: "XJ Series",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Continental GT",
-  },
-  {
-    voc_type: "my",
-    voc_name: "9-3",
-  },
-  {
-    voc_type: "my",
-    voc_name: "xD",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Escort",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Durango",
-  },
-  {
-    voc_type: "my",
-    voc_name: "IS",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Titan",
-  },
-  {
-    voc_type: "my",
-    voc_name: "VS Commodore",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Tribute",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Town & Country",
-  },
-  {
-    voc_type: "my",
-    voc_name: "740",
-  },
-  {
-    voc_type: "my",
-    voc_name: "CR-X",
-  },
-  {
-    voc_type: "my",
-    voc_name: "S60",
-  },
-  {
-    voc_type: "my",
-    voc_name: "Eurovan",
-  },
-  {
-    voc_type: "my",
+    voc_seq: "149-13",
     voc_name: "A6",
   },
   {
-    voc_type: "my",
-    voc_name: "Lumina",
+    voc_seq: "325-67",
+    voc_name: "Cougar",
   },
   {
-    voc_type: "my",
-    voc_name: "H3",
+    voc_seq: "715-75",
+    voc_name: "Pajero",
   },
   {
-    voc_type: "my",
-    voc_name: "LaCrosse",
+    voc_seq: "889-72",
+    voc_name: "HHR",
   },
   {
-    voc_type: "my",
-    voc_name: "Grand Cherokee",
+    voc_seq: "375-35",
+    voc_name: "B-Series",
   },
   {
-    voc_type: "my",
-    voc_name: "Panamera",
+    voc_seq: "383-44",
+    voc_name: "Diablo",
   },
   {
-    voc_type: "my",
-    voc_name: "X3",
+    voc_seq: "952-76",
+    voc_name: "SLR McLaren",
   },
   {
-    voc_type: "my",
-    voc_name: "Prowler",
+    voc_seq: "599-48",
+    voc_name: "Murano",
   },
   {
-    voc_type: "my",
-    voc_name: "Topaz",
+    voc_seq: "565-30",
+    voc_name: "Commander",
   },
   {
-    voc_type: "my",
-    voc_name: "Sorento",
+    voc_seq: "485-05",
+    voc_name: "SLK-Class",
   },
   {
-    voc_type: "my",
-    voc_name: "Escort",
+    voc_seq: "982-08",
+    voc_name: "rio",
   },
   {
-    voc_type: "my",
-    voc_name: "Econoline E150",
+    voc_seq: "355-95",
+    voc_name: "Diablo",
   },
   {
-    voc_type: "my",
-    voc_name: "Golf",
+    voc_seq: "667-29",
+    voc_name: "Charger",
   },
   {
-    voc_type: "my",
-    voc_name: "Altima",
+    voc_seq: "584-86",
+    voc_name: "Expo",
   },
   {
-    voc_type: "my",
+    voc_seq: "454-71",
+    voc_name: "Swift",
+  },
+  {
+    voc_seq: "176-83",
     voc_name: "Continental",
   },
   {
-    voc_type: "my",
-    voc_name: "Patriot",
+    voc_seq: "987-42",
+    voc_name: "Thunderbird",
   },
   {
-    voc_type: "my",
-    voc_name: "525",
+    voc_seq: "983-75",
+    voc_name: "Celica",
   },
   {
-    voc_type: "my",
-    voc_name: "F250",
+    voc_seq: "289-39",
+    voc_name: "Hombre Space",
   },
   {
-    voc_type: "my",
-    voc_name: "SJ",
+    voc_seq: "782-00",
+    voc_name: "Galant",
   },
   {
-    voc_type: "my",
+    voc_seq: "986-13",
+    voc_name: "Corvette",
+  },
+  {
+    voc_seq: "115-52",
+    voc_name: "S10",
+  },
+  {
+    voc_seq: "607-50",
+    voc_name: "Land Cruiser",
+  },
+  {
+    voc_seq: "878-93",
+    voc_name: "Sedona",
+  },
+  {
+    voc_seq: "649-86",
+    voc_name: "Tredia",
+  },
+  {
+    voc_seq: "124-43",
+    voc_name: "Sierra 3500",
+  },
+  {
+    voc_seq: "652-94",
+    voc_name: "Silverado 2500",
+  },
+  {
+    voc_seq: "625-42",
+    voc_name: "Skylark",
+  },
+  {
+    voc_seq: "082-16",
+    voc_name: "Trooper",
+  },
+  {
+    voc_seq: "849-66",
+    voc_name: "Nitro",
+  },
+  {
+    voc_seq: "368-00",
+    voc_name: "Cruze",
+  },
+  {
+    voc_seq: "693-52",
+    voc_name: "Corvette",
+  },
+  {
+    voc_seq: "587-45",
+    voc_name: "Passport",
+  },
+  {
+    voc_seq: "689-42",
+    voc_name: "Sentra",
+  },
+  {
+    voc_seq: "691-65",
+    voc_name: "I",
+  },
+  {
+    voc_seq: "650-19",
+    voc_name: "Sierra 1500",
+  },
+  {
+    voc_seq: "403-54",
+    voc_name: "MKS",
+  },
+  {
+    voc_seq: "072-77",
+    voc_name: "Yukon XL 1500",
+  },
+  {
+    voc_seq: "486-66",
+    voc_name: "LX",
+  },
+  {
+    voc_seq: "656-57",
+    voc_name: "Legend",
+  },
+  {
+    voc_seq: "830-31",
+    voc_name: "W126",
+  },
+  {
+    voc_seq: "354-58",
+    voc_name: "Murciélago",
+  },
+  {
+    voc_seq: "925-20",
+    voc_name: "MX-6",
+  },
+  {
+    voc_seq: "507-96",
+    voc_name: "Colorado",
+  },
+  {
+    voc_seq: "847-09",
+    voc_name: "Sorento",
+  },
+  {
+    voc_seq: "801-08",
+    voc_name: "xD",
+  },
+  {
+    voc_seq: "369-47",
+    voc_name: "Arnage",
+  },
+  {
+    voc_seq: "182-30",
+    voc_name: "Town & Country",
+  },
+  {
+    voc_seq: "198-09",
+    voc_name: "Colt",
+  },
+  {
+    voc_seq: "570-77",
+    voc_name: "9-7X",
+  },
+  {
+    voc_seq: "432-87",
+    voc_name: "Familia",
+  },
+  {
+    voc_seq: "183-24",
+    voc_name: "Aerostar",
+  },
+  {
+    voc_seq: "572-28",
+    voc_name: "MX-3",
+  },
+  {
+    voc_seq: "117-61",
+    voc_name: "M5",
+  },
+  {
+    voc_seq: "202-79",
+    voc_name: "Corvette",
+  },
+  {
+    voc_seq: "985-86",
+    voc_name: "X5",
+  },
+  {
+    voc_seq: "352-73",
+    voc_name: "Celica",
+  },
+  {
+    voc_seq: "668-46",
+    voc_name: "Rodeo",
+  },
+  {
+    voc_seq: "003-79",
+    voc_name: "Viper",
+  },
+  {
+    voc_seq: "115-02",
+    voc_name: "Lancer",
+  },
+  {
+    voc_seq: "200-85",
+    voc_name: "SVX",
+  },
+  {
+    voc_seq: "786-28",
     voc_name: "Endeavor",
   },
   {
-    voc_type: "my",
-    voc_name: "Econoline E350",
+    voc_seq: "997-66",
+    voc_name: "S5",
+  },
+  {
+    voc_seq: "361-65",
+    voc_name: "Town & Country",
+  },
+  {
+    voc_seq: "888-80",
+    voc_name: "Accord",
+  },
+  {
+    voc_seq: "661-56",
+    voc_name: "Econoline E250",
+  },
+  {
+    voc_seq: "143-52",
+    voc_name: "Legend",
+  },
+  {
+    voc_seq: "067-26",
+    voc_name: "Optima",
+  },
+  {
+    voc_seq: "062-86",
+    voc_name: "Ram 2500",
+  },
+  {
+    voc_seq: "990-43",
+    voc_name: "S-Type",
+  },
+  {
+    voc_seq: "919-49",
+    voc_name: "Windstar",
+  },
+  {
+    voc_seq: "317-60",
+    voc_name: "X6",
+  },
+  {
+    voc_seq: "213-23",
+    voc_name: "B-Series",
+  },
+  {
+    voc_seq: "659-75",
+    voc_name: "Suburban 2500",
+  },
+  {
+    voc_seq: "256-45",
+    voc_name: "Ranger",
   },
 ];
 

@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import VocabularyItem from "../vocabulary/VocabularyItem";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
 import { VocabularyWrapper } from "../vocabulary/Vocabulary.styles";
+import { SearchBar } from "./Network.style";
 
 const Network: NextPage = () => {
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
@@ -11,7 +12,9 @@ const Network: NextPage = () => {
     <VocabularyWrapper
       $sideBarWidth={`${sideBarWidth}px`}
       $headerHeight={`${headerHeight}px`}>
-      <VocabularyItem></VocabularyItem>
+      <SearchBar type="text" />
+
+      <VocabularyItem />
     </VocabularyWrapper>
   );
 };

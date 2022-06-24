@@ -25,7 +25,7 @@ const VocabularyItem: FC = () => {
     <GridWrapper $lapTop={isLapTop}>
       {MOCKUP_DATA.map((item) => {
         return (
-          <GridItem>
+          <GridItem key={item.voc_seq}>
             <BtnWrapper>
               <LockBtn>
                 <MdPublic />
