@@ -43,7 +43,14 @@ function Results({ wordInfo }: ResultProps) {
     if (sessionStorage.getItem("userToken")) {
       setSaveModalOpen(true);
     } else {
-      router.push("/login");
+      const currentUrl = router.asPath;
+      router.push(
+        {
+          pathname: "/login",
+          query: { returnUrl: currentUrl },
+        },
+        "/login",
+      );
     }
   };
 
