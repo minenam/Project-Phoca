@@ -102,7 +102,12 @@ function Results({ wordInfo }: ResultProps) {
           width="400px"
           onClose={modalCloseHandler}
           large={false}>
-          <SaveForm onClose={modalCloseHandler} />
+          <SaveForm
+            onClose={modalCloseHandler}
+            wordId={wordInfo.wordId}
+            engWord={engWord}
+            korWord={korWord}
+          />
         </Modal>
       )}
     </>
