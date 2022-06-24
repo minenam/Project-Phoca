@@ -11,6 +11,9 @@ export class WordbookService {
   async getAll(): Promise<Wordbook[]> {
     return await this.wordbookRepository.find({
       where: { secured: false },
+      order: {
+        createDate: "DESC",
+      },
     });
   }
 
