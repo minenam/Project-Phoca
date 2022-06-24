@@ -25,6 +25,7 @@ export const CommentWrapper = styled("div", {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  width: "100%",
   padding: "1.2rem",
 });
 
@@ -32,6 +33,7 @@ export const InputWrapper = styled("div", {
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
+  width: "100%",
   alignItems: "center",
   padding: "1rem",
 });
@@ -45,7 +47,6 @@ export const Comment = styled("input", {
 });
 export const EditButtonWrapper = styled("div", {
   display: "flex",
-  flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
 });
@@ -57,7 +58,6 @@ export const EditButton = styled(
     backgroundColor: props?.$backgroundColor,
     padding: "0.5rem 1.5rem",
     margin: "1rem 1rem 1.5rem",
-    width: "100%",
     fontSize: "1.2rem",
     cursor: "pointer",
   }),

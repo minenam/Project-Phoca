@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { useIsLapTop } from "../../common/utils/useIsLapTop";
 import {
   BtnWrapper,
@@ -9,7 +9,6 @@ import {
 } from "./Vocabulary.styles";
 import { MdPublic } from "react-icons/md";
 import { FaLock, FaShareSquare } from "react-icons/fa";
-import { MOCKUP_DATA } from "../../common/utils/constant";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 interface wordBook {
@@ -21,6 +20,7 @@ interface wordBook {
 }
 interface itemProps {
   listItem: wordBook[] | undefined;
+  trigger: Dispatch<SetStateAction<boolean>>;
 }
 
 const wordBookChangeHandler = async (props: wordBook) => {
@@ -50,12 +50,13 @@ const wordBookChangeHandler = async (props: wordBook) => {
   }
 };
 
-const VocabularyItem: FC<itemProps> = ({ listItem }) => {
+const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
   const VocaMutation = useMutation(wordBookChangeHandler, {
     onSuccess: (data) => {
       console.log("단어장 수정 성공", data);
+      // trigger(true);
       router.push("/vocabulary");
     },
     onError: (error) => {

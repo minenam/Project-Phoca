@@ -21,17 +21,21 @@ const Vocabulary: NextPage = () => {
   const [vocaList, setVocaList] = useState<wordBook[] | undefined>([]);
   const [mainText, setMainText] = useState("내 단어장");
   const [checked, setChecked] = useState(false);
+  const [isChange, setIsChange] = useState(false);
 
   const user = userStore((state) => state.user);
 
   const { data } = useQuery<wordBook[], Error>(
-    ["wordbookList", user?.userId],
+    ["wordbookList", user?.userId, checked],
     () => getVocaList(user?.userId),
   );
 
   async function getVocaList(userId?: string) {
+    console.log("check", checked);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/user/${userId}`,
+      checked
+        ? `${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark/${userId}`
+        : `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/user/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -63,7 +67,7 @@ const Vocabulary: NextPage = () => {
         inputChecked={checked}
         userInfo={user}
       />
-      <VocabularyItem listItem={vocaList && vocaList} />
+      <VocabularyItem listItem={vocaList && vocaList} trigger={setIsChange} />
     </VocabularyWrapper>
   );
 };

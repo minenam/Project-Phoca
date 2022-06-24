@@ -53,7 +53,10 @@ const MyPage: NextPage = () => {
       <UserWrapper>
         <UserInfoWrapper>
           <Avatar>
-            <AvatarImage src={user?.userImage} alt="avatar" />
+            <AvatarImage
+              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`}
+              alt="avatar"
+            />
           </Avatar>
           <UserName>{user?.userName}님</UserName>
         </UserInfoWrapper>
@@ -100,7 +103,7 @@ const MyPage: NextPage = () => {
       {userEditModalOpen && (
         <Modal
           open={userEditModalOpen}
-          width="400px"
+          width="500px"
           onClose={userEditModalCloseHandler}
           large={true}>
           <UserEditModal onClose={userEditModalCloseHandler} userInfo={user} />

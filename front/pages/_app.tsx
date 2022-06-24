@@ -51,7 +51,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }*/
 
         const result: ResponseType = await res.json();
-        console.log("res=====>", result);
+        console.log("result=====>", result);
         userStore.setState({ user: result.data });
       } catch (err) {
         console.log(err);

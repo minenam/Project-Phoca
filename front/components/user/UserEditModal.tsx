@@ -163,7 +163,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       {isDel && (
         <Modal
           open={isDel}
-          width="400px"
+          width="600px"
           onClose={deleteModalCloseHandler}
           large={true}>
           <UserDelModal onClose={deleteModalCloseHandler} userInfo={userInfo} />
