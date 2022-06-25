@@ -1,6 +1,6 @@
-import { NetworkWrapper } from "../../components/network/Network.style";
+import NetworkListItem from "../../components/network/NetworkListItem";
 
 const Network = () => {
-  return <NetworkWrapper>test</NetworkWrapper>;
+  return <NetworkListItem />;
 };
 export default Network;
