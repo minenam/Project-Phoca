@@ -41,7 +41,6 @@ const getOthersWordbookList = async (userId?: string) => {
   );
 
   const result = await res.json();
-  console.log("getResult===>", result);
   return result;
 };
 
@@ -68,7 +67,6 @@ const NetworkListItem: FC = () => {
   useEffect(() => {
     const timerId = setTimeout(() => {
       setIsStop(true);
-      console.log("stopped");
     }, 300);
 
     return () => {

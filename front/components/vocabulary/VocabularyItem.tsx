@@ -28,7 +28,6 @@ const wordBookChangeHandler = async (props: wordBook) => {
     wordbookName: props.wordbookName,
     secured: props.secured ? false : true,
   };
-  console.log(`${process.env.NEXT_PUBLIC_SERVER_URL}/${props.wordbookId}`);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/${props.wordbookId}`,

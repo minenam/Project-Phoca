@@ -49,7 +49,6 @@ const loginHandler = async (data: LoginValues) => {
   });
 
   const result: ResponseType = await res.json();
-  console.log("res", res);
   if (result.statusCode !== 201) {
     throw new Error(result.message);
   }

@@ -35,7 +35,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   // 유저 정보 userStore에 저장
   useEffect(() => {
     async function getUser() {
-      console.log("session", sessionStorage.getItem("userToken"));
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/user/current`,
@@ -45,13 +44,12 @@ function MyApp({ Component, pageProps }: AppProps) {
             },
           },
         );
-        console.log("res=====>", res);
-        /*if (!res.ok) {
+
+        if (!res.ok) {
           throw new Error("토큰 만료");
-        }*/
+        }
 
         const result: ResponseType = await res.json();
-        console.log("result=====>", result);
         userStore.setState({ user: result.data });
       } catch (err) {
         console.log(err);
