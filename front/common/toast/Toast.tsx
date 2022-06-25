@@ -1,5 +1,6 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { ToastMsg } from "./Toast.style";
+import { BiError, BiCheck } from "react-icons/bi";
 
 interface ToastProps {
   success: boolean;
@@ -21,7 +22,13 @@ function Toast(props: ToastProps) {
   }, []);
 
   return (
-    <>{toastVisible && <ToastMsg $success={success}>{message}</ToastMsg>}</>
+    <>
+      {toastVisible && (
+        <ToastMsg $success={success}>
+          {success ? <BiCheck /> : <BiError />} {message}
+        </ToastMsg>
+      )}
+    </>
   );
 }
 
