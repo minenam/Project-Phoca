@@ -72,17 +72,20 @@ export const UserInfoWrapper = styled("div", {
   alignSelf: "center",
 });
 
-export const Avatar = styled("div", {
+export const Avatar = styled("div", (props: { $modal?: boolean }) => ({
   borderRadius: "50%",
   width: "100px",
   height: "100px",
-  marginTop: "1.5rem",
+  marginTop: props.$modal ? "" : "1.5rem",
   border: "5px solid orange",
-});
+  zIndex: 2,
+  overflow: "hidden",
+}));
 
 export const AvatarImage = styled("img", {
-  width: "95%",
-  height: "95%",
+  padding: "10px",
+  width: "100%",
+  height: "100%",
   display: "block",
   margin: "0 auto",
   objectFit: "contain",
