@@ -38,6 +38,7 @@ export const EngWord = styled("p", (props) => ({
   gridColumnStart: 2,
   fontSize: "5rem",
   margin: 0,
+  textAlign: "center",
 }));
 
 export const KorWord = styled("p", (props) => ({

@@ -26,6 +26,7 @@ import { JwtAuthGuard } from "../auth/auth.guard";
 import { UpdateWordDto } from "./dto/update-word.dto";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
+import { Word } from "./word.entity";
 import { WordService } from "./word.service";
 
 @ApiTags("단어 API")
@@ -58,9 +59,7 @@ export class WordController {
   @UseInterceptors(FileInterceptor("file"))
   @UsePipes(new ValidationPipe({ transform: true }))
   async uploadWord(@UploadedFile() file: Express.Multer.File) {
-    const { wordEng, wordImage, wordKey } = await this.imageService.uploadImage(
-      file,
-    );
+    const { wordEng, wordKey } = await this.imageService.uploadImage(file);
     const wordKor = [];
     for (const word of wordEng) {
       const kor = await this.translateService.translate(word, "ko", "en");
@@ -84,7 +83,7 @@ export class WordController {
   })
   @ApiParam({
     name: "wordbookId",
-    type: "string",
+    type: Word["wordbookId"],
     format: "uuid",
     description: "단어장 아이디",
     required: true,
@@ -102,7 +101,7 @@ export class WordController {
   })
   @ApiParam({
     name: "wordId",
-    type: "string",
+    type: Word["wordId"],
     format: "uuid",
     description: "단어 아이디",
     required: true,
@@ -122,7 +121,7 @@ export class WordController {
   })
   @ApiParam({
     name: "wordId",
-    type: "string",
+    type: Word["wordId"],
     format: "uuid",
     description: "단어 아이디",
     required: true,
@@ -132,15 +131,17 @@ export class WordController {
       type: "object",
       properties: {
         wordEng: {
-          type: "array",
+          type: Word["wordEng"],
           description: "영어 단어",
+          example: ["word"],
         },
         wordKor: {
-          type: "array",
+          type: Word["wordKor"],
           description: "한글 단어",
+          example: ["단어"],
         },
         wordbookId: {
-          type: "string",
+          type: Word["wordbookId"],
           format: "uuid",
           description: "단어장 아이디",
         },
@@ -180,7 +181,7 @@ export class WordController {
   })
   @ApiParam({
     name: "wordId",
-    type: "string",
+    type: Word["wordId"],
     format: "uuid",
     description: "영어 아이디",
     required: true,

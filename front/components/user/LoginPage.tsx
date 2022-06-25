@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
+import { Dispatch, SetStateAction } from "react";
 import {
   Form,
   ContentContainer,
@@ -19,6 +20,10 @@ import {
   KakaoBtn,
 } from "./AccountPage.style";
 import { userStore, UserProperties } from "../../zustand/userStore";
+
+interface LoginPageProps {
+  setErrorMsg: Dispatch<SetStateAction<string>>;
+}
 
 interface LoginValues {
   email: string;
@@ -51,16 +56,24 @@ const loginHandler = async (data: LoginValues) => {
   return result;
 };
 
-function LoginPage() {
+function LoginPage(props: LoginPageProps) {
   const router = useRouter();
+  const { setErrorMsg } = props;
+
   const loginMutation = useMutation(loginHandler, {
     onSuccess: (result, variables) => {
       sessionStorage.setItem("userToken", result.token);
       userStore.setState({ user: result.data });
-      router.push("/");
+
+      if (router.query.returnUrl) {
+        const returnUrl = router.query.returnUrl as string;
+        router.push(returnUrl);
+      } else {
+        router.push("/");
+      }
     },
-    onError: (err, variables) => {
-      console.log("Login 실패 ", err);
+    onError: ({ message }, variables) => {
+      setErrorMsg(message);
     },
   });
 
