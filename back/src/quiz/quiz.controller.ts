@@ -6,6 +6,7 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { diskStorage } from "multer";
 
 @ApiTags("퀴즈 API")
 @Controller("quiz")
@@ -28,8 +29,22 @@ export class QuizController {
     },
   })
   @Post("upload")
-  @UseInterceptors(FileInterceptor("file"))
+  @UseInterceptors(
+    FileInterceptor("file", {
+      storage: diskStorage({
+        destination: "./images",
+        filename: function (req, file, callback) {
+          callback(null, Date.now() + file.originalname);
+        },
+      }),
+    }),
+  )
   uploadQuiz(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
+    const response = {
+      originalname: file.originalname,
+      filename: file.filename,
+    };
+    return response;
   }
 }

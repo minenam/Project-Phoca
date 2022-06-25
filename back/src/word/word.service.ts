@@ -61,18 +61,4 @@ export class WordService {
     const key = word.wordKey;
     return key;
   }
-
-  @OnEvent("word.created", { async: true })
-  async checkEscape(payload: WordCreatedEvent) {
-    const { wordId } = payload;
-    await new Promise<void>((resolve) => setTimeout(() => resolve(), 3600000));
-    const word = await this.wordRepository.findOne({ where: { wordId } });
-    const { wordbookId, wordKey } = word;
-    if (!wordbookId) {
-      await this.imageService.deleteImage(wordKey);
-      await this.deleteWord(wordId);
-
-      console.log("unsaved word deleted");
-    }
-  }
 }

@@ -11,18 +11,20 @@ import { Word } from "./word.entity";
 import { lastValueFrom } from "rxjs";
 dotenv.config();
 
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
-  region: process.env.AWS_BUCKET_REGION,
-});
 @Injectable()
 export class ImageService {
   constructor(
     @InjectRepository(Word) private wordRepository: Repository<Word>,
     private configService: ConfigService,
     private readonly httpService: HttpService,
-  ) {}
+  ) {
+    AWS.config.update({
+      accessKeyId: this.configService.get("AWS_ACCESS_KEY"),
+      secretAccessKey: this.configService.get("AWS_SECRET_KEY"),
+      region: this.configService.get("AWS_BUCKET_REGION"),
+    });
+  }
+
   s3 = new AWS.S3();
 
   async uploadImage(file: Express.Multer.File) {
