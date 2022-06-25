@@ -26,7 +26,7 @@ const Vocabulary: NextPage = () => {
   const user = userStore((state) => state.user);
 
   const { data } = useQuery<wordBook[], Error>(
-    ["wordbookList", user?.userId, checked],
+    ["wordbookList", user?.userId, checked, isChange],
     () => getVocaList(user?.userId),
   );
 
