@@ -11,12 +11,16 @@ import {
   ThumbImage,
 } from "./Dropzone.style";
 import { WordInfo } from "../../../common/types/resultsType";
+import Toast from "../../../common/toast/Toast";
 
 const uploadImage = async (formData: FormData) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/word/upload`, {
     method: "POST",
     body: formData,
   });
+  if (!res.ok) {
+    throw new Error("등록할 수 없는 이미지 입니다.");
+  }
   const result: WordInfo = await res.json();
   return result;
 };
@@ -25,6 +29,7 @@ const Upload = () => {
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]); // 업로드할 파일
   const [preview, setPreview] = useState(""); // 업로드한 파일의 프리뷰
+  const [errorMsg, setErrorMsg] = useState("");
 
   // drop handler
   const onDrop = (acceptedFiles: File[]) => {
@@ -36,6 +41,12 @@ const Upload = () => {
   const uploadImageMutation = useMutation(uploadImage, {
     onSuccess: (data, variables) => {
       router.push(`/word/results/${data.wordId}`);
+    },
+    onError: ({ message }) => {
+      setErrorMsg(message);
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     },
   });
 
@@ -70,6 +81,10 @@ const Upload = () => {
 
       {files.length !== 0 && (
         <SubmitBtn onClick={imageSubmitHandler}>사진 보내기</SubmitBtn>
+      )}
+
+      {errorMsg.length > 1 && (
+        <Toast success={false} message={errorMsg} setErrorMsg={setErrorMsg} />
       )}
     </>
   );
