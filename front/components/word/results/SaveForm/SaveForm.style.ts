@@ -1,21 +1,5 @@
 import { styled } from "styletron-react";
 
-export const SelectBookContainer = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-});
-
-export const Title = styled("h1", {
-  fontSize: "2rem",
-  margin: "1rem",
-  textAlign: "center",
-});
-
-export const Label = styled("label", {
-  marginLeft: "1rem",
-});
-
 export const AddBookBtn = styled("button", {
   border: 0,
   backgroundColor: "transparent",
