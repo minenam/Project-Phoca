@@ -35,7 +35,7 @@ const Vocabulary: NextPage = () => {
     const res = await fetch(
       checked
         ? `${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark/${userId}`
-        : `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/userTest/${userId}`,
+        : `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/user/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

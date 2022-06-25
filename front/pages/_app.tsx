@@ -29,7 +29,7 @@ interface ResponseType {
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const urlWithoutNavbar: string[] = ["/login", "/register"];
-  const urlWithoutSidebar: string[] = ["/", "/login", "/register"];
+  const urlWithoutSidebar: string[] = ["/", "/login", "/register", "/network"];
   const queryClient = new QueryClient();
 
   // 유저 정보 userStore에 저장
@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       console.log("session", sessionStorage.getItem("userToken"));
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/currentTest`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/current`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
