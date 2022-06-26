@@ -20,15 +20,52 @@ import {
 } from "./MyPage.style";
 import Link from "next/link";
 import { userStore } from "../../zustand/userStore";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../../common/modal/Modal";
 import UserEditModal from "../../components/user/UserEditModal";
+import { useQuery } from "react-query";
+
+const getCount = async (userId: string | undefined) => {
+  try {
+    const wordbookRes = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/count/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
+      },
+    );
+
+    const bookmarkRes = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark/count/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
+      },
+    );
+
+    const wordbookResult = await wordbookRes.json();
+    const bookmarkResult = await bookmarkRes.json();
+
+    return { wordbookResult, bookmarkResult };
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 const MyPage: NextPage = () => {
   const [userEditModalOpen, setUserEditModalOpen] = useState(false);
+  const [wordbookCount, setWordbookCount] = useState();
+  const [bookmarkCount, setbookmarkCount] = useState();
+
   const user = userStore((state) => state.user);
 
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
+
+  const { data } = useQuery(["getCount", user?.userId], () =>
+    getCount(user?.userId),
+  );
 
   const userEditModalCloseHandler = () => {
     setUserEditModalOpen(false);
@@ -37,6 +74,12 @@ const MyPage: NextPage = () => {
   const userEditModalOpenHandler = () => {
     setUserEditModalOpen(true);
   };
+
+  useEffect(() => {
+    console.log("data====>", data);
+    setWordbookCount(data?.wordbookResult);
+    setbookmarkCount(data?.bookmarkResult);
+  }, [data]);
 
   return (
     <MyPageWrapper $sideBarWidth={`${sideBarWidth}px`}>
@@ -70,11 +113,11 @@ const MyPage: NextPage = () => {
         <UserInfoWrapper>
           <UserDetailWrapper>
             <RoundedBox>내 단어장</RoundedBox>
-            <UserInfoDetail>4개</UserInfoDetail>
+            <UserInfoDetail>{wordbookCount}개</UserInfoDetail>
           </UserDetailWrapper>
           <UserDetailWrapper>
             <RoundedBox>북마크한 단어장</RoundedBox>
-            <UserInfoDetail>10개</UserInfoDetail>
+            <UserInfoDetail>{bookmarkCount}개</UserInfoDetail>
           </UserDetailWrapper>
         </UserInfoWrapper>
         <ImgWrapper>
