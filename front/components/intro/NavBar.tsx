@@ -9,19 +9,14 @@ import {
   Welcome,
 } from "./NavBar.style";
 import { userStore } from "../../zustand/userStore";
-import { useRouter } from "next/router";
 
 const NavBar: FC = () => {
   const user = userStore((state) => state.user);
-  const router = useRouter();
 
   const loginHandler = (e: React.MouseEvent<HTMLElement>) => {
     if (user != null) {
       sessionStorage.removeItem("userToken");
       userStore.setState({ user: null });
-      router.push("/");
-    } else {
-      router.push("/login");
     }
   };
 
