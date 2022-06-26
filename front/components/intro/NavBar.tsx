@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC } from "react";
 import Link from "next/link";
 import {
   Anchor,
@@ -9,13 +9,19 @@ import {
   Welcome,
 } from "./NavBar.style";
 import { userStore } from "../../zustand/userStore";
+import { useRouter } from "next/router";
 
 const NavBar: FC = () => {
-  const user = userStore();
+  const user = userStore((state) => state.user);
+  const router = useRouter();
+
   const loginHandler = (e: React.MouseEvent<HTMLElement>) => {
-    if (sessionStorage.getItem("userToken")) {
+    if (user != null) {
       sessionStorage.removeItem("userToken");
       userStore.setState({ user: null });
+      router.push("/");
+    } else {
+      router.push("/login");
     }
   };
 
@@ -29,7 +35,9 @@ const NavBar: FC = () => {
       </Link>
       <RightMenuWrapper>
         <Link href={"/login"} passHref>
-          <Login>{user.user != null ? "Logout" : "Login"}</Login>
+          <Login onClick={loginHandler}>
+            {user != null ? "Logout" : "Login"}
+          </Login>
         </Link>
         <Welcome>Hi! I&apos;m Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
       </RightMenuWrapper>

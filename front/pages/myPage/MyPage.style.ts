@@ -6,7 +6,6 @@ export const MyPageWrapper = styled(
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    // height: `calc(100vh - ${HEADER_HEIGHT}px)`,
     marginLeft: props.$sideBarWidth,
     width: `calc(100vw - ${props.$sideBarWidth}px`,
     flexDirection: "column",
@@ -136,7 +135,6 @@ export const UserWrapper = styled("div", (props: { $box?: Boolean }) => ({
   display: "flex",
   width: "100%",
   justifyContent: props.$box ? "space-evenly" : "space-between",
-
   alignContent: "center",
   flexDirection: "row",
   marginTop: props.$box ? "4rem" : "",

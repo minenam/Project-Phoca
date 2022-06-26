@@ -20,9 +20,8 @@ import {
 } from "./MyPage.style";
 import Link from "next/link";
 import { userStore } from "../../zustand/userStore";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "../../common/modal/Modal";
-import LoginRequiredModal from "../../components/intro/LoginRequiredModal";
 import UserEditModal from "../../components/user/UserEditModal";
 
 const MyPage: NextPage = () => {
@@ -38,9 +37,7 @@ const MyPage: NextPage = () => {
   const userEditModalOpenHandler = () => {
     setUserEditModalOpen(true);
   };
-  useEffect(() => {
-    console.log("user", user);
-  }, []);
+
   return (
     <MyPageWrapper $sideBarWidth={`${sideBarWidth}px`}>
       <Wrapper>

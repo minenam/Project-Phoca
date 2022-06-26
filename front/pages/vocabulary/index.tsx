@@ -1,32 +1,23 @@
 import { NextPage } from "next";
 import { VocabularyWrapper } from "../../components/vocabulary/Vocabulary.styles";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
-import { useRouter } from "next/router";
-
 import VocabularyMarkHeader from "../../components/vocabulary/VocabularyMarkHeader";
 import VocabularyItem from "../../components/vocabulary/VocabularyItem";
 import { useEffect, useState } from "react";
 import { userStore } from "../../zustand/userStore";
 import { useQuery } from "react-query";
-
-interface wordBook {
-  wordbookName: string;
-  secured: boolean;
-  userId: string;
-  wordbookId: string;
-  createDate: string;
-}
+import { WordBook } from "../../common/types/resultsType";
 
 const Vocabulary: NextPage = () => {
-  const [vocaList, setVocaList] = useState<wordBook[] | undefined>([]);
+  const [vocaList, setVocaList] = useState<WordBook[] | undefined>([]);
   const [mainText, setMainText] = useState("내 단어장");
   const [checked, setChecked] = useState(false);
   const [isChange, setIsChange] = useState(false);
 
   const user = userStore((state) => state.user);
 
-  const { data } = useQuery<wordBook[], Error>(
-    ["wordbookList", user?.userId, checked],
+  const { data } = useQuery<WordBook[], Error>(
+    ["wordbookList", user?.userId, checked, isChange],
     () => getVocaList(user?.userId),
   );
 
