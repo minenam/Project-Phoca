@@ -11,19 +11,14 @@ import { MdPublic } from "react-icons/md";
 import { FaLock, FaShareSquare } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
-interface wordBook {
-  wordbookName: string;
-  secured: boolean;
-  userId: string;
-  wordbookId: string;
-  createDate: string;
-}
+import { WordBook } from "../../common/types/resultsType";
+
 interface itemProps {
-  listItem: wordBook[] | undefined;
+  listItem: WordBook[] | undefined;
   trigger: Dispatch<SetStateAction<boolean>>;
 }
 
-const wordBookChangeHandler = async (props: wordBook) => {
+const wordBookChangeHandler = async (props: WordBook) => {
   const data = {
     wordbookName: props.wordbookName,
     secured: props.secured ? false : true,
@@ -63,7 +58,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
     },
   });
 
-  const vocaChangeHandler = (props: wordBook) => {
+  const vocaChangeHandler = (props: WordBook) => {
     VocaMutation.mutate(props);
   };
 

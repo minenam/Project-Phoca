@@ -122,7 +122,10 @@ const NetworkListItem: FC = () => {
 
   const bookMarkMutation = useMutation(bookMarkHandler, {
     onSuccess: (data) => {
-      return queryClient.invalidateQueries();
+      return queryClient.invalidateQueries([
+        ["othersWordbookList", isStop],
+        ["bookmarkList"],
+      ]);
     },
     onError: (error) => {
       console.error("북마크 수정 실패", error);
