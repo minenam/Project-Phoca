@@ -9,3 +9,11 @@ export interface WordInfo {
   wordbookId: null | string;
   wordId: string;
 }
+
+export interface WordBook {
+  wordbookName: string;
+  secured: boolean;
+  userId: string;
+  wordbookId: string;
+  createDate: string;
+}
