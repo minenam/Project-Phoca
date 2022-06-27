@@ -54,7 +54,7 @@ const Home: NextPage = () => {
       </MainPhrase>
 
       <MainButtonWrapper>
-        <Link href={MAIN_BUTTON[0].link} passHref>
+        <Link href={"/guide"} passHref>
           <MainButtonHoverWrapper $guide>
             <MainButton
               $guide
