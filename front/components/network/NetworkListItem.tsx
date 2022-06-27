@@ -14,34 +14,27 @@ import {
   SearchBarWrapper,
 } from "./Network.style";
 import { HEADER_HEIGHT } from "../../common/utils/constant";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { userStore } from "../../zustand/userStore";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouter } from "next/router";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { WordBook } from "../../common/types/resultsType";
-
-interface BookMark {
-  bookmarkId: string;
-  userId: string;
-  wordbook: WordBook;
-  wordbookId: string;
-}
+import { WordBook, BookMark } from "../../common/types/resultsType";
 
 interface BookMakrProps {
   wordbookId: string;
   userId?: string;
 }
 
-const getOthersWordbookList = async (userId?: string) => {
+const getOthersWordbookList = async (
+  userId?: string,
+  searchKeyword?: string,
+) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/${userId}`,
+      searchKeyword
+        ? `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/search?keyword=${searchKeyword}`
+        : `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -50,6 +43,7 @@ const getOthersWordbookList = async (userId?: string) => {
     );
 
     const result = await res.json();
+    console.log("result", result);
     return result;
   } catch (e) {
     console.error(e);
@@ -89,8 +83,8 @@ const NetworkListItem: FC = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(["othersWordbookList", isStop], () =>
-    getOthersWordbookList(user?.userId),
+  const { data } = useQuery(["othersWordbookList", isStop, searchKeyword], () =>
+    getOthersWordbookList(user?.userId, searchKeyword && searchKeyword),
   );
 
   const bookMarkedData = useQuery(["bookmarkList"], () =>
