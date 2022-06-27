@@ -76,7 +76,6 @@ const MyPage: NextPage = () => {
   };
 
   useEffect(() => {
-    console.log("data====>", data);
     setWordbookCount(data?.wordbookResult);
     setbookmarkCount(data?.bookmarkResult);
   }, [data]);
@@ -122,7 +121,7 @@ const MyPage: NextPage = () => {
         </UserInfoWrapper>
         <ImgWrapper>
           <Seal src="/logo.png" alt="seal" />
-          <Branch src="/branch.png" alt="branch" />
+          <Branch src="/images/branch.png" alt="branch" />
         </ImgWrapper>
       </UserWrapper>
       <UserWrapper $box>
