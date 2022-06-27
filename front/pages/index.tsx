@@ -59,7 +59,7 @@ const Home: NextPage = () => {
             <MainButton
               $guide
               ref={(ref) => (btnRef.current[0] = ref)}
-              $backgroundImage="/faq.svg">
+              $backgroundImage="/images/faq.svg">
               학습가이드
             </MainButton>
           </MainButtonHoverWrapper>
