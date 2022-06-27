@@ -17,3 +17,10 @@ export interface WordBook {
   wordbookId: string;
   createDate: string;
 }
+
+export interface BookMark {
+  bookmarkId: string;
+  userId: string;
+  wordbook: WordBook;
+  wordbookId: string;
+}

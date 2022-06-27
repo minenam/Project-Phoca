@@ -6,7 +6,7 @@ import VocabularyItem from "../../components/vocabulary/VocabularyItem";
 import { useEffect, useState } from "react";
 import { userStore } from "../../zustand/userStore";
 import { useQuery } from "react-query";
-import { WordBook } from "../../common/types/resultsType";
+import { WordBook, BookMark } from "../../common/types/resultsType";
 
 const Vocabulary: NextPage = () => {
   const [vocaList, setVocaList] = useState<WordBook[] | undefined>([]);
@@ -33,8 +33,10 @@ const Vocabulary: NextPage = () => {
       },
     );
     const result = await res.json();
+    let bookmark: WordBook[] = [];
+    checked && result.map((item: BookMark) => bookmark.push(item.wordbook));
     setIsChange(false);
-    return result;
+    return checked ? bookmark : result;
   }
 
   useEffect(() => {
