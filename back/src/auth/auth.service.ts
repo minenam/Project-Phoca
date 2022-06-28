@@ -32,18 +32,18 @@ export class AuthService {
       const payload = { email: user.email, sub: user.userId };
       const accessToken = this.jwtService.sign({
         payload,
-        expiresIn: "10m",
+        expiresIn: 60000 * 10,
       });
 
       const { password, provider, joinedAt, lastloginedAt, activated, ...userInfo } = user;
       return {
         statusCode: 201,
-        message: "Login Success",
+        message: "로그인 성공",
         data: userInfo,
         token: accessToken,
       };
     } else {
-      throw new UnauthorizedException("Login Failed");
+      throw new UnauthorizedException("로그인 실패");
     }
   }
 }
