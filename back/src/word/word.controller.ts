@@ -10,8 +10,6 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  UsePipes,
-  ValidationPipe,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import {
@@ -23,7 +21,8 @@ import {
   ApiBearerAuth,
 } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
-import { UpdateWordDto } from "./dto/update-word.dto";
+import { BodyWordDto } from "./dto/body-word.dto";
+import { ParamWordDto } from "./dto/param-word.dto";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
 import { Word } from "./word.entity";
@@ -57,7 +56,6 @@ export class WordController {
     },
   })
   @UseInterceptors(FileInterceptor("file"))
-  @UsePipes(new ValidationPipe({ transform: true }))
   async uploadWord(@UploadedFile() file: Express.Multer.File) {
     const { wordEng, wordKey } = await this.imageService.uploadImage(file);
     const wordKor = [];
@@ -81,14 +79,8 @@ export class WordController {
     summary: "단어장 단어 조회 API",
     description: "단어장 아이디를 입력받아 단어들을 조회.",
   })
-  @ApiParam({
-    name: "wordbookId",
-    type: Word["wordbookId"],
-    format: "uuid",
-    description: "단어장 아이디",
-    required: true,
-  })
-  getAll(@Param("wordbookId") wordbookId: string) {
+  getAll(@Param() paramWordDto: ParamWordDto) {
+    const { wordbookId } = paramWordDto;
     return this.wordService.getAll(wordbookId);
   }
 
@@ -126,50 +118,12 @@ export class WordController {
     description: "단어 아이디",
     required: true,
   })
-  @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        wordEng: {
-          type: Word["wordEng"],
-          description: "영어 단어",
-          example: ["word"],
-        },
-        wordKor: {
-          type: Word["wordKor"],
-          description: "한글 단어",
-          example: ["단어"],
-        },
-        wordbookId: {
-          type: Word["wordbookId"],
-          format: "uuid",
-          description: "단어장 아이디",
-        },
-      },
-    },
-  })
   updateWord(
     @Param("wordId") wordId: string,
-    @Body() updateWordDto: UpdateWordDto,
+    @Body() bodyWordDto: BodyWordDto,
   ) {
-    return this.wordService.update(wordId, updateWordDto);
+    return this.wordService.update(wordId, bodyWordDto);
   }
-
-  // // 이미지 삭제
-  // @Delete("image/:key")
-  // @ApiOperation({
-  //   summary: "이미지 삭제 API",
-  //   description: "이미지 키를 입력받아 버킷의 이미지를 삭제한다.",
-  // })
-  // @ApiParam({
-  //   name: "key",
-  //   type: "string",
-  //   description: "AWS S3 이미지 키(삭제 시 필요)",
-  //   required: true,
-  // })
-  // async deleteImage(@Param("key") key: string) {
-  //   return await this.imageService.deleteImage(key);
-  // }
 
   // 단어 삭제
   @UseGuards(JwtAuthGuard)
