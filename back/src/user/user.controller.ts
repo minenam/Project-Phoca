@@ -69,9 +69,7 @@ export class UserController {
   getCurrentUser(@GetUser() user): Promise<UserInfo> {
     const userId = user.sub;
     this.logger.verbose(`Current Login User ID: ${userId}`);
-    if (userId) {
-      return this.userService.getUserById(userId);
-    }
+    return this.userService.getUserById(userId);
   }
 
   // 특정 유저 정보 조회 user/:userId
