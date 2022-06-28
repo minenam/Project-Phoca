@@ -1,4 +1,4 @@
-import { Ref, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
 import { MAIN_BUTTON } from "../common/utils/constant";
 import { useStyletron } from "styletron-react";
@@ -10,8 +10,12 @@ import {
 } from "../components/intro/Main.style";
 import Link from "next/link";
 import { userStore } from "../zustand/userStore";
+import Modal from "../common/modal/Modal";
+import LoginRequiredModal from "../components/intro/LoginRequiredModal";
 
 const Home: NextPage = () => {
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const user = userStore();
   const [css] = useStyletron();
   const btnRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -29,6 +33,17 @@ const Home: NextPage = () => {
     });
   }, [btnRef]);
 
+  const loginModalCloseHandler = () => {
+    setLoginModalOpen(false);
+  };
+
+  const buttonClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (btnRef.current[2] === e.target && user.user === null) {
+      e.preventDefault();
+      setLoginModalOpen(true);
+    }
+  };
+
   return (
     <div>
       <MainPhrase>
@@ -38,7 +53,10 @@ const Home: NextPage = () => {
       <MainButtonWrapper>
         <Link href={MAIN_BUTTON[0].link} passHref>
           <MainButtonHoverWrapper $guide>
-            <MainButton $guide ref={(ref) => (btnRef.current[0] = ref)}>
+            <MainButton
+              $guide
+              ref={(ref) => (btnRef.current[0] = ref)}
+              $backgroundImage="/faq.svg">
               학습가이드
             </MainButton>
           </MainButtonHoverWrapper>
@@ -50,7 +68,9 @@ const Home: NextPage = () => {
               <MainButtonHoverWrapper>
                 <MainButton
                   ref={(ref) => (btnRef.current[idx + 1] = ref)}
-                  className={css({ backgroundColor: item.buttonColor })}>
+                  className={css({ backgroundColor: item.buttonColor })}
+                  $backgroundImage={item.backgroundImage}
+                  onClick={buttonClickHandler}>
                   {item.buttonName}
                 </MainButton>
               </MainButtonHoverWrapper>
@@ -58,6 +78,15 @@ const Home: NextPage = () => {
           );
         })}
       </MainButtonWrapper>
+      {loginModalOpen && (
+        <Modal
+          open={loginModalOpen}
+          width="400px"
+          onClose={loginModalCloseHandler}
+          large={false}>
+          <LoginRequiredModal onClose={loginModalCloseHandler} />
+        </Modal>
+      )}
     </div>
   );
 };

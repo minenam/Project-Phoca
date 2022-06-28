@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import {
   AuthCardContainer,
   Card,
@@ -10,8 +11,11 @@ import {
 } from "../../components/user/AuthCard.style";
 import LoginPage from "../../components/user/LoginPage";
 import Seo from "../../common/Seo";
+import Toast from "../../common/toast/Toast";
 
 const Login: NextPage = () => {
+  const [errorMsg, setErrorMsg] = useState("");
+
   return (
     <>
       <Seo title="로그인" />
@@ -30,9 +34,12 @@ const Login: NextPage = () => {
             </Link>
             <Title>로그인</Title>
           </TitleContainer>
-          <LoginPage />
+          <LoginPage setErrorMsg={setErrorMsg} />
         </Card>
       </AuthCardContainer>
+      {errorMsg.length > 1 && (
+        <Toast success={false} message={errorMsg} setErrorMsg={setErrorMsg} />
+      )}
     </>
   );
 };
