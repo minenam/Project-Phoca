@@ -18,7 +18,7 @@ export class BookmarkService {
         wordbookId: createBookmarkDto.wordbookId,
       },
     });
-    if (bookmark) {
+    if (bookmark.length != 0) {
       return "이미 북마크가 되어 있습니다.";
     }
     const newBookmark = this.bookmarkRepository.create(createBookmarkDto);
@@ -53,5 +53,11 @@ export class BookmarkService {
     }
     await this.bookmarkRepository.remove(bookmark);
     return `북마크가 삭제되었습니다.`;
+  }
+
+  async countBookmark(userId: string): Promise<number> {
+    return await this.bookmarkRepository.count({
+      where: { userId },
+    });
   }
 }

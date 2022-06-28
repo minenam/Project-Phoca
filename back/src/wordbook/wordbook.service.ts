@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { Security, Wordbook } from "./wordbook.entity";
-import { Repository, DeleteResult } from "typeorm";
+import { Wordbook } from "./wordbook.entity";
+import { Repository, Not, Like } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 @Injectable()
 export class WordbookService {
@@ -10,12 +10,30 @@ export class WordbookService {
   ) {}
   async getAll(): Promise<Wordbook[]> {
     return await this.wordbookRepository.find({
-      where: { security: Security.PUBLIC },
+      where: { secured: false },
+    });
+  }
+
+  async getExcept(userId: string): Promise<Wordbook[]> {
+    return await this.wordbookRepository.find({
+      where: { secured: false, userId: Not(userId) },
     });
   }
 
   async getById(userId: string): Promise<Wordbook[]> {
     return await this.wordbookRepository.find({ where: { userId } });
+  }
+
+  async search(keyword: string): Promise<Wordbook[]> {
+    return await this.wordbookRepository.find({
+      where: { wordbookName: Like(`${keyword}%`) },
+    });
+  }
+
+  async countWordbook(userId: string): Promise<number> {
+    return await this.wordbookRepository.count({
+      where: { userId },
+    });
   }
 
   async create(wordbook: Partial<Wordbook>): Promise<Wordbook> {
@@ -48,13 +66,14 @@ export class WordbookService {
     return this.wordbookRepository.save(item);
   }
 
-  async delete(wordbookId: string): Promise<Wordbook> {
+  async delete(wordbookId: string): Promise<string> {
     const wordbook = await this.wordbookRepository.findOne({
       where: { wordbookId },
     });
     if (!wordbook) {
       throw new NotFoundException("해당 단어장이 존재하지 않습니다.");
     }
-    return await this.wordbookRepository.remove(wordbook);
+    await this.wordbookRepository.remove(wordbook);
+    return "단어장이 삭제되었습니다.";
   }
 }

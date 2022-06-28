@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
+import { Users } from "../user.entity";
 
 export class ParamUserDto {
   @ApiProperty({
@@ -10,5 +11,5 @@ export class ParamUserDto {
     format: "uuid",
   })
   @IsString()
-  userId: string;
+  userId: Users["userId"];
 }

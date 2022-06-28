@@ -34,7 +34,12 @@ const registerHandler = async (data: RegisterValues) => {
       body: JSON.stringify(data),
     },
   );
-  const result = await res.text();
+
+  const result = await res.json();
+
+  if (result.statusCode !== 201) {
+    throw new Error(result.message);
+  }
   return result;
 };
 

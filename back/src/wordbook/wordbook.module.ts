@@ -3,10 +3,28 @@ import { WordbookController } from "./wordbook.controller";
 import { WordbookService } from "./wordbook.service";
 import { Wordbook } from "./wordbook.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
   controllers: [WordbookController],
   providers: [WordbookService],
-  imports: [TypeOrmModule.forFeature([Wordbook])],
+  imports: [
+    TypeOrmModule.forFeature([Wordbook]),
+    PassportModule.register({ defaultStrategy: "jwt" }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: configService.get<string>("JWT_SECRET_KEY"),
+          signOptions: {
+            expiresIn: configService.get<string>("JWT_EXPIRESIN"),
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
+  ],
 })
 export class WordbookModule {}

@@ -8,6 +8,7 @@ import { ConfigModule } from "@nestjs/config";
 import { WordbookModule } from "./wordbook/wordbook.module";
 import { WordModule } from "./word/word.module";
 import { BookmarkModule } from "./bookmark/bookmark.module";
+import { QuizModule } from "./quiz/quiz.module";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { BookmarkModule } from "./bookmark/bookmark.module";
     WordbookModule,
     WordModule,
     BookmarkModule,
+    QuizModule,
   ],
   controllers: [],
   providers: [],

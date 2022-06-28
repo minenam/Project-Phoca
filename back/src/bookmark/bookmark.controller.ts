@@ -1,7 +1,25 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+  ApiBearerAuth,
+} from "@nestjs/swagger";
+import { JwtAuthGuard } from "../auth/auth.guard";
 import { BookmarkService } from "./bookmark.service";
 import { CreateBookmarkDto } from "./dto/create-bookmark.dto";
+
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth("accesskey")
 @ApiTags("북마크 API")
 @Controller("bookmark")
 export class BookmarkController {
@@ -21,6 +39,23 @@ export class BookmarkController {
   })
   get(@Param("userId") userId: string) {
     return this.bookmarkService.get(userId);
+  }
+
+  // 내 북마크 개수 카운트
+  @Get("/count/:userId")
+  @ApiOperation({
+    summary: "북마크 개수 카운트 API",
+    description: "유저 아이디를 입력받아 북마크 개수 카운트.",
+  })
+  @ApiParam({
+    name: "userId",
+    type: "string",
+    format: "uuid",
+    description: "유저 아이디",
+    required: true,
+  })
+  countWordbook(@Param("userId") userId: string) {
+    return this.bookmarkService.countBookmark(userId);
   }
 
   @Post("/")
