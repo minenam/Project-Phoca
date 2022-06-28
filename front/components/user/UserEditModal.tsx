@@ -75,7 +75,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         body: formData,
       },
     );
-    console.log("res", res);
+
     if (!res.ok) {
       throw new Error(res.statusText);
     }
