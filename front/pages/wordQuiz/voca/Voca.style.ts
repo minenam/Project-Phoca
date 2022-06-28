@@ -52,11 +52,10 @@ export const TtsBtn = styled("button", {
 });
 
 export const TextContainer = styled("div", {
-  display: "flex",
-  flexDirection: "column",
   height: "100%",
-  justifyContent: "center",
-  marginTop: "-2rem",
+  display: "grid",
+  gridTemplateRows: "2fr 1fr",
+  alignItems: "center",
 });
 
 export const EngWord = styled("h1", {
@@ -68,7 +67,6 @@ export const KorWord = styled("p", {
   fontSize: "2rem",
   color: "gray",
   textAlign: "center",
-  marginTop: "2rem",
 });
 
 export const PageBtnContainer = styled("div", {

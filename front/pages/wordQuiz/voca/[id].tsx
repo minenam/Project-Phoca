@@ -56,6 +56,7 @@ function Voca() {
 
   const [wordList, setWordList] = useState<Word[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [korWordVisible, setKorWordVisible] = useState(false);
 
   const isValid = wordList.length > 0;
 
@@ -93,22 +94,30 @@ function Voca() {
               </TtsBtn>
             </TtsBtnContainer>
 
-            <TextContainer>
+            <TextContainer onClick={() => setKorWordVisible((cur) => !cur)}>
               <EngWord>{isValid && wordList[currentIdx].wordEng[0]}</EngWord>
-              <KorWord>{isValid && wordList[currentIdx].wordKor[0]}</KorWord>
+              {korWordVisible && (
+                <KorWord>{isValid && wordList[currentIdx].wordKor[0]}</KorWord>
+              )}
             </TextContainer>
           </WordCard>
         </WordCardContainer>
 
         <PageBtnContainer>
           <LeftBtn
-            onClick={() => setCurrentIdx((cur) => cur - 1)}
+            onClick={() => {
+              setCurrentIdx((cur) => cur - 1);
+              setKorWordVisible(false);
+            }}
             disabled={currentIdx === 0}
             $disabled={currentIdx === 0}
           />
           {currentIdx + 1} / {wordList.length > 0 && wordList.length}
           <RightBtn
-            onClick={() => setCurrentIdx((cur) => cur + 1)}
+            onClick={() => {
+              setCurrentIdx((cur) => cur + 1);
+              setKorWordVisible(false);
+            }}
             disabled={currentIdx === wordList.length - 1}
             $disabled={currentIdx === wordList.length - 1}
           />
