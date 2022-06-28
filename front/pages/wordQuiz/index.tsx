@@ -40,14 +40,21 @@ const card: Card[] = [
 ];
 
 function WordQuiz() {
+  const router = useRouter();
   const small = useMediaQuery({ query: "(max-width : 1651px)" });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBtnIdx, setSelectedBtnIdx] = useState(0);
   const [wordbookList, setWordbookList] = useState<Wordbook[]>([]); // 단어장 리스트를 저장
   const [selectedWordbookId, setSelectedWordbookId] = useState(""); // 선택된 단어장 Id를 저장
 
-  const btnClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const btnClickHandler = (idx: number) => {
+    setSelectedBtnIdx(idx);
     setIsModalOpen(true);
+  };
+
+  const selectBtnClickHandler = () => {
+    router.push(`${card[selectedBtnIdx].link}/${selectedWordbookId}`);
   };
 
   const modalCloseHandler = () => {
@@ -64,7 +71,7 @@ function WordQuiz() {
             <Image src={item.src} alt={item.alt} width={400} height={400} />
             <Title>{item.title}</Title>
             <BtnContainer>
-              <Button $small={small} onClick={btnClickHandler}>
+              <Button $small={small} onClick={() => btnClickHandler(idx)}>
                 {item.buttonName}
               </Button>
             </BtnContainer>
@@ -86,7 +93,7 @@ function WordQuiz() {
             setSelectedWordbookId={setSelectedWordbookId}
           />
           <BtnContainer>
-            <SelectBtn>선택하기</SelectBtn>
+            <SelectBtn onClick={selectBtnClickHandler}>선택하기</SelectBtn>
           </BtnContainer>
         </Modal>
       )}
