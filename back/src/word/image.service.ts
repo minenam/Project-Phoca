@@ -1,20 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { InjectRepository } from "@nestjs/typeorm";
 import * as AWS from "aws-sdk";
 import * as dotenv from "dotenv";
-import { Repository } from "typeorm";
 import { HttpService } from "@nestjs/axios";
-// import { CreateWordDto } from "./dto/create-word.dto";
-// import { UpdateWordDto } from "./dto/update-word.dto";
-import { Word } from "./word.entity";
 import { lastValueFrom } from "rxjs";
 dotenv.config();
 
 @Injectable()
 export class ImageService {
   constructor(
-    @InjectRepository(Word) private wordRepository: Repository<Word>,
     private configService: ConfigService,
     private readonly httpService: HttpService,
   ) {
@@ -31,8 +25,7 @@ export class ImageService {
     const AWS_S3_BUCKET = this.configService.get("AWS_BUCKET_NAME");
     const params = {
       Bucket: AWS_S3_BUCKET,
-      //Key: String(Date.now() + "_" + file.originalname),
-      Key: file.originalname,
+      Key: String(Date.now() + "_" + file.originalname),
       Body: file.buffer,
       ACL: "public-read",
     };
@@ -48,7 +41,7 @@ export class ImageService {
       const wordEng = data.data.classes;
       return { wordEng, wordImage, wordKey };
     } catch (e) {
-      console.log(e);
+      return e;
     }
   }
   async deleteImage(key: string) {
