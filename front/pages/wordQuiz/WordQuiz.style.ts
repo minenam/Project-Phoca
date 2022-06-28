@@ -47,3 +47,14 @@ export const Button = styled("button", (props: { $small: boolean }) => ({
   color: "#fff",
   cursor: "pointer",
 }));
+
+export const SelectBtn = styled("button", {
+  width: "60%",
+  border: 0,
+  backgroundColor: "#FE8C55",
+  borderRadius: "20px",
+  margin: "1rem",
+  fontSize: "2rem",
+  color: "#fff",
+  cursor: "pointer",
+});
