@@ -3,8 +3,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useMutation } from "react-query";
-import { Dispatch, SetStateAction } from "react";
+import { useMutation, useQuery } from "react-query";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   Form,
   ContentContainer,
@@ -18,6 +18,7 @@ import {
   ErrorMsg,
   SnsTitle,
   KakaoBtn,
+  SNSBtnContainer,
 } from "./AccountPage.style";
 import { userStore, UserProperties } from "../../zustand/userStore";
 
@@ -39,6 +40,7 @@ interface ResponseType {
 
 const initialValue: LoginValues = { email: "", password: "" };
 
+// 로그인 핸들러
 const loginHandler = async (data: LoginValues) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
     method: "POST",
@@ -55,10 +57,38 @@ const loginHandler = async (data: LoginValues) => {
   return result;
 };
 
+// 카카오 로그인 핸들러
+const kakaoLoginHandler = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/kakao/login`,
+  );
+  if (!res.ok) {
+    throw new Error("카카오 로그인 실패");
+  }
+  const result = await res.json();
+  return result;
+};
+
 function LoginPage(props: LoginPageProps) {
   const router = useRouter();
   const { setErrorMsg } = props;
 
+  const [isKakaoBtnClick, setIsKakaoBtnClick] = useState(false);
+
+  // kakao login 요청
+  useQuery(["kakao_login"], kakaoLoginHandler, {
+    enabled: isKakaoBtnClick,
+    retry: false,
+    onSuccess: (data) => {
+      console.log("kakao login success, data : ", data);
+    },
+    onError: (err) => {
+      console.log("kakao login error : ", err);
+      setIsKakaoBtnClick(false);
+    },
+  });
+
+  // 로그인 요청
   const loginMutation = useMutation(loginHandler, {
     onSuccess: (result, variables) => {
       sessionStorage.setItem("userToken", result.token);
@@ -76,6 +106,7 @@ function LoginPage(props: LoginPageProps) {
     },
   });
 
+  // 폼 유효성 검사, Submit Handler
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: Yup.object({
@@ -91,9 +122,14 @@ function LoginPage(props: LoginPageProps) {
     },
   });
 
+  // 카카오 버튼 누름 상태 체크
+  const kakaoBtnClickHandler = () => {
+    setIsKakaoBtnClick(true);
+  };
+
   return (
     <>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form $isLogin onSubmit={formik.handleSubmit}>
         <ContentContainer>
           <Field>
             <Label htmlFor="email">이메일</Label>
@@ -132,18 +168,18 @@ function LoginPage(props: LoginPageProps) {
             |<TextButton>비밀번호 찾기</TextButton>
           </TextBtnContainer>
         </BtnContainer>
-        <SnsTitle>SNS 로그인</SnsTitle>
-        <BtnContainer>
-          <KakaoBtn>
-            <Image
-              src="/images/kakaoLogin.png"
-              alt="kakao-login-btn"
-              width="183"
-              height="45"
-            />
-          </KakaoBtn>
-        </BtnContainer>
       </Form>
+      <SnsTitle>SNS 로그인</SnsTitle>
+      <SNSBtnContainer>
+        <KakaoBtn onClick={kakaoBtnClickHandler}>
+          <Image
+            src="/images/kakaoLogin.png"
+            alt="kakao-login-btn"
+            width="183"
+            height="45"
+          />
+        </KakaoBtn>
+      </SNSBtnContainer>
     </>
   );
 }
