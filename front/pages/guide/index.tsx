@@ -18,7 +18,7 @@ const Guide: NextPage = () => {
     e: React.MouseEvent<HTMLLIElement>,
     idx: number,
   ) => {
-    console.log(e.currentTarget.nextElementSibling);
+    console.log("menuRef.current[idx]", menuRef.current[idx]);
   };
 
   return (

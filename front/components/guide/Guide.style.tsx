@@ -48,4 +48,8 @@ export const MenuItem = styled("li", (props: { $clicked?: boolean }) => ({
   cursor: "pointer",
   transition: "height 0.5 ease",
   marginTop: "1.4rem",
+  ":hover": {
+    transition: "height 0.5 ease",
+    height: "250px",
+  },
 }));
