@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { AuthCredentialDto } from "./dto/auth.credential.dto";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
-import { LoginUserInfoType } from "../user/dto/login-user.dto";
+import { LoginUserInfo } from "../user/dto/login-user.dto";
 
 @Injectable()
 export class AuthService {
@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   // 로그인시 유저 비밀번호 확인 및 JWT 생성
-  async validateUser(authcredntialDto: AuthCredentialDto): Promise<LoginUserInfoType> {
+  async validateUser(authcredntialDto: AuthCredentialDto): Promise<LoginUserInfo> {
     const { email, password } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
 
