@@ -67,7 +67,7 @@ export class UserController {
   @ApiOperation({ summary: "현재 로그인 유저 정보 조회 API" })
   @ApiBearerAuth("accesskey")
   getCurrentUser(@GetUser() user): Promise<UserInfo> {
-    const userId = user.sub;
+    const userId = user.payload.sub;
     this.logger.verbose(`Current Login User ID: ${userId}`);
     return this.userService.getUserById(userId);
   }
@@ -82,7 +82,7 @@ export class UserController {
     @GetUser() user,
   ): Promise<UserInfo> {
     const { userId } = paramUserDto;
-    if (userId !== user.sub) {
+    if (userId !== user.payload.sub) {
       throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
     }
     const found = this.userService.getUserById(userId);
@@ -99,7 +99,7 @@ export class UserController {
     @GetUser() user,
   ): Promise<string> {
     const { userId } = paramUserDto;
-    if (userId !== user.sub) {
+    if (userId !== user.payload.sub) {
       throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
     }
     this.logger.verbose(`Try to Withdraw: UserID ${userId}`);
@@ -134,7 +134,7 @@ export class UserController {
     @UploadedFile("file") file: Express.Multer.File,
   ): Promise<Users> {
     const { userId } = paramUserDto;
-    if (userId !== user.sub) {
+    if (userId !== user.payload.sub) {
       throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
     }
     const updateUserInfo = { userName, comment, file };
