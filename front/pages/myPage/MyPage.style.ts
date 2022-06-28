@@ -6,7 +6,6 @@ export const MyPageWrapper = styled(
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    // height: `calc(100vh - ${HEADER_HEIGHT}px)`,
     marginLeft: props.$sideBarWidth,
     width: `calc(100vw - ${props.$sideBarWidth}px`,
     flexDirection: "column",

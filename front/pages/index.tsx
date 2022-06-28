@@ -37,8 +37,11 @@ const Home: NextPage = () => {
     setLoginModalOpen(false);
   };
 
-  const buttonClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (btnRef.current[2] === e.target && user.user === null) {
+  const buttonClickHandler = (
+    e: React.MouseEvent<HTMLDivElement>,
+    idx: number,
+  ) => {
+    if (idx === 1 && user.user === null) {
       e.preventDefault();
       setLoginModalOpen(true);
     }
@@ -70,7 +73,7 @@ const Home: NextPage = () => {
                   ref={(ref) => (btnRef.current[idx + 1] = ref)}
                   className={css({ backgroundColor: item.buttonColor })}
                   $backgroundImage={item.backgroundImage}
-                  onClick={buttonClickHandler}>
+                  onClick={(e) => buttonClickHandler(e, idx)}>
                   {item.buttonName}
                 </MainButton>
               </MainButtonHoverWrapper>

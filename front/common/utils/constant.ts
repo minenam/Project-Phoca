@@ -18,7 +18,7 @@ export const MAIN_BUTTON: Button[] = [
     backgroundImage: "/monster_artist.svg",
   },
   {
-    buttonName: "단어장 보러가기",
+    buttonName: "단어장 하러가기",
     buttonColor: "#FEC70B",
     link: "/myPage",
     backgroundImage: "/traveling.svg",
