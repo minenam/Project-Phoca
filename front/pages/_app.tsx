@@ -35,6 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     "/register",
     "/network",
     "/guide",
+    "/wordQuiz/game/[id]",
   ];
   const queryClient = new QueryClient();
 
