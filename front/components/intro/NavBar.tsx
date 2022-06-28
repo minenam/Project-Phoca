@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Anchor,
@@ -13,7 +13,10 @@ import { userStore } from "../../zustand/userStore";
 const NavBar: FC = () => {
   const user = userStore();
   const loginHandler = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(e.target);
+    if (sessionStorage.getItem("userToken")) {
+      sessionStorage.removeItem("userToken");
+      userStore.setState({ user: null });
+    }
   };
 
   return (
@@ -25,8 +28,8 @@ const NavBar: FC = () => {
         </Anchor>
       </Link>
       <RightMenuWrapper>
-        <Link href={"/login"} onClick={loginHandler} passHref>
-          <Login>{user ? "Logout" : "Login"}</Login>
+        <Link href={"/login"} passHref>
+          <Login>{user.user != null ? "Logout" : "Login"}</Login>
         </Link>
         <Welcome>Hi! I&apos;m Your English Mate!&nbsp;&nbsp;&nbsp;</Welcome>
       </RightMenuWrapper>
