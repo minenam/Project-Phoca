@@ -68,7 +68,7 @@ function BookList(props: ListProps) {
 
   useEffect(() => {
     setWordbookList(data);
-    if (data) {
+    if (data && data.length > 0) {
       setSelectedWordbookId(data[0].wordbookId);
     }
   }, [data]);
