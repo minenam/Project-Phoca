@@ -11,7 +11,7 @@ const MenuButton = ({
   const [onClicked, setOnClicked] = useState(false);
 
   const menuItemClickHandler = (e: React.MouseEvent) => {
-    setOnClicked(cancelClicked);
+    setOnClicked(true);
   };
 
   useEffect(() => {
@@ -21,12 +21,8 @@ const MenuButton = ({
   return (
     <MenuItem
       key={key}
-      className={`${onClicked ? "clicked" : ""}`}
-      $style={{
-        height: onClicked ? "250px" : "85px",
-        transition: onClicked ? "height 0.5 ease" : "",
-      }}
-      onClick={(e) => menuItemClickHandler(e)}>
+      $clicked={onClicked ? true : false}
+      onClick={menuItemClickHandler}>
       {text}
     </MenuItem>
   );
