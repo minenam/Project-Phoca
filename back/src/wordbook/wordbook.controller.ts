@@ -21,13 +21,17 @@ import {
   ApiQuery,
 } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
+import { WordService } from "../word/word.service";
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth("accesskey")
 @ApiTags("단어장 API")
 @Controller("wordbook")
 export class WordbookController {
-  constructor(private wordbookService: WordbookService) {}
+  constructor(
+    private wordbookService: WordbookService,
+    private wordService: WordService,
+  ) {}
 
   //전체 단어장 조회
   @Get()
@@ -151,8 +155,11 @@ export class WordbookController {
     description: "단어장 아이디",
     required: true,
   })
-  findOne(@Param("wordbookId") wordbookId: string) {
-    return this.wordbookService.get(wordbookId);
+  async findOne(@Param("wordbookId") wordbookId: string) {
+    const wordCount = await this.wordService.countWord(wordbookId);
+    const wordbookInfo = await this.wordbookService.get(wordbookId);
+
+    return { wordCount, ...wordbookInfo };
   }
 
   // 단어장 이름, 보안 수정
