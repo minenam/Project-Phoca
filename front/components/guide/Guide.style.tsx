@@ -42,14 +42,14 @@ export const MenuItem = styled("li", (props: { $clicked?: boolean }) => ({
   backgroundColor: "orange",
   display: "flex",
   alignItems: "center",
-  height: props.$clicked ? "250px" : "85px",
+  height: "85px",
   width: "100%",
   fontSize: "20px",
   cursor: "pointer",
   transition: "height 0.5 ease",
   marginTop: "1.4rem",
-  ":hover": {
-    transition: "height 0.5 ease",
+  clicked: {
     height: "250px",
+    transition: "height 3.5 linear",
   },
 }));

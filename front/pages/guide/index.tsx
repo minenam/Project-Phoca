@@ -9,17 +9,11 @@ import {
 } from "../../components/guide/Guide.style";
 import { HEADER_HEIGHT, MAIN_BUTTON } from "../../common/utils/constant";
 import { useRef, useState } from "react";
+import MenuList from "../../components/guide/MenuList";
 
 const Guide: NextPage = () => {
   const [menuClicked, setMenuClicked] = useState(false);
   const menuRef = useRef<(HTMLLIElement | null)[]>([]);
-
-  const menuItemClickHandler = (
-    e: React.MouseEvent<HTMLLIElement>,
-    idx: number,
-  ) => {
-    console.log("menuRef.current[idx]", menuRef.current[idx]);
-  };
 
   return (
     <GuideWrapper $headerHeight={HEADER_HEIGHT}>
@@ -28,16 +22,7 @@ const Guide: NextPage = () => {
       </ContentWrapper>
       <MenuWrapper>
         <MenuRoot>
-          {MAIN_BUTTON.map((item, idx) => {
-            return (
-              <MenuItem
-                $clicked={menuRef.current[idx] ? true : false}
-                ref={(ref) => (menuRef.current[idx] = ref)}
-                onClick={(e) => menuItemClickHandler(e, idx)}>
-                {item.buttonName}
-              </MenuItem>
-            );
-          })}
+          <MenuList />
         </MenuRoot>
       </MenuWrapper>
     </GuideWrapper>

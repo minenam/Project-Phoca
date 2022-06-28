@@ -67,7 +67,7 @@ const Home: NextPage = () => {
 
         {MAIN_BUTTON.map((item, idx) => {
           return (
-            <Link href={item.link} key={idx} passHref>
+            <Link href={item.link} key={item.buttonName} passHref>
               <MainButtonHoverWrapper>
                 <MainButton
                   ref={(ref) => (btnRef.current[idx + 1] = ref)}
