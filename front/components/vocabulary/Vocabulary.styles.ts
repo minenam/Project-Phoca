@@ -106,30 +106,34 @@ export const GridTextItem = styled("p", {
   paddingBottom: "1.5rem",
 });
 
-export const GridWrapper = styled("div", (props: { $lapTop?: Boolean }) => ({
-  display: "flex",
-  width: props.$lapTop ? "87%" : "97%",
-  alignSelf: "flex-start",
-  justifyContent: "center",
-  borderRadius: "30px",
-  marginTop: "20px",
-  flexWrap: "wrap",
-  backgroundColor: "#fedda6",
-  scrollbarWidth: "thin",
-  padding: "25px",
-  overflowY: "auto",
-  "::-webkit-scrollbar": {
-    backgroundColor: "#FFECD0",
-  },
-  "::-webkit-scrollbar-thumb": {
-    backgroundColor: "#FFAA2A",
-    borderRadius: "20px",
-  },
-  "::-webkit-scrollbar-track": {
-    backgroundColor: "darkgray",
-    borderRadius: "20px",
-  },
-}));
+export const GridWrapper = styled(
+  "div",
+  (props: { $lapTop?: Boolean; $without?: Boolean }) => ({
+    display: "flex",
+    width: props.$lapTop ? "87%" : "97%",
+    height: props.$without ? "5rem" : "",
+    alignSelf: "flex-start",
+    justifyContent: "center",
+    borderRadius: "30px",
+    marginTop: "20px",
+    flexWrap: "wrap",
+    backgroundColor: "#fedda6",
+    scrollbarWidth: "thin",
+    padding: "25px",
+    overflowY: "auto",
+    "::-webkit-scrollbar": {
+      backgroundColor: "#FFECD0",
+    },
+    "::-webkit-scrollbar-thumb": {
+      backgroundColor: "#FFAA2A",
+      borderRadius: "20px",
+    },
+    "::-webkit-scrollbar-track": {
+      backgroundColor: "darkgray",
+      borderRadius: "20px",
+    },
+  }),
+);
 
 export const BtnWrapper = styled("div", {
   display: "flex",

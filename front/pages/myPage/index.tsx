@@ -20,23 +20,43 @@ import {
 } from "./MyPage.style";
 import Link from "next/link";
 import { userStore } from "../../zustand/userStore";
+import React, { useEffect, useState } from "react";
+import Modal from "../../common/modal/Modal";
+import LoginRequiredModal from "../../components/intro/LoginRequiredModal";
+import UserEditModal from "../../components/user/UserEditModal";
 
 const MyPage: NextPage = () => {
+  const [userEditModalOpen, setUserEditModalOpen] = useState(false);
   const user = userStore((state) => state.user);
 
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
 
+  const userEditModalCloseHandler = () => {
+    setUserEditModalOpen(false);
+  };
+
+  const userEditModalOpenHandler = () => {
+    setUserEditModalOpen(true);
+  };
+  useEffect(() => {
+    console.log("user", user);
+  }, []);
   return (
     <MyPageWrapper $sideBarWidth={`${sideBarWidth}px`}>
       <Wrapper>
-        <UserInfoEdit $sideBarWidth={`${sideBarWidth}px`}>
+        <UserInfoEdit
+          $sideBarWidth={`${sideBarWidth}px`}
+          onClick={userEditModalOpenHandler}>
           회원 정보 수정하기
         </UserInfoEdit>
       </Wrapper>
       <UserWrapper>
         <UserInfoWrapper>
           <Avatar>
-            <AvatarImage src="/vercel.svg" alt="avatar" />
+            <AvatarImage
+              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`}
+              alt="avatar"
+            />
           </Avatar>
           <UserName>{user?.userName}님</UserName>
         </UserInfoWrapper>
@@ -47,7 +67,7 @@ const MyPage: NextPage = () => {
           </UserDetailWrapper>
           <UserDetailWrapper>
             <RoundedBox>코멘트</RoundedBox>
-            <UserInfoDetail>테스트 코멘트</UserInfoDetail>
+            <UserInfoDetail>{user?.comment}</UserInfoDetail>
           </UserDetailWrapper>
         </UserInfoWrapper>
         <UserInfoWrapper>
@@ -80,6 +100,15 @@ const MyPage: NextPage = () => {
           </Browser>
         </Link>
       </UserWrapper>
+      {userEditModalOpen && (
+        <Modal
+          open={userEditModalOpen}
+          width="500px"
+          onClose={userEditModalCloseHandler}
+          large={true}>
+          <UserEditModal onClose={userEditModalCloseHandler} userInfo={user} />
+        </Modal>
+      )}
     </MyPageWrapper>
   );
 };
