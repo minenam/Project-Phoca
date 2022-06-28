@@ -1,9 +1,14 @@
-import { IsOptional } from "class-validator";
+import { IsOptional, IsUUID } from "class-validator";
+import { Word } from "../word.entity";
 
 export class UpdateWordDto {
   @IsOptional()
-  wordEng: string;
+  wordEng: Word["wordEng"];
 
   @IsOptional()
-  wordKor: string;
+  wordKor: Word["wordKor"];
+
+  @IsUUID()
+  @IsOptional()
+  wordbookId: Word["wordbookId"];
 }

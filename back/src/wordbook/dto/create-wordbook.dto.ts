@@ -1,16 +1,14 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Security } from "../wordbook.entity";
+import { Wordbook } from "../wordbook.entity";
 
 export class CreateWordbookDto {
-  // @IsUUID()
-  // wordbookId: string;
-
   @IsString()
   @IsNotEmpty()
-  wordbookName: string;
+  @ApiProperty({ description: "단어장 이름" })
+  wordbookName: Wordbook["wordbookName"];
 
   @IsOptional()
-  security: Security;
-
-  // createDate: Date;
+  @ApiProperty({ description: "단어장 공개 여부" })
+  secured: Wordbook["secured"];
 }
