@@ -14,10 +14,13 @@ function Toast(props: ToastProps) {
 
   useEffect(() => {
     if (toastVisible) {
-      setTimeout(() => {
+      const timerId = setTimeout(() => {
         setToastVisible(false);
         setErrorMsg("");
-      }, 2000);
+      }, 3000);
+      return () => {
+        clearTimeout(timerId);
+      };
     }
   }, []);
 

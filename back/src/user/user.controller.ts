@@ -28,9 +28,9 @@ import {
 import { JwtAuthGuard } from "../auth/auth.guard";
 import { GetUser } from "./user.decorator";
 import { ParamUserDto } from "./dto/param-user.dto";
-import { LoginUserInfoType } from "../user/dto/login-user.dto";
+import { LoginUserInfo } from "../user/dto/login-user.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { UserInfoType } from "./dto/user-info.dto";
+import { UserInfo } from "./dto/user-info.dto";
 
 @Controller("user")
 @ApiTags("회원(유저) API")
@@ -48,7 +48,7 @@ export class UserController {
   // 유저 회원가입 /user/register
   @Post("register")
   @ApiOperation({ summary: "회원가입 API" })
-  register(@Body() createUserDto: CreateUserDto): Promise<UserInfoType> {
+  register(@Body() createUserDto: CreateUserDto): Promise<UserInfo> {
     this.logger.verbose(`Try to Register: Username ${createUserDto.userName}`);
     return this.userService.register(createUserDto);
   }
@@ -56,7 +56,7 @@ export class UserController {
   // 유저 로그인 /user/login
   @Post("login")
   @ApiOperation({ summary: "로그인 API (토큰발급)" })
-  login(@Body() authCredentialDto: AuthCredentialDto): Promise<LoginUserInfoType> {
+  login(@Body() authCredentialDto: AuthCredentialDto): Promise<LoginUserInfo> {
     this.logger.verbose(`Try to Login: User Email ${authCredentialDto.email}`);
     return this.userService.login(authCredentialDto);
   }
@@ -66,12 +66,10 @@ export class UserController {
   @Get("current")
   @ApiOperation({ summary: "현재 로그인 유저 정보 조회 API" })
   @ApiBearerAuth("accesskey")
-  getCurrentUser(@GetUser() user): Promise<UserInfoType> {
+  getCurrentUser(@GetUser() user): Promise<UserInfo> {
     const userId = user.sub;
     this.logger.verbose(`Current Login User ID: ${userId}`);
-    if (userId) {
-      return this.userService.getUserById(userId);
-    }
+    return this.userService.getUserById(userId);
   }
 
   // 특정 유저 정보 조회 user/:userId
@@ -82,7 +80,7 @@ export class UserController {
   getUserById(
     @Param() paramUserDto: ParamUserDto,
     @GetUser() user,
-  ): Promise<UserInfoType> {
+  ): Promise<UserInfo> {
     const { userId } = paramUserDto;
     if (userId !== user.sub) {
       throw new BadRequestException(`Wrong Token`);
