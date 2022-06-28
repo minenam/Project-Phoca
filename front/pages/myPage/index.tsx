@@ -38,9 +38,7 @@ const MyPage: NextPage = () => {
   const userEditModalOpenHandler = () => {
     setUserEditModalOpen(true);
   };
-  useEffect(() => {
-    console.log("user", user);
-  }, []);
+
   return (
     <MyPageWrapper $sideBarWidth={`${sideBarWidth}px`}>
       <Wrapper>

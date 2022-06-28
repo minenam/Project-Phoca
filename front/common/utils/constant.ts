@@ -30,7 +30,7 @@ export const MAIN_BUTTON: Button[] = [
     backgroundImage: "/playing_cards.svg",
   },
   {
-    buttonName: "단어퀴즈 보러가기",
+    buttonName: "단어퀴즈 하러가기",
     buttonColor: "#FE7394",
     link: "/wordQuiz",
     backgroundImage: "/popularity.svg",
