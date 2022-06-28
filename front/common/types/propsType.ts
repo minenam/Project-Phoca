@@ -5,8 +5,6 @@ export interface ModalProps {
 }
 
 export interface GuideMenuButtonProps {
-  key: string;
-  text: string;
-  cancelClicked?: boolean;
-  trigger: Dispatch<SetStateAction<boolean>>;
+  selected: string;
+  setSelected: Dispatch<SetStateAction<string>>;
 }

@@ -28,7 +28,7 @@ export const MenuWrapper = styled("div", {
   justifyContent: "start",
   alignSelf: "flex-start",
   marginLeft: "1.4rem",
-  width: "33.3333333%",
+  width: "35%",
   height: "100%",
 });
 export const MenuRoot = styled("ul", {
@@ -37,8 +37,9 @@ export const MenuRoot = styled("ul", {
   height: "100%",
   flexDirection: "column",
 });
-
-export const MenuItem = styled("li", (props: { $clicked?: boolean }) => ({
+export const MenuItemWrapper = styled("div", {});
+export const MenuItem = styled("li", (props: { $onClicked: boolean }) => ({
+  position: "relative",
   backgroundColor: "orange",
   display: "flex",
   alignItems: "center",
@@ -46,10 +47,16 @@ export const MenuItem = styled("li", (props: { $clicked?: boolean }) => ({
   width: "100%",
   fontSize: "20px",
   cursor: "pointer",
-  transition: "height 0.5 ease",
   marginTop: "1.4rem",
-  clicked: {
-    height: "250px",
-    transition: "height 3.5 linear",
+  ":after": {
+    content: '""',
+    position: "absolute",
+    top: props.$onClicked ? "25px" : "",
+    right: props.$onClicked ? "-15px" : "",
+    height: props.$onClicked ? "0px" : "",
+    width: props.$onClicked ? "0px" : "",
+    borderTop: props.$onClicked ? "solid 15px transparent" : "",
+    borderLeft: props.$onClicked ? "solid 15px orange" : "",
+    borderBottom: props.$onClicked ? "solid 15px transparent" : "",
   },
 }));

@@ -7,13 +7,12 @@ import {
   MenuWrapper,
   Title,
 } from "../../components/guide/Guide.style";
-import { HEADER_HEIGHT, MAIN_BUTTON } from "../../common/utils/constant";
+import { HEADER_HEIGHT } from "../../common/utils/constant";
 import { useRef, useState } from "react";
 import MenuList from "../../components/guide/MenuList";
 
 const Guide: NextPage = () => {
-  const [menuClicked, setMenuClicked] = useState(false);
-  const menuRef = useRef<(HTMLLIElement | null)[]>([]);
+  const [selected, setSelected] = useState("");
 
   return (
     <GuideWrapper $headerHeight={HEADER_HEIGHT}>
@@ -22,7 +21,7 @@ const Guide: NextPage = () => {
       </ContentWrapper>
       <MenuWrapper>
         <MenuRoot>
-          <MenuList />
+          <MenuList selected={selected} setSelected={setSelected} />
         </MenuRoot>
       </MenuWrapper>
     </GuideWrapper>

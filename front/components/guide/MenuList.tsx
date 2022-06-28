@@ -1,21 +1,27 @@
-import { FC, useState } from "react";
 import { MAIN_BUTTON } from "../../common/utils/constant";
 import { MenuItem } from "./Guide.style";
-import MenuButton from "./MenuButton";
+import { GuideMenuButtonProps } from "../../common/types/propsType";
 
-const MenuList = () => {
-  const [trigger, setTrigger] = useState(false);
+const MenuList = ({ selected, setSelected }: GuideMenuButtonProps) => {
+  const buttonClickHandler = (
+    e: React.MouseEvent<HTMLLIElement>,
+    name: string,
+  ) => {
+    setSelected(name);
+  };
 
   return (
     <>
       {MAIN_BUTTON.map((item, idx) => {
         return (
-          <MenuButton
-            key={item.buttonName}
-            text={item.buttonName}
-            trigger={setTrigger}
-            cancelClicked={trigger ? true : false}
-          />
+          <>
+            <MenuItem
+              key={item.buttonName}
+              $onClicked={selected === item.buttonName}
+              onClick={(e) => buttonClickHandler(e, item.buttonName)}>
+              {item.buttonName}
+            </MenuItem>
+          </>
         );
       })}
     </>

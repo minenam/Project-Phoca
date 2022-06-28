@@ -41,7 +41,7 @@ const Home: NextPage = () => {
     e: React.MouseEvent<HTMLDivElement>,
     idx: number,
   ) => {
-    if (idx === 2 && user.user === null) {
+    if (idx === 1 && user.user === null) {
       e.preventDefault();
       setLoginModalOpen(true);
     }
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <MainPhrase>
-        아이들 영여 교육, Phoca와 함께 주변 사물부터 시작해봐요.
+        아이들 영어 교육, Phoca와 함께 주변 사물부터 시작해봐요.
       </MainPhrase>
 
       <MainButtonWrapper>
