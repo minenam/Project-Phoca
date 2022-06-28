@@ -8,7 +8,7 @@ import {
   LockBtn,
 } from "./Vocabulary.styles";
 import { MdPublic } from "react-icons/md";
-import { FaLock, FaShareSquare } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { WordBook } from "../../common/types/resultsType";
@@ -71,9 +71,6 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
               <BtnWrapper>
                 <LockBtn onClick={() => vocaChangeHandler(item)}>
                   {item.secured ? <FaLock /> : <MdPublic />}
-                </LockBtn>
-                <LockBtn>
-                  <FaShareSquare />
                 </LockBtn>
               </BtnWrapper>
               <GridTextItem>{item.wordbookName}</GridTextItem>
