@@ -12,7 +12,8 @@ import { UserService } from "./user.service";
 @Module({
   imports: [
     TypeOrmModule.forFeature([Users]),
-    PassportModule.register({ defaultStrategy: "jwt" }),
+    // PassportModule.register({ defaultStrategy: "jwt" }),
+    PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {

@@ -6,6 +6,7 @@ import { AuthCredentialDto } from "./dto/auth.credential.dto";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
 import { LoginUserInfoType } from "../user/dto/login-user.dto";
+import { HttpService } from "@nestjs/axios";
 
 @Injectable()
 export class AuthService {
@@ -42,5 +43,16 @@ export class AuthService {
     } else {
       throw new UnauthorizedException("Login Failed");
     }
+  }
+
+  // 카카오 로그인
+  async kakaoLogin(user) {
+    if (!user) {
+      return "No User from Kakao";
+    }
+    return {
+      message: "User Infofmation from Kakao",
+      user,
+    };
   }
 }
