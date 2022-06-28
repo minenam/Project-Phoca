@@ -12,6 +12,7 @@ import {
   Title,
   WordCardContainer,
   WordCard,
+  TtsBtnContainer,
   TtsBtn,
   TextContainer,
   EngWord,
@@ -53,43 +54,67 @@ function Voca() {
   const router = useRouter();
   const wordbookId = router.query.id as string;
 
-  const [wordbookList, setWordbookList] = useState<Word[]>([]);
+  const [wordList, setWordList] = useState<Word[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
+
+  const isValid = wordList.length > 0;
 
   const { data } = useQuery("words", () => getWords(wordbookId), {
     enabled: !!wordbookId,
   });
 
+  const ttsBtnClickHandler = (word: string) => {
+    const tts: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(word);
+    tts.lang = "en-US";
+    window.speechSynthesis.speak(tts);
+  };
+
   useEffect(() => {
     if (data && data.length > 0) {
-      setWordbookList(data);
+      setWordList(data);
     }
   }, [data]);
 
   return (
-    <Note width={WORD_NOTE_WIDTH} height={WORD_NOTE_HEIGHT}>
-      <TitleContainer>
-        <Title>
-          {wordbookList.length > 0 && wordbookList[0].wordbook.wordbookName}
-        </Title>
-      </TitleContainer>
-      <WordCardContainer>
-        <WordCard>
-          <TtsBtn>
-            <FaVolumeUp />
-          </TtsBtn>
-          <TextContainer>
-            <EngWord>Word</EngWord>
-            <KorWord>한글 뜻</KorWord>
-          </TextContainer>
-        </WordCard>
-      </WordCardContainer>
-      <PageBtnContainer>
-        <LeftBtn />
-        1 / 33
-        <RightBtn />
-      </PageBtnContainer>
-    </Note>
+    <>
+      <Note width={WORD_NOTE_WIDTH} height={WORD_NOTE_HEIGHT}>
+        <TitleContainer>
+          <Title>{isValid && wordList[0].wordbook.wordbookName}</Title>
+        </TitleContainer>
+
+        <WordCardContainer>
+          <WordCard>
+            <TtsBtnContainer>
+              <TtsBtn
+                onClick={() =>
+                  ttsBtnClickHandler(wordList[currentIdx].wordEng[0])
+                }>
+                <FaVolumeUp />
+              </TtsBtn>
+            </TtsBtnContainer>
+
+            <TextContainer>
+              <EngWord>{isValid && wordList[currentIdx].wordEng[0]}</EngWord>
+              <KorWord>{isValid && wordList[currentIdx].wordKor[0]}</KorWord>
+            </TextContainer>
+          </WordCard>
+        </WordCardContainer>
+
+        <PageBtnContainer>
+          <LeftBtn
+            onClick={() => setCurrentIdx((cur) => cur - 1)}
+            disabled={currentIdx === 0}
+            $disabled={currentIdx === 0}
+          />
+          {currentIdx + 1} / {wordList.length > 0 && wordList.length}
+          <RightBtn
+            onClick={() => setCurrentIdx((cur) => cur + 1)}
+            disabled={currentIdx === wordList.length - 1}
+            $disabled={currentIdx === wordList.length - 1}
+          />
+        </PageBtnContainer>
+      </Note>
+    </>
   );
 }
 

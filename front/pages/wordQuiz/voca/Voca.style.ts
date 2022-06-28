@@ -33,13 +33,21 @@ export const WordCard = styled("div", {
   borderRadius: "30px",
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
+});
+
+export const TtsBtnContainer = styled("div", {
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  width: "95%",
+  height: "20%",
 });
 
 export const TtsBtn = styled("button", {
-  fontSize: "2rem",
+  fontSize: "2.5rem",
   border: 0,
   backgroundColor: "transparent",
-  margin: "0.5rem 1rem 0 auto",
   cursor: "pointer",
 });
 
@@ -60,7 +68,7 @@ export const KorWord = styled("p", {
   fontSize: "2rem",
   color: "gray",
   textAlign: "center",
-  marginTop: "0.5rem",
+  marginTop: "2rem",
 });
 
 export const PageBtnContainer = styled("div", {
@@ -71,24 +79,26 @@ export const PageBtnContainer = styled("div", {
   fontSize: "2rem",
 });
 
-export const LeftBtn = styled("button", {
+export const LeftBtn = styled("button", (props: { $disabled: boolean }) => ({
   width: 0,
   height: 0,
   backgroundColor: "transparent",
   borderTop: "30px solid transparent",
   borderBottom: "30px solid transparent",
   borderLeft: "50px solid transparent",
-  borderRight: "50px solid #FFAA2A",
+  borderRight: props.$disabled ? "50px solid #ccc" : "50px solid #FFAA2A",
   marginRight: "1rem",
-});
+  cursor: "pointer",
+}));
 
-export const RightBtn = styled("button", {
+export const RightBtn = styled("button", (props: { $disabled: boolean }) => ({
   width: 0,
   height: 0,
   backgroundColor: "transparent",
   borderTop: "30px solid transparent",
   borderBottom: "30px solid transparent",
-  borderLeft: "50px solid #FFAA2A",
+  borderLeft: props.$disabled ? "50px solid #ccc" : "50px solid #FFAA2A",
   borderRight: "50px solid transparent",
   marginLeft: "1rem",
-});
+  cursor: "pointer",
+}));
