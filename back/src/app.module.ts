@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-// import { typeORMconfig } from "./config/typeorm.config";
 import { UserModule } from "./user/user.module";
 import { AuthModule } from "./auth/auth.module";
 import { configAsync } from "./orm.config";
@@ -17,7 +16,6 @@ import { QuizModule } from "./quiz/quiz.module";
       envFilePath: [".env"],
     }),
     TypeOrmModule.forRootAsync(configAsync),
-    // TypeOrmModule.forRoot(typeORMconfig),
     UserModule,
     AuthModule,
     WordbookModule,

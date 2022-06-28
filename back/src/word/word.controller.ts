@@ -84,6 +84,30 @@ export class WordController {
     return this.wordService.getAll(wordbookId);
   }
 
+  // 카드 뒤집기 게임용 단어 단어장에서 추출
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth("accesskey")
+  @Get("game/:wordbookId")
+  @ApiOperation({
+    summary: "카드 뒤집기 단어 조회 API",
+    description: "단어장 아이디를 입력받아 단어들을 조회.",
+  })
+  @ApiParam({
+    name: "wordbookId",
+    type: Word["wordbookId"],
+    format: "uuid",
+    description: "단어장 아이디",
+    required: true,
+  })
+  async getWords(@Param("wordbookId") wordbookId: string) {
+    const wordCount = await this.wordService.countWord(wordbookId);
+    if (wordCount < 8) {
+      return `게임을 하기 위해서는 최소 8개의 단어가 있어야 합니다. 현재 단어의 수는 ${wordCount}개 입니다. `;
+    }
+    return await this.wordService.getRandomWord(wordbookId);
+  }
+
   // 단어 개별 조회
 
   @Get("/:wordId")
