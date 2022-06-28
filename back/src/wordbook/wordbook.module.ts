@@ -6,12 +6,14 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { WordService } from "../word/word.service";
+import { Word } from "../word/word.entity";
 
 @Module({
   controllers: [WordbookController],
-  providers: [WordbookService],
+  providers: [WordbookService, WordService],
   imports: [
-    TypeOrmModule.forFeature([Wordbook]),
+    TypeOrmModule.forFeature([Wordbook, Word]),
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
