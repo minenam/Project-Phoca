@@ -17,44 +17,41 @@ import {
 interface Card {
   title: string;
   src: string;
-  alt: string;
   buttonName: string;
   link: string;
 }
 
-const card: Card[] = [
-  {
+const card: { [key in string]: Card } = {
+  "play-game": {
     title: "재밌는 게임으로 \n영어단어를 외우고 싶다면?",
     src: "/images/playing_cards_yellow.svg",
-    alt: "play-game",
     buttonName: "단어 짝 맞추기 게임",
     link: "/wordQuiz/game",
   },
-  {
+  "memorize-voca": {
     title: "직접 만든 단어장의 \n단어들을 외우고 싶다면?",
     src: "/images/Memorizing.svg",
-    alt: "memorize-voca",
     buttonName: "단어장 외우기",
     link: "/wordQuiz/voca",
   },
-];
+};
 
 function WordQuiz() {
   const router = useRouter();
   const small = useMediaQuery({ query: "(max-width : 1651px)" });
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBtnIdx, setSelectedBtnIdx] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 단어장 목록 모달 open 여부
+  const [selectedBtn, setSelectedBtn] = useState(""); // 선택된 버튼의 key 저장
   const [wordbookList, setWordbookList] = useState<Wordbook[]>([]); // 단어장 리스트를 저장
   const [selectedWordbookId, setSelectedWordbookId] = useState(""); // 선택된 단어장 Id를 저장
 
-  const btnClickHandler = (idx: number) => {
-    setSelectedBtnIdx(idx);
+  const btnClickHandler = (key: string) => {
+    setSelectedBtn(key);
     setIsModalOpen(true);
   };
 
   const selectBtnClickHandler = () => {
-    router.push(`${card[selectedBtnIdx].link}/${selectedWordbookId}`);
+    router.push(`${card[selectedBtn].link}/${selectedWordbookId}`);
   };
 
   const modalCloseHandler = () => {
@@ -66,13 +63,13 @@ function WordQuiz() {
       <CardContainer
         $headerHeight={HEADER_HEIGHT}
         $sidebarWidth={SIDEBAR_WIDTH}>
-        {card.map((item, idx) => (
-          <Card key={idx}>
-            <Image src={item.src} alt={item.alt} width={400} height={400} />
-            <Title>{item.title}</Title>
+        {Object.entries(card).map(([key, value]) => (
+          <Card key={key}>
+            <Image src={value.src} alt={key} width={400} height={400} />
+            <Title>{value.title}</Title>
             <BtnContainer>
-              <Button $small={small} onClick={() => btnClickHandler(idx)}>
-                {item.buttonName}
+              <Button $small={small} onClick={() => btnClickHandler(key)}>
+                {value.buttonName}
               </Button>
             </BtnContainer>
           </Card>
