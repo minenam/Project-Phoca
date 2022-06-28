@@ -33,7 +33,9 @@ export class UserService {
     // 이메일 중복확인
     const foundEmail = await this.userRepository.findOneBy({ email });
     if (foundEmail) {
-      throw new ConflictException(`Already exist ${email}`);
+      throw new ConflictException(
+        `이미 존재하는 이메일입니다. 다시 입력해주세요.`,
+      );
     }
     // 새로운 유저 저장
     const hashedPassword = await this.authService.hashedUser(password);
@@ -53,7 +55,7 @@ export class UserService {
 
     return {
       statusCode: 201,
-      message: "success",
+      message: "회원가입 성공",
       data: userInfo,
     };
   }
@@ -76,7 +78,7 @@ export class UserService {
     const getUser = await this.userRepository.findOneBy({ userId });
 
     if (!getUser) {
-      throw new NotFoundException(`can't find userid ${userId}`);
+      throw new NotFoundException(`존재하지 않는 회원입니다.`);
     }
     const {
       password,
@@ -88,7 +90,7 @@ export class UserService {
     } = getUser;
     return {
       statusCode: 200,
-      message: "success",
+      message: "회원 정보 수정 완료",
       data: userInfo,
     };
   }
@@ -110,7 +112,7 @@ export class UserService {
   async updateUser(userId: string, updateUserInfo) {
     const user = await this.userRepository.findOneBy({ userId });
     if (!user) {
-      throw new NotFoundException(`can't find user`);
+      throw new NotFoundException(`존재하지 않는 회원입니다.`);
     }
     const { userName, comment, file } = updateUserInfo;
     if (userName) {
