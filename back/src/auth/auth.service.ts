@@ -38,12 +38,12 @@ export class AuthService {
       const { password, provider, joinedAt, lastloginedAt, activated, ...userInfo } = user;
       return {
         statusCode: 201,
-        message: "Login Success",
+        message: "로그인 성공",
         data: userInfo,
         token: accessToken,
       };
     } else {
-      throw new UnauthorizedException("Login Failed");
+      throw new UnauthorizedException("로그인 실패");
     }
   }
 }
