@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { userStore } from "../zustand/userStore";
 import Modal from "../common/modal/Modal";
-import LoginRequiredModal from "../components/intro/LoginRequiredModal";
+import LoginRequiredModal from "../common/loginRequiredModal/LoginRequiredModal";
 
 const Home: NextPage = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
