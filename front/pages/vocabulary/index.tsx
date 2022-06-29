@@ -69,7 +69,7 @@ const Vocabulary: NextPage = () => {
           inputChecked={checked}
           userInfo={user}
         />
-        <VocabularyItem listItem={vocaList && vocaList} />
+        <VocabularyItem listItem={vocaList && vocaList} isMine={checked} />
       </VocabularyWrapper>
     </>
   );

@@ -22,6 +22,7 @@ import { vocaKeys } from "../../common/querykeys/querykeys";
 
 interface itemProps {
   listItem: WordBook[] | undefined;
+  isMine: boolean;
 }
 
 const imageUrl = shuffle(WORD_IMAGES);
@@ -66,7 +67,7 @@ const checkWordsCount = async (wordbookId: string) => {
   return result;
 };
 
-const VocabularyItem: FC<itemProps> = ({ listItem }) => {
+const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
   const [isEdit, setIsEdit] = useState(false);
@@ -136,9 +137,11 @@ const VocabularyItem: FC<itemProps> = ({ listItem }) => {
                   <LockBtn onClick={() => vocaChangeHandler(item)}>
                     {item.secured ? <FaLock /> : <MdPublic />}
                   </LockBtn>
-                  <LockBtn onClick={(e) => editHandler(e, item.wordbookId)}>
-                    <FaEdit />
-                  </LockBtn>
+                  {!isMine && (
+                    <LockBtn onClick={(e) => editHandler(e, item.wordbookId)}>
+                      <FaEdit />
+                    </LockBtn>
+                  )}
                 </BtnWrapper>
                 <GridTextItem
                   onClick={() => setSelectedWordbookId(item.wordbookId)}>
