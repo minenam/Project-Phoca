@@ -4,7 +4,7 @@ import {
   ModalContent,
 } from "./LoginRequiredModal.style";
 import { useRouter } from "next/router";
-import { ModalProps } from "../../common/types/propsType";
+import { ModalProps } from "../types/propsType";
 
 function LoginRequiredModal({ onClose }: ModalProps) {
   const router = useRouter();
