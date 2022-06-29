@@ -41,7 +41,10 @@ const Home: NextPage = () => {
     e: React.MouseEvent<HTMLDivElement>,
     idx: number,
   ) => {
-    if (idx === 1 && user.user === null) {
+    if (
+      (idx === 1 && user.user === null) ||
+      (idx === 3 && user.user === null)
+    ) {
       e.preventDefault();
       setLoginModalOpen(true);
     }
