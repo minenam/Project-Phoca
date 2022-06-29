@@ -126,7 +126,7 @@ export class UserController {
     },
   })
   @UseInterceptors(FileInterceptor("file"))
-  updateUser(
+  async updateUser(
     @Param() paramUserDto: ParamUserDto,
     @GetUser() user,
     @Body("userName") userName: string,
@@ -138,9 +138,9 @@ export class UserController {
       throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
     }
     const updateUserInfo = { userName, comment, file };
-    this.logger.verbose("Try to update info :", updateUserInfo);
+    this.logger.verbose(`Try to update info: UserId ${userId}`);
     if (updateUserInfo) {
-      return this.userService.updateUser(userId, updateUserInfo);
+      return await this.userService.updateUser(userId, updateUserInfo);
     }
   }
 

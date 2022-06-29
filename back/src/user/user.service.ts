@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  Logger,
   NotFoundException,
 } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -64,9 +65,13 @@ export class UserService {
   async login(authcredntialDto: AuthCredentialDto): Promise<LoginUserInfo> {
     const { email } = authcredntialDto;
     const user = await this.userRepository.findOneBy({ email });
+    if (!user) {
+      throw new NotFoundException(
+        `해당 회원이 존재하지 않습니다. 다시 확인해주세요.`,
+      );
+    }
     // 마지막 로그인일자 업데이트
-    const now = new Date();
-    user.lastloginedAt = now;
+    user.lastloginedAt = new Date();
     await this.userRepository.save(user);
     // 토큰 생성
     const token = await this.authService.validateUser(authcredntialDto);
@@ -122,11 +127,12 @@ export class UserService {
       user.comment = comment;
     }
     if (file) {
-      const upload = await this.imageMiddleware.uploadImage(file);
-      user.userImage = upload.Key;
+      const uploadImageKey = await this.imageMiddleware.uploadImage(file);
+      Logger.debug(uploadImageKey);
+      user.userImage = uploadImageKey;
     }
     await this.userRepository.save(user);
 
-    return user;
+    return await this.userRepository.findOneBy({ userId });
   }
 }
