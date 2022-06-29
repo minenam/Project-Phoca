@@ -52,10 +52,12 @@ export const TtsBtn = styled("button", {
 });
 
 export const TextContainer = styled("div", {
+  width: "100%",
   height: "100%",
   display: "grid",
   gridTemplateRows: "2fr 1fr",
   alignItems: "center",
+  cursor: "pointer",
 });
 
 export const EngWord = styled("h1", {
