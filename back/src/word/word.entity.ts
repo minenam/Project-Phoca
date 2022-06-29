@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, Generated, JoinColumn, ManyToOne } from "typeorm";
 import { Wordbook } from "../wordbook/wordbook.entity";
-
-//@Index("word_pkey", ["word_id"], { unique: true })
 @Entity("word", { schema: "public" })
 export class Word {
   @Column("uuid", { primary: true, name: "word_id" })

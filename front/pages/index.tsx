@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { MAIN_BUTTON } from "../common/utils/constant";
 import { useStyletron } from "styletron-react";
 import {
@@ -14,10 +15,13 @@ import Modal from "../common/modal/Modal";
 import LoginRequiredModal from "../common/loginRequiredModal/LoginRequiredModal";
 
 const Home: NextPage = () => {
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const router = useRouter();
   const user = userStore();
   const [css] = useStyletron();
+  const url = router.asPath;
+
   const btnRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   useEffect(() => {
     btnRef.current.forEach((btn: any) => {
@@ -41,7 +45,10 @@ const Home: NextPage = () => {
     e: React.MouseEvent<HTMLDivElement>,
     idx: number,
   ) => {
-    if (idx === 1 && user.user === null) {
+    if (
+      (idx === 1 && user.user === null) ||
+      (idx === 3 && user.user === null)
+    ) {
       e.preventDefault();
       setLoginModalOpen(true);
     }
@@ -86,7 +93,8 @@ const Home: NextPage = () => {
           open={loginModalOpen}
           width="400px"
           onClose={loginModalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <LoginRequiredModal onClose={loginModalCloseHandler} />
         </Modal>
       )}

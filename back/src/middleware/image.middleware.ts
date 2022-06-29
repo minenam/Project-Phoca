@@ -4,6 +4,7 @@ import * as AWS from "aws-sdk";
 
 @Injectable()
 export class ImageMiddleware {
+  private logger = new Logger("ImageMiddelware");
   constructor(private configService: ConfigService) {
     AWS.config.update({
       accessKeyId: this.configService.get("AWS_ACCESS_KEY"),
@@ -23,9 +24,9 @@ export class ImageMiddleware {
     };
     try {
       const response = await this.s3.upload(params).promise();
-      return response;
+      return response.Key;
     } catch (e) {
-      Logger.debug(`AWS S3 저장에 실패했습니다.`);
+      this.logger.error(`${e}: AWS S3 저장에 실패했습니다.`);
       throw new Error(e.message);
     }
   }

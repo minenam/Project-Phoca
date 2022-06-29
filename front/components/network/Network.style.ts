@@ -32,11 +32,11 @@ export const SearchBar = styled("input", {
 
 export const BackButton = styled("button", {
   cursor: "pointer",
-  border: "none",
+  border: 0,
   width: "5rem",
-  backgroundColor: "white",
+  backgroundColor: "transparent",
   height: "auto",
-  fontSize: "14px",
+  fontSize: "2rem",
   padding: "10px",
   borderRadius: "10px",
   marginRight: "20rem",

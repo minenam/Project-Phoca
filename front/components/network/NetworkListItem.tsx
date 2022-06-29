@@ -16,7 +16,7 @@ import {
 import { HEADER_HEIGHT, WORD_IMAGES } from "../../common/utils/constant";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { userStore } from "../../zustand/userStore";
-import { BiArrowBack } from "react-icons/bi";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { WordBook, BookMark } from "../../common/types/resultsType";
@@ -160,11 +160,18 @@ const NetworkListItem: FC = () => {
     setIsStop(true);
   };
 
+  const vocaClickHandler = (wordbookId: string) => {
+    router.push({
+      pathname: `/vocabulary/${wordbookId}`,
+      query: { returnUrl: router.asPath },
+    });
+  };
+
   return (
     <NetworkWrapper $headerHeight={HEADER_HEIGHT}>
       <SearchBarWrapper>
         <BackButton onClick={backButtonHandler}>
-          <BiArrowBack />
+          <AiOutlineArrowLeft />
         </BackButton>
         <SearchBar
           type="text"
@@ -202,7 +209,9 @@ const NetworkListItem: FC = () => {
                     </LockBtn>
                   )}
                 </BtnWrapper>
-                <GridTextItem>{item.wordbookName}</GridTextItem>
+                <GridTextItem onClick={() => vocaClickHandler(item.wordbookId)}>
+                  {item.wordbookName}
+                </GridTextItem>
               </GridItem>
             );
           })
