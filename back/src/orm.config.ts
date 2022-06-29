@@ -13,7 +13,7 @@ export default class TypeOrmConfig {
       password: configService.get("DB_PASSWORD"),
       host: configService.get("DB_HOST"),
       database: configService.get("DB_NAME"),
-      synchronize: true,
+      synchronize: false,
       entities: ["dist/**/*.entity{.ts,.js}"],
     };
   }
