@@ -15,7 +15,12 @@ function SideBar() {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     link: string,
   ) => {
-    if (link === "/myPage" || link === "/wordQuiz") {
+    const userToken = sessionStorage.getItem("userToken");
+    console.log(userToken);
+    if (
+      (!userToken && link === "/myPage") ||
+      (!userToken && link === "/wordQuiz")
+    ) {
       e.preventDefault();
       setLoginModalOpen(true);
     }
