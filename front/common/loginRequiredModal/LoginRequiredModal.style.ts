@@ -3,7 +3,8 @@ import { styled } from "styletron-react";
 export const ConfirmButton = styled("button", {
   border: 0,
   borderRadius: "20px",
-  backgroundColor: "#48cfc8",
+  backgroundColor: "#FFAA2A",
+  color: "#fff",
   padding: "0.5rem 1.5rem",
   margin: "1rem 1rem 1.5rem",
   fontSize: "1.2rem",

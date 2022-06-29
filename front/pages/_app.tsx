@@ -29,7 +29,14 @@ interface ResponseType {
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const urlWithoutNavbar: string[] = ["/login", "/register"];
-  const urlWithoutSidebar: string[] = ["/", "/login", "/register", "/network"];
+  const urlWithoutSidebar: string[] = [
+    "/",
+    "/login",
+    "/register",
+    "/network",
+    "/guide",
+    "/wordQuiz/game/[id]",
+  ];
   const queryClient = new QueryClient();
 
   // 유저 정보 userStore에 저장

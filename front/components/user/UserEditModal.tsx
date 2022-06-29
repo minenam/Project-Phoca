@@ -12,7 +12,7 @@ import {
 import { UserProperties, userStore } from "../../zustand/userStore";
 import { Avatar, AvatarImage } from "../../pages/myPage/MyPage.style";
 import { useDropzone } from "react-dropzone";
-import { ConfirmButton } from "../intro/LoginRequiredModal.style";
+import { ConfirmButton } from "../../common/loginRequiredModal/LoginRequiredModal.style";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DropContainer } from "../word/upload/Dropzone.style";
 import { Input, Label } from "../word/results/EditForm/EditForm.style";
@@ -149,9 +149,9 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         </InputWrapper>
       </CommentWrapper>
       <EditButtonWrapper>
-        <EditButton $backgroundColor="orange">비밀번호 변경</EditButton>
+        <EditButton $borderColor="#48cfc8">비밀번호 변경</EditButton>
         <EditButton
-          $backgroundColor="#FE7394"
+          $borderColor="#FE7394"
           $withdrawal
           onClick={deleteUserHandler}>
           회원 탈퇴
