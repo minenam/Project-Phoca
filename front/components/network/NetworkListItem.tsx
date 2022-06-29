@@ -148,6 +148,16 @@ const NetworkListItem: FC = () => {
     setIsStop(true);
   };
 
+  const vocaClickHandler = (wordbookId: string) => {
+    router.push(
+      {
+        pathname: `/vocabulary/${wordbookId}`,
+        query: { returnUrl: router.asPath },
+      },
+      `/vocabulary/${wordbookId}`,
+    );
+  };
+
   return (
     <NetworkWrapper $headerHeight={HEADER_HEIGHT}>
       <SearchBarWrapper>
@@ -188,7 +198,9 @@ const NetworkListItem: FC = () => {
                     </LockBtn>
                   )}
                 </BtnWrapper>
-                <GridTextItem>{item.wordbookName}</GridTextItem>
+                <GridTextItem onClick={() => vocaClickHandler(item.wordbookId)}>
+                  {item.wordbookName}
+                </GridTextItem>
               </GridItem>
             );
           })
