@@ -1,4 +1,10 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useIsLapTop } from "../../common/utils/useIsLapTop";
 import {
   BtnWrapper,
@@ -8,15 +14,22 @@ import {
   LockBtn,
 } from "./Vocabulary.styles";
 import { MdPublic } from "react-icons/md";
-import { FaLock } from "react-icons/fa";
+import { FaLock, FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { WordBook } from "../../common/types/resultsType";
+import { shuffle } from "../../common/utils/shuffle";
+import { WORD_IMAGES } from "../../common/utils/constant";
+import Seo from "../../common/Seo";
+import UserEditModal from "../user/UserEditModal";
+import Modal from "../../common/modal/Modal";
 
 interface itemProps {
   listItem: WordBook[] | undefined;
   trigger: Dispatch<SetStateAction<boolean>>;
 }
+
+const imageUrl = shuffle(WORD_IMAGES);
 
 const wordBookChangeHandler = async (props: WordBook) => {
   const data = {
@@ -47,6 +60,8 @@ const wordBookChangeHandler = async (props: WordBook) => {
 const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
+  const [isEdit, setIsEdit] = useState(false);
+
   const VocaMutation = useMutation(wordBookChangeHandler, {
     onSuccess: (data) => {
       console.log("단어장 수정 성공", data);
@@ -66,15 +81,29 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
     router.push(`/vocabulary/${wordbookId}`);
   };
 
+  const editHandler = () => {
+    setIsEdit(true);
+  };
+
+  const modalClose = () => {
+    setIsEdit(false);
+  };
+
   return (
     <GridWrapper $lapTop={isLapTop}>
+      <Seo title="단어장" />
       {listItem != undefined && listItem?.length > 0 ? (
-        listItem.map((item) => {
+        listItem.map((item, idx) => {
           return (
-            <GridItem key={item.createDate}>
+            <GridItem
+              $backgroundImage={imageUrl[idx % imageUrl.length]}
+              key={item.createDate}>
               <BtnWrapper>
                 <LockBtn onClick={() => vocaChangeHandler(item)}>
                   {item.secured ? <FaLock /> : <MdPublic />}
+                </LockBtn>
+                <LockBtn onClick={editHandler}>
+                  <FaEdit />
                 </LockBtn>
               </BtnWrapper>
               <GridTextItem onClick={() => vocaClickHandler(item.wordbookId)}>
@@ -85,6 +114,11 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
         })
       ) : (
         <GridWrapper $without>단어장이 아직 없습니다</GridWrapper>
+      )}
+      {isEdit && (
+        <Modal open={isEdit} width="500px" onClose={modalClose} large={true}>
+          <UserEditModal onClose={modalClose} userInfo={user} />
+        </Modal>
       )}
     </GridWrapper>
   );

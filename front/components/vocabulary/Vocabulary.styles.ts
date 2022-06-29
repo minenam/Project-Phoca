@@ -86,7 +86,7 @@ export const SwitchButton = styled("label", (props: { $checked: Boolean }) => ({
 
 export const GridItem = styled(
   "div",
-  (props: { $backgroundImage: string }) => ({
+  (props: { $backgroundImage?: string }) => ({
     position: "relative",
     display: "flex",
     justifyContent: "flex-start",

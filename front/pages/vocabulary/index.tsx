@@ -19,6 +19,9 @@ const Vocabulary: NextPage = () => {
   const { data } = useQuery<WordBook[], Error>(
     ["wordbookList", user?.userId, checked, isChange],
     () => getVocaList(user?.userId),
+    {
+      enabled: !!user?.userId,
+    },
   );
 
   async function getVocaList(userId?: string) {

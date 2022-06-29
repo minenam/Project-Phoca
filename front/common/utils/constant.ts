@@ -38,7 +38,6 @@ export const MAIN_BUTTON: Button[] = [
 ];
 
 export const WORD_IMAGES: string[] = [
-  "/images/celebrate.svg",
   "/images/contemplating.svg",
   "/images/faq.svg",
   "/images/monster_artist.svg",
