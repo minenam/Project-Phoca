@@ -1,12 +1,14 @@
 import { PassportStrategy } from "@nestjs/passport";
 // import { Profile, Strategy } from "passport-google-oauth20";
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 import { Users } from "../user/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Profile, Strategy } from "passport-kakao";
 import { AuthService } from "./auth.service";
+// import * as bcrypt from "bcryptjs";
+import { randomUUID } from "crypto";
 
 @Injectable()
 export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
@@ -21,7 +23,7 @@ export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
       clientID: configService.get<string>("OAUTH_KAKAO_ID"),
       clientSecret: configService.get<string>("OAUTH_KAKAO_SECRET"),
       callbackURL: configService.get<string>("OAUTH_KAKAO_REDIRECT_URL"),
-      // "scope":"account_email openid profile_nickname"
+      // scope: "kakao_account.email properties.nickname provider",
     });
   }
 
@@ -31,20 +33,34 @@ export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
     profile: Profile,
     done,
   ) {
-    console.log(profile);
+    // console.log(profile);
+    const userId = profile.id;
     const email = profile._json.kakao_account.email;
-    const username = profile._json.properties.nickname;
-    const provider = profile.provider;
-    const userInfo = {
-      email,
-      username,
-      provider,
-    };
+    const userName = profile._json.properties.nickname;
+    const provider = profile.provider; // "kakao"
+    const userImage = profile._json.properties.profile_image
+      ? profile._json.properties.profile_image
+      : undefined;
+    const joinedAt = profile._json.connected_at;
+
+    // const salt = await bcrypt.genSalt();
+    // const hashedPassword = await bcrypt.hash(userId, salt);
+    const hashedPassword = userId;
 
     const user = await this.userRepository.findOneBy({ email });
+
     if (!user) {
-      // 토큰 발급
-      return this.authService.kakaoLogin(userInfo);
+      const newUser = {
+        userId: randomUUID(),
+        userName,
+        email,
+        password: hashedPassword,
+        userImage,
+        provider,
+        joinedAt,
+      };
+      await this.userRepository.save(newUser);
     }
+    return done(null, profile, { accessToken, refreshToken });
   }
 }

@@ -11,8 +11,7 @@ import { KakaoAuthStrategy } from "./kakao-auth.strategy";
 
 @Module({
   imports: [
-    // PassportModule.register({ defaultStrategy: "jwt" }),
-    PassportModule,
+    PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
