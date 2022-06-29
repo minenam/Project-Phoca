@@ -18,6 +18,7 @@ import { FaVolumeUp, FaEdit } from "react-icons/fa";
 import Modal from "../../../common/modal/Modal";
 import EditForm from "./EditForm/EditForm";
 import SaveForm from "./SaveForm/SaveForm";
+import LoginRequiredModal from "../../../common/loginRequiredModal/LoginRequiredModal";
 import { ResultProps } from "../../../common/types/resultsType";
 
 function Results({ wordInfo }: ResultProps) {
@@ -28,6 +29,7 @@ function Results({ wordInfo }: ResultProps) {
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const ttsBtnClickHandler = () => {
     const tts: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(engWord);
@@ -43,20 +45,14 @@ function Results({ wordInfo }: ResultProps) {
     if (sessionStorage.getItem("userToken")) {
       setSaveModalOpen(true);
     } else {
-      const currentUrl = router.asPath;
-      router.push(
-        {
-          pathname: "/login",
-          query: { returnUrl: currentUrl },
-        },
-        "/login",
-      );
+      setLoginModalOpen(true);
     }
   };
 
   const modalCloseHandler = () => {
     setEditModalOpen(false);
     setSaveModalOpen(false);
+    setLoginModalOpen(false);
   };
 
   return (
@@ -101,6 +97,15 @@ function Results({ wordInfo }: ResultProps) {
             engWordList={wordInfo.wordEng}
             korWordList={wordInfo.wordKor}
           />
+        </Modal>
+      )}
+      {loginModalOpen && (
+        <Modal
+          open={loginModalOpen}
+          width="400px"
+          onClose={modalCloseHandler}
+          large={false}>
+          <LoginRequiredModal onClose={modalCloseHandler} />
         </Modal>
       )}
       {saveModalOpen && (
