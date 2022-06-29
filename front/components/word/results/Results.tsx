@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import {
   ResultsContainer,
@@ -22,8 +21,6 @@ import LoginRequiredModal from "../../../common/loginRequiredModal/LoginRequired
 import { ResultProps } from "../../../common/types/resultsType";
 
 function Results({ wordInfo }: ResultProps) {
-  const router = useRouter();
-
   const [engWord, setEngWord] = useState(wordInfo.wordEng[0]);
   const [korWord, setKorWord] = useState(wordInfo.wordKor[0]);
 
