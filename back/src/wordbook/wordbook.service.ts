@@ -46,7 +46,6 @@ export class WordbookService {
 
   async create(wordbook: Partial<Wordbook>): Promise<Wordbook> {
     try {
-      console.log(wordbook);
       const newWordbook = this.wordbookRepository.create(wordbook);
       return await this.wordbookRepository.save(newWordbook);
     } catch (e) {
