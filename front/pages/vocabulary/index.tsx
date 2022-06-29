@@ -27,7 +27,6 @@ const Vocabulary: NextPage = () => {
   );
 
   async function getVocaList(userId?: string) {
-    console.log("result", checked);
     const res = await fetch(
       checked
         ? `${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark/${userId}`
@@ -46,7 +45,6 @@ const Vocabulary: NextPage = () => {
   }
 
   useEffect(() => {
-    console.log("data", data);
     setVocaList(data);
   }, [data]);
 

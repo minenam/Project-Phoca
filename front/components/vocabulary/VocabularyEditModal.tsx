@@ -8,7 +8,6 @@ import { vocaKeys } from "../../common/querykeys/querykeys";
 import { useRouter } from "next/router";
 
 const getVocaInfo = async (wordbookId: string) => {
-  console.log("wordbookId", wordbookId);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/single/${wordbookId}`,
@@ -20,7 +19,6 @@ const getVocaInfo = async (wordbookId: string) => {
     );
 
     const result = await res.json();
-    console.log("result", result);
     return result;
   } catch (e) {
     console.error(e);
@@ -41,7 +39,6 @@ const VocabularyEditModal = ({
       wordbookName: name,
       secured: wordbookData?.secured,
     };
-    console.log("submitdata", data);
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/${wordbookData?.wordbookId}`,
