@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useStyletron } from "styletron-react";
 import { MAIN_BUTTON, HEADER_HEIGHT } from "../../common/utils/constant";
@@ -7,7 +8,9 @@ import LoginRequiredModal from "../../common/loginRequiredModal/LoginRequiredMod
 import { SideBarContainer, SideBarBtn } from "./SideBar.style";
 
 function SideBar() {
+  const router = useRouter();
   const [css] = useStyletron();
+  const url = router.asPath;
 
   const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 페이지로 연결 여부
 
@@ -51,7 +54,8 @@ function SideBar() {
           open={loginModalOpen}
           width="400px"
           onClose={loginModalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <LoginRequiredModal onClose={loginModalCloseHandler} />
         </Modal>
       )}

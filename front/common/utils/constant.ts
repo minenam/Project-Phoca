@@ -52,3 +52,16 @@ export const SIDEBAR_WIDTH: string = "400px";
 
 export const WORD_NOTE_WIDTH: string = "650px";
 export const WORD_NOTE_HEIGHT: string = "70vh";
+
+export const URL_WITHOUT_NAVBAR: string[] = ["/login", "/register"];
+export const URL_WITHOUT_SIDEBAR: string[] = [
+  "/",
+  "/login",
+  "/register",
+  "/network",
+  "/guide",
+  "/wordQuiz/game/[id]",
+];
+
+export const LEFT_WITH_SIDEBAR = "60%";
+export const LEFT_WITHOUT_SIDEBAR = "50%";

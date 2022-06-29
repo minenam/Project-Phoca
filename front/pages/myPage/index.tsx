@@ -19,6 +19,7 @@ import {
   RoundedBox,
 } from "./MyPage.style";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { userStore } from "../../zustand/userStore";
 import React, { useEffect, useState } from "react";
 import Modal from "../../common/modal/Modal";
@@ -55,6 +56,9 @@ const getCount = async (userId: string | undefined) => {
 };
 
 const MyPage: NextPage = () => {
+  const router = useRouter();
+  const url = router.asPath;
+
   const [userEditModalOpen, setUserEditModalOpen] = useState(false);
   const [wordbookCount, setWordbookCount] = useState();
   const [bookmarkCount, setbookmarkCount] = useState();
@@ -146,7 +150,8 @@ const MyPage: NextPage = () => {
           open={userEditModalOpen}
           width="500px"
           onClose={userEditModalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <UserEditModal onClose={userEditModalCloseHandler} userInfo={user} />
         </Modal>
       )}

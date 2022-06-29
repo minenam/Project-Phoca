@@ -62,6 +62,7 @@ const getWordsCount = async (wordbookId: string) => {
 
 function WordQuiz() {
   const router = useRouter();
+  const url = router.asPath;
   const small = useMediaQuery({ query: "(max-width : 1651px)" });
 
   const [isModalOpen, setIsModalOpen] = useState(false); // 단어장 목록 모달 open 여부
@@ -92,7 +93,7 @@ function WordQuiz() {
     ) {
       router.push(`${card[selectedBtn].link}/${selectedWordbookId}`);
     } else {
-      setErrorMsg("단어장에 저장된 단어 수가 적어 선택할 수 없습니다.");
+      setErrorMsg("단어장에 저장된 \n 단어 수가 적어 선택할 수 없습니다.");
     }
   };
 
@@ -122,7 +123,8 @@ function WordQuiz() {
           open={isModalOpen}
           width="400px"
           onClose={modalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <BookList
             title="단어장 선택"
             height="300px"
@@ -137,7 +139,12 @@ function WordQuiz() {
         </Modal>
       )}
       {errorMsg.length > 0 && (
-        <Toast success={false} message={errorMsg} setErrorMsg={setErrorMsg} />
+        <Toast
+          success={false}
+          message={errorMsg}
+          url={url}
+          setErrorMsg={setErrorMsg}
+        />
       )}
     </>
   );

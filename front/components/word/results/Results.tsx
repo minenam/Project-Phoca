@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import {
   ResultsContainer,
@@ -21,6 +22,9 @@ import LoginRequiredModal from "../../../common/loginRequiredModal/LoginRequired
 import { ResultProps } from "../../../common/types/resultsType";
 
 function Results({ wordInfo }: ResultProps) {
+  const router = useRouter();
+  const url = router.asPath;
+
   const [engWord, setEngWord] = useState(wordInfo.wordEng[0]);
   const [korWord, setKorWord] = useState(wordInfo.wordKor[0]);
 
@@ -85,7 +89,8 @@ function Results({ wordInfo }: ResultProps) {
           open={editModalOpen}
           width="800px"
           onClose={modalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <EditForm
             imageUrl={`${process.env.NEXT_PUBLIC_IMAGE_URL}${wordInfo.wordKey}`}
             onClose={modalCloseHandler}
@@ -101,7 +106,8 @@ function Results({ wordInfo }: ResultProps) {
           open={loginModalOpen}
           width="400px"
           onClose={modalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <LoginRequiredModal onClose={modalCloseHandler} />
         </Modal>
       )}
@@ -110,7 +116,8 @@ function Results({ wordInfo }: ResultProps) {
           open={saveModalOpen}
           width="400px"
           onClose={modalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <SaveForm
             onClose={modalCloseHandler}
             wordId={wordInfo.wordId}

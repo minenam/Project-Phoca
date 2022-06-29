@@ -12,6 +12,10 @@ import { userStore, UserProperties } from "../zustand/userStore";
 
 import NavBar from "../components/intro/NavBar";
 import SideBar from "../components/sidebar/SideBar";
+import {
+  URL_WITHOUT_NAVBAR,
+  URL_WITHOUT_SIDEBAR,
+} from "../common/utils/constant";
 
 declare module "react-query/types/react/QueryClientProvider" {
   interface QueryClientProviderProps {
@@ -28,15 +32,6 @@ interface ResponseType {
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const urlWithoutNavbar: string[] = ["/login", "/register"];
-  const urlWithoutSidebar: string[] = [
-    "/",
-    "/login",
-    "/register",
-    "/network",
-    "/guide",
-    "/wordQuiz/game/[id]",
-  ];
   const queryClient = new QueryClient();
 
   // 유저 정보 userStore에 저장
@@ -70,8 +65,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StyletronProvider value={styletron}>
       <QueryClientProvider client={queryClient}>
-        {!urlWithoutNavbar.includes(router.pathname) && <NavBar />}
-        {!urlWithoutSidebar.includes(router.pathname) && <SideBar />}
+        {!URL_WITHOUT_NAVBAR.includes(router.pathname) && <NavBar />}
+        {!URL_WITHOUT_SIDEBAR.includes(router.pathname) && <SideBar />}
         <Component {...pageProps} />
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
