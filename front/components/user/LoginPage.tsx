@@ -3,8 +3,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useMutation, useQuery } from "react-query";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useMutation } from "react-query";
+import { Dispatch, SetStateAction } from "react";
 import {
   Form,
   ContentContainer,
@@ -57,36 +57,9 @@ const loginHandler = async (data: LoginValues) => {
   return result;
 };
 
-// 카카오 로그인 핸들러
-const kakaoLoginHandler = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/kakao/login`,
-  );
-  if (!res.ok) {
-    throw new Error("카카오 로그인 실패");
-  }
-  const result = await res.json();
-  return result;
-};
-
 function LoginPage(props: LoginPageProps) {
   const router = useRouter();
   const { setErrorMsg } = props;
-
-  const [isKakaoBtnClick, setIsKakaoBtnClick] = useState(false);
-
-  // kakao login 요청
-  useQuery(["kakao_login"], kakaoLoginHandler, {
-    enabled: isKakaoBtnClick,
-    retry: false,
-    onSuccess: (data) => {
-      console.log("kakao login success, data : ", data);
-    },
-    onError: (err) => {
-      console.log("kakao login error : ", err);
-      setIsKakaoBtnClick(false);
-    },
-  });
 
   // 로그인 요청
   const loginMutation = useMutation(loginHandler, {
@@ -121,11 +94,6 @@ function LoginPage(props: LoginPageProps) {
       loginMutation.mutate(values);
     },
   });
-
-  // 카카오 버튼 누름 상태 체크
-  const kakaoBtnClickHandler = () => {
-    setIsKakaoBtnClick(true);
-  };
 
   return (
     <>
@@ -171,14 +139,17 @@ function LoginPage(props: LoginPageProps) {
       </Form>
       <SnsTitle>SNS 로그인</SnsTitle>
       <SNSBtnContainer>
-        <KakaoBtn onClick={kakaoBtnClickHandler}>
-          <Image
-            src="/images/kakaoLogin.png"
-            alt="kakao-login-btn"
-            width="183"
-            height="45"
-          />
-        </KakaoBtn>
+        <Link
+          href={`${process.env.NEXT_PUBLIC_KAKAO_LOGIN_URL}&client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL} `}>
+          <KakaoBtn>
+            <Image
+              src="/images/kakaoLogin.png"
+              alt="kakao-login-btn"
+              width="183"
+              height="45"
+            />
+          </KakaoBtn>
+        </Link>
       </SNSBtnContainer>
     </>
   );
