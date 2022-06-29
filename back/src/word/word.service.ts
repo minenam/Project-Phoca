@@ -35,6 +35,9 @@ export class WordService {
   async getAll(wordbookId: string) {
     const wordbook = await this.wordRepository.find({
       where: { wordbookId },
+      order: {
+        wordId: "DESC",
+      },
     });
     return wordbook;
   }
