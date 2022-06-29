@@ -23,7 +23,6 @@ const getWrodGameInit = async (wordbookId: string | string[] | undefined) => {
     const result = await res.json();
     const shuffled: string[] = shuffle(result[1]);
     useGameStore.setState({ answer: result[0] });
-    console.log(shuffled);
 
     return shuffled;
   } catch (e) {
@@ -36,10 +35,11 @@ const WordQuizGame = () => {
   const wordbookId = router.query.id;
   const gameResult = useGameStore((state) => state.answer);
 
-  const { data } = useQuery("wordGameInit", () => getWrodGameInit(wordbookId));
+  const { data } = useQuery("wordGameInit", () => getWrodGameInit(wordbookId), {
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
-    console.log("data=========>", data);
     data && setCardShuffled(data);
   }, [data]);
 

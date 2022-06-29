@@ -47,6 +47,8 @@ export const WORD_IMAGES: string[] = [
   "/updated.svg",
 ];
 
+export const IMAGE_EXTENSION = [".jpg", ".png", ".jpeg"];
+
 export const HEADER_HEIGHT: string = "130px";
 export const SIDEBAR_WIDTH: string = "400px";
 

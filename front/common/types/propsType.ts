@@ -10,5 +10,8 @@ export interface GuideMenuButtonProps {
 }
 
 export interface CardProps {
-  value: string;
+  value: { data: string; matched: boolean };
+  handleChoice: (e: string) => void;
+  isTwoSelected: boolean;
+  setIsTwoSelected: Dispatch<SetStateAction<boolean>>;
 }
