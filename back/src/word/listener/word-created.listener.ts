@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -9,6 +9,7 @@ import { WordService } from "../word.service";
 
 @Injectable()
 export class WordCreatedListener {
+  private readonly logger = new Logger("WordCreatedListener");
   constructor(
     @InjectRepository(Word)
     private wordRepository: Repository<Word>,
@@ -17,7 +18,7 @@ export class WordCreatedListener {
   ) {}
   @OnEvent("word.created", { async: true })
   async checkEscape(payload: WordCreatedEvent) {
-    console.log("word created");
+    this.logger.verbose("word created");
     const { wordId } = payload;
     await new Promise<void>((resolve) => setTimeout(() => resolve(), 3600000));
     const word = await this.wordRepository.findOne({ where: { wordId } });
@@ -25,7 +26,7 @@ export class WordCreatedListener {
     if (!wordbookId) {
       await this.imageService.deleteImage(wordKey);
       await this.wordService.deleteWord(wordId);
-      console.log("unsaved word deleted");
+      this.logger.verbose("unsaved word deleted");
     }
   }
 }

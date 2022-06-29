@@ -47,29 +47,29 @@ export class WordService {
 
   async getRandomWord(wordbookId: string) {
     const words = await this.wordRepository.find({ where: { wordbookId } });
-    const arr1 = [];
-    const arr2 = [];
-    const given = [];
+    const wordPair = [];
+    const wordArray = [];
+    const chosenIndex = [];
     const wordSet = [];
     while (wordSet.length != 8) {
       const random = Number((Math.random() * (words.length - 1)).toFixed());
-      if (!given.includes(random)) {
+      if (!chosenIndex.includes(random)) {
         wordSet.push(words[random]);
-        given.push(random);
+        chosenIndex.push(random);
       }
     }
     for (const word of wordSet) {
-      const obj = new Object();
+      const wordObj = new Object();
       const wordName = word.wordEng[0];
       const { wordKey } = word;
-      obj[wordName] = wordKey;
-      arr1.push(obj);
+      wordObj[wordName] = wordKey;
+      wordPair.push(wordObj);
     }
     for (const word of wordSet) {
-      arr2.push(...word.wordEng);
-      arr2.push(word.wordKey);
+      wordArray.push(...word.wordEng);
+      wordArray.push(word.wordKey);
     }
-    return [arr1, arr2];
+    return [wordPair, wordArray];
   }
 
   async update(wordId: string, updateWordDto: UpdateWordDto) {

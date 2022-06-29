@@ -31,7 +31,6 @@ export class ImageService {
     };
     try {
       const response = await this.s3.upload(params).promise();
-      console.log(response);
       const wordKey = response.Key;
       const wordImage = this.configService.get("IMAGE") + `/${wordKey}`;
       const AI_URL = this.configService.get("AI_IMAGE_DETECTION");

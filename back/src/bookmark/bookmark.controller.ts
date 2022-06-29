@@ -80,7 +80,6 @@ export class BookmarkController {
     },
   })
   create(@Body() createBookmarkDto: CreateBookmarkDto) {
-    console.log(createBookmarkDto);
     return this.bookmarkService.create(createBookmarkDto);
   }
   @Delete("/")
