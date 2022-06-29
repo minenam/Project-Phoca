@@ -62,3 +62,6 @@ export const URL_WITHOUT_SIDEBAR: string[] = [
   "/guide",
   "/wordQuiz/game/[id]",
 ];
+
+export const LEFT_WITH_SIDEBAR = "60%";
+export const LEFT_WITHOUT_SIDEBAR = "50%";

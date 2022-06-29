@@ -62,6 +62,7 @@ const getWordsCount = async (wordbookId: string) => {
 
 function WordQuiz() {
   const router = useRouter();
+  const url = router.asPath;
   const small = useMediaQuery({ query: "(max-width : 1651px)" });
 
   const [isModalOpen, setIsModalOpen] = useState(false); // 단어장 목록 모달 open 여부
@@ -122,7 +123,8 @@ function WordQuiz() {
           open={isModalOpen}
           width="400px"
           onClose={modalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <BookList
             title="단어장 선택"
             height="300px"

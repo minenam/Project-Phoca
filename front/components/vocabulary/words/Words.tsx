@@ -41,6 +41,7 @@ function Words() {
   const user = userStore((state) => state.user);
   const router = useRouter();
   const wordbookId = router.query.id;
+  const url = router.asPath;
 
   const [wordList, setWordList] = useState<Word[]>([]);
   const [selectedWordId, setSelectedWordId] = useState("");
@@ -149,7 +150,8 @@ function Words() {
           open={editModalOpen}
           width="600px"
           onClose={modalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <WordEditForm
             wordId={selectedWordId}
             wordbookId={selectedWordbookId}
@@ -162,7 +164,8 @@ function Words() {
           open={deleteModalOpen}
           width="500px"
           onClose={modalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <WordDelForm
             wordId={selectedWordId}
             wordbookId={selectedWordbookId}
