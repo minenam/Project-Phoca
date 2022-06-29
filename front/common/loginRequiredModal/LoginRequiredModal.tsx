@@ -23,7 +23,7 @@ function LoginRequiredModal({ onClose }: ModalProps) {
     <ModalWrapper>
       <ModalContent>로그인이 필요한 서비스입니다.</ModalContent>
 
-      <ConfirmButton onClick={conFirmHandler}>확인</ConfirmButton>
+      <ConfirmButton onClick={conFirmHandler}>로그인하러 가기</ConfirmButton>
     </ModalWrapper>
   );
 }
