@@ -53,12 +53,13 @@ export const Card = styled("div", {
   backgroundPosition: "center",
 });
 
-export const CardHeader = styled("div", {
+export const CardHeader = styled("div", (props: { $isMine: boolean }) => ({
   height: "15%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-});
+  visibility: props.$isMine ? "visible" : "hidden",
+}));
 
 export const CardBody = styled("div", {
   height: "70%",

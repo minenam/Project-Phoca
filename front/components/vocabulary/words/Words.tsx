@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
+import { userStore } from "../../../zustand/userStore";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../../common/utils/constant";
 import Modal from "../../../common/modal/Modal";
 import WordEditForm from "./WordEditForm";
@@ -36,6 +37,7 @@ const getWords = async (wordbookId: string) => {
 };
 
 function Words() {
+  const user = userStore((state) => state.user);
   const router = useRouter();
   const wordbookId = router.query.id;
 
@@ -81,7 +83,8 @@ function Words() {
     <>
       <Container $headerHeight={HEADER_HEIGHT} $sidebarWidth={SIDEBAR_WIDTH}>
         <Header>
-          <IconBtn>
+          <IconBtn
+            onClick={() => router.push(router.query.returnUrl as string)}>
             <AiOutlineArrowLeft />
           </IconBtn>
           {isValid && wordList[0].wordbook.wordbookName}
@@ -90,7 +93,7 @@ function Words() {
           {isValid &&
             wordList.map((item, idx) => (
               <Card key={item.wordId}>
-                <CardHeader>
+                <CardHeader $isMine={user?.userId === item.wordbook.userId}>
                   <IconBtn
                     onClick={() =>
                       editBtnClickHandler(item.wordId, item.wordbook.wordbookId)
