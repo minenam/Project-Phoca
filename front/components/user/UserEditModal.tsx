@@ -39,6 +39,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const [comment, setComment] = useState(userInfo?.comment);
   const [isDel, setIsDel] = useState(false);
   const router = useRouter();
+  const url = router.asPath;
 
   const onDrop = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
@@ -165,7 +166,8 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
           open={isDel}
           width="600px"
           onClose={deleteModalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <UserDelModal onClose={deleteModalCloseHandler} userInfo={userInfo} />
         </Modal>
       )}

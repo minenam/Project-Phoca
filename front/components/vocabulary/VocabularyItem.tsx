@@ -10,18 +10,18 @@ import {
 import { MdPublic } from "react-icons/md";
 import { FaLock, FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { WordBook } from "../../common/types/resultsType";
 import { shuffle } from "../../common/utils/shuffle";
 import { WORD_IMAGES } from "../../common/utils/constant";
 import Seo from "../../common/Seo";
-import UserEditModal from "../user/UserEditModal";
 import Modal from "../../common/modal/Modal";
 import Toast from "../../common/toast/Toast";
+import VocabularyEditModal from "./VocabularyEditModal";
+import { vocaKeys } from "../../common/querykeys/querykeys";
 
 interface itemProps {
   listItem: WordBook[] | undefined;
-  trigger: Dispatch<SetStateAction<boolean>>;
 }
 
 const imageUrl = shuffle(WORD_IMAGES);
@@ -66,12 +66,14 @@ const checkWordsCount = async (wordbookId: string) => {
   return result;
 };
 
-const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
+const VocabularyItem: FC<itemProps> = ({ listItem }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
   const [isEdit, setIsEdit] = useState(false);
+  const [clickedItem, setClickedItem] = useState("");
 
   const url = router.asPath;
+  const queryClient = useQueryClient();
 
   const [selectedWordbookId, setSelectedWordbookId] = useState(""); // 선택된 단어장 아이디
   const [errorMsg, setErrorMsg] = useState(""); // 에러 메세지
@@ -88,8 +90,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
   const VocaMutation = useMutation(wordBookChangeHandler, {
     onSuccess: (data) => {
       console.log("단어장 수정 성공", data);
-      trigger(true);
-      router.push("/vocabulary");
+      queryClient.invalidateQueries(vocaKeys.getAll);
     },
     onError: (error) => {
       console.error("단어장 수정 실패", error);
@@ -112,8 +113,12 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
     }
   }, [data, isSuccess, router, selectedWordbookId]);
 
-  const editHandler = () => {
+  const editHandler = (
+    e: React.MouseEvent<HTMLDivElement>,
+    wordbookId: string,
+  ) => {
     setIsEdit(true);
+    setClickedItem(wordbookId);
   };
 
   const modalClose = () => {
@@ -130,6 +135,9 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
                 <BtnWrapper>
                   <LockBtn onClick={() => vocaChangeHandler(item)}>
                     {item.secured ? <FaLock /> : <MdPublic />}
+                  </LockBtn>
+                  <LockBtn onClick={(e) => editHandler(e, item.wordbookId)}>
+                    <FaEdit />
                   </LockBtn>
                 </BtnWrapper>
                 <GridTextItem
@@ -152,9 +160,17 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
         />
       )}
       {isEdit && (
-          <Modal open={isEdit} width="500px" onClose={modalClose} large={true}>
-            <UserEditModal onClose={modalClose} userInfo={user} />
-          </Modal>
+        <Modal
+          open={isEdit}
+          width="500px"
+          onClose={modalClose}
+          large={true}
+          url={url}>
+          <VocabularyEditModal
+            onClose={modalClose}
+            wordbookInfo={clickedItem}
+          />
+        </Modal>
       )}
     </>
   );

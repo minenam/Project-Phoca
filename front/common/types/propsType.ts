@@ -4,6 +4,10 @@ export interface ModalProps {
   onClose: () => void;
 }
 
+export interface VocabularyModalProps extends ModalProps {
+  wordbookInfo: string;
+}
+
 export interface GuideMenuButtonProps {
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
