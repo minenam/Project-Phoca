@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { SIDEBAR_WIDTH } from "../../common/utils/constant";
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
 import {
   Browser,
   MyPageWrapper,
@@ -81,7 +81,9 @@ const MyPage: NextPage = () => {
   }, [data]);
 
   return (
-    <MyPageWrapper $sideBarWidth={`${sideBarWidth}px`}>
+    <MyPageWrapper
+      $sideBarWidth={`${sideBarWidth}px`}
+      $headerHeight={HEADER_HEIGHT}>
       <Wrapper>
         <UserInfoEdit
           $sideBarWidth={`${sideBarWidth}px`}
