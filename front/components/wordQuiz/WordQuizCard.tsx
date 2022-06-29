@@ -25,12 +25,8 @@ const WordQuizCard = ({
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>, value: string) => {
     setFlip((v) => !v);
-    console.log("e.target", e.currentTarget.lastElementChild?.innerHTML);
-    console.log("e.target", e.currentTarget.lastChild);
-    // console.log(e.currentTarget.querySelector("p")!.innerText);
     if (e.currentTarget && !e.currentTarget.className.includes("flip")) {
       handleChoice(value);
-      console.log("value", value);
     }
   };
   const isFlipped = () => {
@@ -41,7 +37,6 @@ const WordQuizCard = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       isFlipped();
-      console.log("setTimeout");
     }, 500);
 
     return () => clearTimeout(timer);
