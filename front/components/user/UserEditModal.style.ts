@@ -58,6 +58,7 @@ export const EditButton = styled(
     border: `4px solid ${props?.$borderColor}`,
     padding: "0.5rem 1.5rem",
     margin: "1rem 1rem 1.5rem",
+    color: props.$borderColor,
     fontSize: "1.2rem",
     cursor: "pointer",
   }),

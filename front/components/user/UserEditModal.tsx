@@ -149,7 +149,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         </InputWrapper>
       </CommentWrapper>
       <EditButtonWrapper>
-        <EditButton $borderColor="#FFAA2A">비밀번호 변경</EditButton>
+        <EditButton $borderColor="#48cfc8">비밀번호 변경</EditButton>
         <EditButton
           $borderColor="#FE7394"
           $withdrawal
