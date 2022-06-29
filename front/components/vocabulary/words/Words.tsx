@@ -5,6 +5,7 @@ import { userStore } from "../../../zustand/userStore";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../../common/utils/constant";
 import Modal from "../../../common/modal/Modal";
 import WordEditForm from "./WordEditForm";
+import WordDelForm from "./WordDelForm";
 import {
   Container,
   Header,
@@ -46,6 +47,7 @@ function Words() {
   const [selectedWordbookId, setSelectedWordbookId] = useState("");
 
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const isValid = wordList.length > 0;
 
@@ -54,6 +56,9 @@ function Words() {
     () => getWords(wordbookId as string),
     {
       enabled: !!wordbookId,
+      staleTime: 5000,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
     },
   );
 
@@ -69,8 +74,15 @@ function Words() {
     setEditModalOpen(true);
   };
 
+  const deleteBtnClickHandler = (wordId: string, wordbookId: string) => {
+    setSelectedWordId(wordId);
+    setSelectedWordbookId(wordbookId);
+    setDeleteModalOpen(true);
+  };
+
   const modalCloseHandler = () => {
     setEditModalOpen(false);
+    setDeleteModalOpen(false);
   };
 
   useEffect(() => {
@@ -100,7 +112,13 @@ function Words() {
                     }>
                     <FaEdit />
                   </IconBtn>
-                  <IconBtn>
+                  <IconBtn
+                    onClick={() =>
+                      deleteBtnClickHandler(
+                        item.wordId,
+                        item.wordbook.wordbookId,
+                      )
+                    }>
                     <AiFillDelete />
                   </IconBtn>
                 </CardHeader>
@@ -133,6 +151,19 @@ function Words() {
           onClose={modalCloseHandler}
           large={true}>
           <WordEditForm
+            wordId={selectedWordId}
+            wordbookId={selectedWordbookId}
+            onClose={modalCloseHandler}
+          />
+        </Modal>
+      )}
+      {deleteModalOpen && (
+        <Modal
+          open={deleteModalOpen}
+          width="500px"
+          onClose={modalCloseHandler}
+          large={true}>
+          <WordDelForm
             wordId={selectedWordId}
             wordbookId={selectedWordbookId}
             onClose={modalCloseHandler}

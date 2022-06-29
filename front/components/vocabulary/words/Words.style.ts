@@ -122,6 +122,15 @@ export const Button = styled("button", {
   fontSize: "1.2rem",
   color: "#fff",
   padding: "0.5rem 3rem",
-  marginBottom: "1rem",
+  margin: "1rem",
   cursor: "pointer",
+});
+
+export const ConfirmContainer = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  textAlign: "center",
+  fontSize: "2rem",
 });
