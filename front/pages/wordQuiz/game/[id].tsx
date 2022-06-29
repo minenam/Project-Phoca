@@ -5,6 +5,9 @@ import { useGameStore } from "../../../zustand/useGameStore";
 import { shuffle } from "../../../common/utils/shuffle";
 import {
   CardRootWrapper,
+  GameBackHomeWrapper,
+  GameEndButton,
+  GameReGameWrapper,
   GameWrapper,
 } from "../../../components/wordQuiz/WordQuiz.style";
 import WordQuizCardList from "../../../components/wordQuiz/WordQuizCardList";
@@ -31,23 +34,60 @@ const getWrodGameInit = async (wordbookId: string | string[] | undefined) => {
 };
 const WordQuizGame = () => {
   const [cardShuffled, setCardShuffled] = useState<string[] | undefined>([]);
+  const [isGameEnd, setIsGameEnd] = useState(false);
+
   const router = useRouter();
   const wordbookId = router.query.id;
+
+  const totalAnswer = useGameStore((state) => state.total);
   const gameResult = useGameStore((state) => state.answer);
 
   const { data } = useQuery("wordGameInit", () => getWrodGameInit(wordbookId), {
     refetchOnWindowFocus: false,
   });
 
+  const backHandler = (direction: string) => {
+    router.push(direction);
+  };
+
   useEffect(() => {
     data && setCardShuffled(data);
   }, [data]);
 
+  useEffect(() => {
+    totalAnswer === 16 ? setIsGameEnd(true) : setIsGameEnd(false);
+  }, [totalAnswer]);
+
   return (
     <GameWrapper $headerHeight={HEADER_HEIGHT}>
+      {isGameEnd && (
+        <GameBackHomeWrapper>
+          <GameEndButton
+            $buttonCss
+            $backgroundColor="skyblue"
+            onClick={() => {
+              backHandler("/");
+            }}>
+            홈으로
+          </GameEndButton>
+        </GameBackHomeWrapper>
+      )}
+
       <CardRootWrapper>
         <WordQuizCardList shuffleList={cardShuffled} />
       </CardRootWrapper>
+      {isGameEnd && (
+        <GameReGameWrapper>
+          <GameEndButton
+            $buttonCss
+            $backgroundColor="skyblue"
+            onClick={() => {
+              backHandler("/wordQuiz");
+            }}>
+            다시 할래요
+          </GameEndButton>
+        </GameReGameWrapper>
+      )}
     </GameWrapper>
   );
 };

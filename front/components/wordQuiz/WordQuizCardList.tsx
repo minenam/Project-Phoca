@@ -50,10 +50,6 @@ const WordQuizCardList = ({ shuffleList }: ShuffleProps) => {
       ? choiceOne
       : choiceTwo;
 
-    console.log(
-      "choiceAnswer[0]===========>",
-      answer.filter((item) => item[nameChoice] === imageChoice),
-    );
     if (
       answer.filter((item) => item[nameChoice] === imageChoice).length !== 0
     ) {
@@ -63,7 +59,6 @@ const WordQuizCardList = ({ shuffleList }: ShuffleProps) => {
         //if(정답 로직)
         return cards?.map((card, idx) => {
           if (card.data === nameChoice || card.data === imageChoice) {
-            console.log("card", card);
             return { ...card, matched: true };
           } else {
             return card;
@@ -75,10 +70,6 @@ const WordQuizCardList = ({ shuffleList }: ShuffleProps) => {
       reset();
     }
   };
-
-  useEffect(() => {
-    console.log("matchCard", cardList);
-  }, [cardList]);
 
   const reset = () => {
     setChoiceOne("");
@@ -94,7 +85,6 @@ const WordQuizCardList = ({ shuffleList }: ShuffleProps) => {
 
   useEffect(() => {
     setCards();
-    console.log("shuffle", cardList);
   }, [shuffleList]);
 
   useEffect(() => {
