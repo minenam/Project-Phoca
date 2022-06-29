@@ -12,11 +12,11 @@ function SideBar() {
   const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 페이지로 연결 여부
 
   const sidebarBtnClickHandler = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    e: React.MouseEvent<HTMLDivElement>,
     link: string,
   ) => {
     const userToken = sessionStorage.getItem("userToken");
-    console.log(userToken);
+
     if (
       (!userToken && link === "/myPage") ||
       (!userToken && link === "/wordQuiz")
