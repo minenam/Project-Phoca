@@ -100,3 +100,27 @@ export const KorWord = styled("p", (props) => ({
   textAlign: "center",
   marginTop: "1rem",
 }));
+
+export const InputContainer = styled("div", {
+  backgroundColor: "#FFECD0",
+  width: "90%",
+  margin: "1rem auto",
+  display: "flex",
+});
+
+export const BtnContainer = styled("div", {
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+});
+
+export const Button = styled("button", {
+  backgroundColor: "#FFAA2A",
+  border: 0,
+  borderRadius: "20px",
+  fontSize: "1.2rem",
+  color: "#fff",
+  padding: "0.5rem 3rem",
+  marginBottom: "1rem",
+  cursor: "pointer",
+});

@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../../common/utils/constant";
+import Modal from "../../../common/modal/Modal";
+import WordEditForm from "./WordEditForm";
 import {
   Container,
   Header,
@@ -38,6 +40,10 @@ function Words() {
   const wordbookId = router.query.id;
 
   const [wordList, setWordList] = useState<Word[]>([]);
+  const [selectedWordId, setSelectedWordId] = useState("");
+  const [selectedWordbookId, setSelectedWordbookId] = useState("");
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const isValid = wordList.length > 0;
 
@@ -49,6 +55,22 @@ function Words() {
     },
   );
 
+  const ttsBtnClickHandler = (word: string) => {
+    const tts: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(word);
+    tts.lang = "en-US";
+    window.speechSynthesis.speak(tts);
+  };
+
+  const editBtnClickHandler = (wordId: string, wordbookId: string) => {
+    setSelectedWordId(wordId);
+    setSelectedWordbookId(wordbookId);
+    setEditModalOpen(true);
+  };
+
+  const modalCloseHandler = () => {
+    setEditModalOpen(false);
+  };
+
   useEffect(() => {
     if (data && data.length > 0) {
       setWordList(data);
@@ -56,46 +78,65 @@ function Words() {
   }, [data]);
 
   return (
-    <Container $headerHeight={HEADER_HEIGHT} $sidebarWidth={SIDEBAR_WIDTH}>
-      <Header>
-        <IconBtn>
-          <AiOutlineArrowLeft />
-        </IconBtn>
-        {isValid && wordList[0].wordbook.wordbookName}
-      </Header>
-      <CardContainer>
-        {isValid &&
-          wordList.map((item, idx) => (
-            <Card key={item.wordId}>
-              <CardHeader>
-                <IconBtn>
-                  <FaEdit />
-                </IconBtn>
-                <IconBtn>
-                  <AiFillDelete />
-                </IconBtn>
-              </CardHeader>
-              <CardBody>
-                <ImageContainer>
-                  <CardImage
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.wordKey}`}
-                    alt={item.wordKey}
-                  />
-                </ImageContainer>
-                <WordContainer>
-                  <EngWord>
-                    {item.wordEng}
-                    <IconBtn>
-                      <FaVolumeUp />
-                    </IconBtn>
-                  </EngWord>
-                  <KorWord>{item.wordKor}</KorWord>
-                </WordContainer>
-              </CardBody>
-            </Card>
-          ))}
-      </CardContainer>
-    </Container>
+    <>
+      <Container $headerHeight={HEADER_HEIGHT} $sidebarWidth={SIDEBAR_WIDTH}>
+        <Header>
+          <IconBtn>
+            <AiOutlineArrowLeft />
+          </IconBtn>
+          {isValid && wordList[0].wordbook.wordbookName}
+        </Header>
+        <CardContainer>
+          {isValid &&
+            wordList.map((item, idx) => (
+              <Card key={item.wordId}>
+                <CardHeader>
+                  <IconBtn
+                    onClick={() =>
+                      editBtnClickHandler(item.wordId, item.wordbook.wordbookId)
+                    }>
+                    <FaEdit />
+                  </IconBtn>
+                  <IconBtn>
+                    <AiFillDelete />
+                  </IconBtn>
+                </CardHeader>
+                <CardBody>
+                  <ImageContainer>
+                    <CardImage
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${item.wordKey}`}
+                      alt={item.wordKey}
+                    />
+                  </ImageContainer>
+                  <WordContainer>
+                    <EngWord>
+                      {item.wordEng[0]}
+                      <IconBtn
+                        onClick={() => ttsBtnClickHandler(item.wordEng[0])}>
+                        <FaVolumeUp />
+                      </IconBtn>
+                    </EngWord>
+                    <KorWord>{item.wordKor[0]}</KorWord>
+                  </WordContainer>
+                </CardBody>
+              </Card>
+            ))}
+        </CardContainer>
+      </Container>
+      {editModalOpen && (
+        <Modal
+          open={editModalOpen}
+          width="600px"
+          onClose={modalCloseHandler}
+          large={true}>
+          <WordEditForm
+            wordId={selectedWordId}
+            wordbookId={selectedWordbookId}
+            onClose={modalCloseHandler}
+          />
+        </Modal>
+      )}
+    </>
   );
 }
 
