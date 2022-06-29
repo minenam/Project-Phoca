@@ -169,7 +169,6 @@ export class WordController {
     try {
       await this.imageService.deleteImage(key);
     } catch (e) {
-      console.log(e);
       return new BadRequestException("이미지 삭제 실패");
     }
     return "단어가 삭제되었습니다.";
