@@ -7,7 +7,7 @@ import { Users } from "../user/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Profile, Strategy } from "passport-kakao";
 import { AuthService } from "./auth.service";
-// import * as bcrypt from "bcryptjs";
+// import * as bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
 
 @Injectable()
@@ -43,9 +43,7 @@ export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
       : undefined;
     const joinedAt = profile._json.connected_at;
 
-    // const salt = await bcrypt.genSalt();
-    // const hashedPassword = await bcrypt.hash(userId, salt);
-    const hashedPassword = userId;
+    const password = await this.authService.hashedUser(userId);
 
     const user = await this.userRepository.findOneBy({ email });
 
@@ -54,7 +52,7 @@ export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
         userId: randomUUID(),
         userName,
         email,
-        password: hashedPassword,
+        password,
         userImage,
         provider,
         joinedAt,
