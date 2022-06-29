@@ -2,12 +2,13 @@ import { styled } from "styletron-react";
 
 export const MyPageWrapper = styled(
   "div",
-  (props: { $sideBarWidth?: string }) => ({
+  (props: { $sideBarWidth?: string; $headerHeight: string }) => ({
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
     marginLeft: props.$sideBarWidth,
     width: `calc(100vw - ${props.$sideBarWidth}px`,
+    height: `calc(100vh - ${props.$headerHeight})`,
     flexDirection: "column",
   }),
 );
@@ -137,7 +138,7 @@ export const UserWrapper = styled("div", (props: { $box?: Boolean }) => ({
   justifyContent: props.$box ? "space-evenly" : "space-between",
   alignContent: "center",
   flexDirection: "row",
-  marginTop: props.$box ? "4rem" : "",
+  marginTop: props.$box ? "8rem" : "",
 }));
 
 export const Branch = styled("img", {
