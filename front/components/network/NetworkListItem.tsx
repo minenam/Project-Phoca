@@ -16,7 +16,7 @@ import {
 import { HEADER_HEIGHT } from "../../common/utils/constant";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { userStore } from "../../zustand/userStore";
-import { BiArrowBack } from "react-icons/bi";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { WordBook, BookMark } from "../../common/types/resultsType";
@@ -83,12 +83,20 @@ const NetworkListItem: FC = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(["othersWordbookList", isStop, searchKeyword], () =>
-    getOthersWordbookList(user?.userId, searchKeyword && searchKeyword),
+  const { data } = useQuery(
+    ["othersWordbookList", isStop, searchKeyword],
+    () => getOthersWordbookList(user?.userId, searchKeyword),
+    {
+      enabled: !!user?.userId,
+    },
   );
 
-  const bookMarkedData = useQuery(["bookmarkList"], () =>
-    getMyBookMarkList(user?.userId),
+  const bookMarkedData = useQuery(
+    ["bookmarkList"],
+    () => getMyBookMarkList(user?.userId),
+    {
+      enabled: !!user?.userId,
+    },
   );
 
   const bookMarkHandler = async (props: BookMakrProps) => {
@@ -159,7 +167,7 @@ const NetworkListItem: FC = () => {
     <NetworkWrapper $headerHeight={HEADER_HEIGHT}>
       <SearchBarWrapper>
         <BackButton onClick={backButtonHandler}>
-          <BiArrowBack />
+          <AiOutlineArrowLeft />
         </BackButton>
         <SearchBar
           type="text"
