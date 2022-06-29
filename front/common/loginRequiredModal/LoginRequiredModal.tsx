@@ -10,7 +10,14 @@ function LoginRequiredModal({ onClose }: ModalProps) {
   const router = useRouter();
   const conFirmHandler = () => {
     onClose();
-    router.push("/login");
+    const currentUrl = router.asPath;
+    router.push(
+      {
+        pathname: "/login",
+        query: { returnUrl: currentUrl },
+      },
+      "/login",
+    );
   };
   return (
     <ModalWrapper>
