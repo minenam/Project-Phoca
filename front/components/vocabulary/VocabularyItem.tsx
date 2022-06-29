@@ -62,6 +62,10 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
     VocaMutation.mutate(props);
   };
 
+  const vocaClickHandler = (wordbookId: string) => {
+    router.push(`/vocabulary/${wordbookId}`);
+  };
+
   return (
     <GridWrapper $lapTop={isLapTop}>
       {listItem != undefined && listItem?.length > 0 ? (
@@ -73,7 +77,9 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
                   {item.secured ? <FaLock /> : <MdPublic />}
                 </LockBtn>
               </BtnWrapper>
-              <GridTextItem>{item.wordbookName}</GridTextItem>
+              <GridTextItem onClick={() => vocaClickHandler(item.wordbookId)}>
+                {item.wordbookName}
+              </GridTextItem>
             </GridItem>
           );
         })
