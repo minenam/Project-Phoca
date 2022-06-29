@@ -77,6 +77,7 @@ export const CardImage = styled("img", {
   overFit: "contain",
   borderRadius: "20px",
   border: "10px solid #feb2a5",
+  backgroundColor: "#fff",
 });
 
 export const WordContainer = styled("div", {
