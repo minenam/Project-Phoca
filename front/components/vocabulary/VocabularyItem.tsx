@@ -62,6 +62,7 @@ const checkWordsCount = async (wordbookId: string) => {
 const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
+  const url = router.asPath;
 
   const [selectedWordbookId, setSelectedWordbookId] = useState(""); // 선택된 단어장 아이디
   const [errorMsg, setErrorMsg] = useState(""); // 에러 메세지
@@ -126,7 +127,12 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
         )}
       </GridWrapper>
       {!!errorMsg && (
-        <Toast success={false} message={errorMsg} setErrorMsg={setErrorMsg} />
+        <Toast
+          success={false}
+          message={errorMsg}
+          url={url}
+          setErrorMsg={setErrorMsg}
+        />
       )}
     </>
   );

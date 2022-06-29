@@ -93,7 +93,7 @@ function WordQuiz() {
     ) {
       router.push(`${card[selectedBtn].link}/${selectedWordbookId}`);
     } else {
-      setErrorMsg("단어장에 저장된 단어 수가 적어 선택할 수 없습니다.");
+      setErrorMsg("단어장에 저장된 \n 단어 수가 적어 선택할 수 없습니다.");
     }
   };
 
@@ -139,7 +139,12 @@ function WordQuiz() {
         </Modal>
       )}
       {errorMsg.length > 0 && (
-        <Toast success={false} message={errorMsg} setErrorMsg={setErrorMsg} />
+        <Toast
+          success={false}
+          message={errorMsg}
+          url={url}
+          setErrorMsg={setErrorMsg}
+        />
       )}
     </>
   );
