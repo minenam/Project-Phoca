@@ -4,7 +4,7 @@ export const MyPageWrapper = styled(
   "div",
   (props: { $sideBarWidth?: string; $headerHeight: string }) => ({
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "start",
     alignItems: "center",
     marginLeft: props.$sideBarWidth,
     width: `calc(100vw - ${props.$sideBarWidth}px`,
@@ -137,11 +137,11 @@ export const UserWrapper = styled("div", (props: { $box?: Boolean }) => ({
   justifyContent: props.$box ? "space-evenly" : "space-between",
   alignContent: "center",
   flexDirection: "row",
-  marginTop: props.$box ? "8rem" : "",
+  marginTop: props.$box ? "3rem" : "",
 }));
 
 export const Branch = styled("img", {
-  display: "felx",
+  display: "flex",
   position: "relative",
   width: "20rem",
   alignItems: "center",
