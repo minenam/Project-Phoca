@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { Users } from "../user/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Profile, Strategy } from "passport-kakao";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
@@ -13,6 +14,7 @@ export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
     configService: ConfigService,
     @InjectRepository(Users)
     private readonly userRepository: Repository<Users>,
+    private readonly authService: AuthService,
   ) {
     super({
       // Put config in `.env`
@@ -30,14 +32,19 @@ export class KakaoAuthStrategy extends PassportStrategy(Strategy, "kakao") {
     done,
   ) {
     console.log(profile);
-    const { provider, id, _raw, _json } = profile;
-
-    const payload = {
+    const email = profile._json.kakao_account.email;
+    const username = profile._json.properties.nickname;
+    const provider = profile.provider;
+    const userInfo = {
+      email,
+      username,
       provider,
-      providerId: id,
-      raw: _raw,
-      _json: _json,
     };
-    done(null, payload);
+
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user) {
+      // 토큰 발급
+      return this.authService.kakaoLogin(userInfo);
+    }
   }
 }
