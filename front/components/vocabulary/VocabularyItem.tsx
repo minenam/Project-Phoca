@@ -63,13 +63,10 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
   };
 
   const vocaClickHandler = (wordbookId: string) => {
-    router.push(
-      {
-        pathname: `/vocabulary/${wordbookId}`,
-        query: { returnUrl: router.asPath },
-      },
-      `/vocabulary/${wordbookId}`,
-    );
+    router.push({
+      pathname: `/vocabulary/${wordbookId}`,
+      query: { returnUrl: router.asPath },
+    });
   };
 
   return (
