@@ -83,7 +83,6 @@ export const Avatar = styled("div", (props: { $modal?: boolean }) => ({
 }));
 
 export const AvatarImage = styled("img", {
-  padding: "10px",
   width: "100%",
   height: "100%",
   display: "block",
