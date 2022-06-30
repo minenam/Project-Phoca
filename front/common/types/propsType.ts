@@ -19,3 +19,8 @@ export interface CardProps {
   isTwoSelected: boolean;
   setIsTwoSelected: Dispatch<SetStateAction<boolean>>;
 }
+
+export interface BookMarkProps {
+  wordbookId: string;
+  userId?: string;
+}

@@ -14,11 +14,13 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { WordBook } from "../../common/types/resultsType";
 import { shuffle } from "../../common/utils/shuffle";
 import { WORD_IMAGES } from "../../common/utils/constant";
-import Seo from "../../common/Seo";
 import Modal from "../../common/modal/Modal";
 import Toast from "../../common/toast/Toast";
 import VocabularyEditModal from "./VocabularyEditModal";
 import { vocaKeys } from "../../common/querykeys/querykeys";
+import { AiFillHeart } from "react-icons/ai";
+import { BookMarkProps } from "../../common/types/propsType";
+import { userStore } from "../../zustand/userStore";
 
 interface itemProps {
   listItem: WordBook[] | undefined;
@@ -26,6 +28,25 @@ interface itemProps {
 }
 
 const imageUrl = shuffle(WORD_IMAGES);
+
+const bookMarkHandler = async (props: BookMarkProps) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+      body: JSON.stringify({
+        userId: props.userId,
+        wordbookId: props.wordbookId,
+      }),
+    });
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 const wordBookChangeHandler = async (props: WordBook) => {
   const data = {
@@ -47,6 +68,7 @@ const wordBookChangeHandler = async (props: WordBook) => {
     if (!res.ok) throw new Error(res.statusText);
 
     const result = await res.json();
+    console.log("secure수정", result);
     return result;
   } catch (e) {
     console.error(e);
@@ -73,6 +95,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [clickedItem, setClickedItem] = useState("");
 
+  const user = userStore((state) => state.user);
   const url = router.asPath;
   const queryClient = useQueryClient();
 
@@ -88,10 +111,20 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
     },
   );
 
+  const bookMarkMutation = useMutation(bookMarkHandler, {
+    onSuccess: (data) => {
+      console.log("단어장 삭제 성공", data);
+      queryClient.invalidateQueries([vocaKeys.getAll]);
+    },
+    onError: (error) => {
+      console.error("단어장 수정 실패", error);
+    },
+  });
+
   const VocaMutation = useMutation(wordBookChangeHandler, {
     onSuccess: (data) => {
       console.log("단어장 수정 성공", data);
-      queryClient.invalidateQueries(vocaKeys.getAll);
+      queryClient.invalidateQueries([vocaKeys.getAll]);
     },
     onError: (error) => {
       console.error("단어장 수정 실패", error);
@@ -99,6 +132,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
   });
 
   const vocaChangeHandler = (props: WordBook) => {
+    console.log("props", props);
     VocaMutation.mutate(props);
   };
 
@@ -130,16 +164,28 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
     <>
       <GridWrapper $lapTop={isLapTop}>
         {listItem != undefined && listItem?.length > 0 ? (
-          listItem.map((item) => {
+          listItem.map((item, idx) => {
             return (
-              <GridItem key={item.createDate}>
+              <GridItem
+                key={item.createDate}
+                $backgroundImage={imageUrl[idx % imageUrl.length]}>
                 <BtnWrapper>
                   <LockBtn onClick={() => vocaChangeHandler(item)}>
                     {item.secured ? <FaLock /> : <MdPublic />}
                   </LockBtn>
-                  {!isMine && (
+                  {!isMine ? (
                     <LockBtn onClick={(e) => editHandler(e, item.wordbookId)}>
                       <FaEdit />
+                    </LockBtn>
+                  ) : (
+                    <LockBtn
+                      onClick={() =>
+                        bookMarkMutation.mutate({
+                          wordbookId: item.wordbookId,
+                          userId: user?.userId,
+                        })
+                      }>
+                      <AiFillHeart />
                     </LockBtn>
                   )}
                 </BtnWrapper>

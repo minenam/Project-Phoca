@@ -68,8 +68,12 @@ const MyPage: NextPage = () => {
 
   const sideBarWidth = parseInt(SIDEBAR_WIDTH.substring(0, 3)) + 100;
 
-  const { data } = useQuery(["getCount", user?.userId], () =>
-    getCount(user?.userId),
+  const { data } = useQuery(
+    ["getCount", user?.userId],
+    () => getCount(user?.userId),
+    {
+      enabled: !user,
+    },
   );
 
   const userEditModalCloseHandler = () => {

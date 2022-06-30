@@ -21,11 +21,7 @@ import { useRouter } from "next/router";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { WordBook, BookMark } from "../../common/types/resultsType";
 import { shuffle } from "../../common/utils/shuffle";
-
-interface BookMakrProps {
-  wordbookId: string;
-  userId?: string;
-}
+import { BookMarkProps } from "../../common/types/propsType";
 
 const imageUrl = shuffle(WORD_IMAGES);
 
@@ -103,7 +99,7 @@ const NetworkListItem: FC = () => {
     },
   );
 
-  const bookMarkHandler = async (props: BookMakrProps) => {
+  const bookMarkHandler = async (props: BookMarkProps) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark`,

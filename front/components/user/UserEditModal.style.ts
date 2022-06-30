@@ -46,6 +46,7 @@ export const Comment = styled("input", {
   marginLeft: "5px",
 });
 export const EditButtonWrapper = styled("div", {
+  width: "400px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
