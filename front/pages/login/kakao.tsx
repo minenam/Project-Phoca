@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { userStore } from "../../zustand/userStore";
+import Seo from "../../common/Seo";
 
 const getCurrentUser = async (token: string) => {
   const res = await fetch(
@@ -38,7 +39,7 @@ function Kakao() {
       router.push("/");
     }
   }, [data, isSuccess, router]);
-  return <div>Kakao</div>;
+  return <Seo title="카카오 로그인" />;
 }
 
 export default Kakao;

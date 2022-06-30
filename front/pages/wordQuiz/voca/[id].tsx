@@ -6,6 +6,7 @@ import {
   WORD_NOTE_HEIGHT,
 } from "../../../common/utils/constant";
 import Note from "../../../common/note/Note";
+import Seo from "../../../common/Seo";
 import { FaVolumeUp } from "react-icons/fa";
 import {
   TitleContainer,
@@ -78,6 +79,7 @@ function Voca() {
 
   return (
     <>
+      <Seo title="단어장 외우기" />
       <Note width={WORD_NOTE_WIDTH} height={WORD_NOTE_HEIGHT}>
         <TitleContainer>
           <Title>{isValid && wordList[0].wordbook.wordbookName}</Title>
@@ -95,7 +97,10 @@ function Voca() {
             </TtsBtnContainer>
 
             <TextContainer onClick={() => setKorWordVisible((cur) => !cur)}>
-              <EngWord>{isValid && wordList[currentIdx].wordEng[0]}</EngWord>
+              <EngWord
+                $long={isValid && wordList[currentIdx].wordEng[0].length > 6}>
+                {isValid && wordList[currentIdx].wordEng[0]}
+              </EngWord>
               {korWordVisible && (
                 <KorWord>{isValid && wordList[currentIdx].wordKor[0]}</KorWord>
               )}
