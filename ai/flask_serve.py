@@ -105,7 +105,11 @@ def image_predict():
     label = np.argmax(res)
     class_names = [c.strip() for c in open(IC_CLASS_NAME_PATH).readlines()]
     result = True if class_names[label] == answer else False
-    outputs = {"result": result}
+    outputs = {
+      "predicted": class_names[label],
+      "answer": answer,
+      "result": result
+  }
   return jsonify(outputs)
 
 
