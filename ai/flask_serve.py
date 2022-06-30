@@ -94,11 +94,11 @@ def predict():
 
 
 # Image Classification model Api
-@app.route("/ic/", methods=["GET", "POST"])
+@app.route("/ic/", methods=["POST"])
 def image_predict():
   outputs = "please input image url"
   if request.method == 'POST':
-    file = request.files['file']
+    file = request.files['image']
     answer = request.form["answer"]
     img = ic_transform_images(file, 32)
     res = ic_model.predict(img)
