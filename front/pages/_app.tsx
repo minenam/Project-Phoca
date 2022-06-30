@@ -15,6 +15,7 @@ import SideBar from "../components/sidebar/SideBar";
 import {
   URL_WITHOUT_NAVBAR,
   URL_WITHOUT_SIDEBAR,
+  URL_WITHOUT_LOGIN_REQUIRED,
 } from "../common/utils/constant";
 
 declare module "react-query/types/react/QueryClientProvider" {
@@ -47,20 +48,26 @@ function MyApp({ Component, pageProps }: AppProps) {
           },
         );
 
-        if (!res.ok) {
-          throw new Error("토큰 만료");
+        const result: ResponseType = await res.json();
+
+        if (result.statusCode !== 200) {
+          throw new Error(result.message);
         }
 
-        const result: ResponseType = await res.json();
         userStore.setState({ user: result.data });
       } catch (err) {
-        console.log(err);
+        if (!URL_WITHOUT_LOGIN_REQUIRED.includes(router.pathname)) {
+          router.push({
+            pathname: "/login",
+            query: { returnUrl: router.asPath },
+          });
+        }
       }
     }
     if (sessionStorage.getItem("userToken")) {
       getUser();
     }
-  }, []);
+  }, [router]);
 
   return (
     <StyletronProvider value={styletron}>

@@ -63,6 +63,15 @@ export const URL_WITHOUT_SIDEBAR: string[] = [
   "/guide",
   "/wordQuiz/game/[id]",
 ];
+export const URL_WITHOUT_LOGIN_REQUIRED: string[] = [
+  "/",
+  "/guide",
+  "/word/upload",
+  "/word/result/[id]",
+  "/drawing",
+  "/login",
+  "/register",
+];
 
 export const LEFT_WITH_SIDEBAR = "60%";
 export const LEFT_WITHOUT_SIDEBAR = "50%";
