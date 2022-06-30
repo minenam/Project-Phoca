@@ -131,7 +131,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       </AvatarEditWrapper>
       <CommentWrapper>
         <InputWrapper>
-          <label htmlFor="userName">유저명 :</label>
+          <label htmlFor="userName">이름 :</label>
           <Comment
             id="userName"
             type="text"
