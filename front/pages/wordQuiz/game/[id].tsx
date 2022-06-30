@@ -40,13 +40,13 @@ const WordQuizGame = () => {
   const wordbookId = router.query.id;
 
   const totalAnswer = useGameStore((state) => state.total);
-  const gameResult = useGameStore((state) => state.answer);
 
   const { data } = useQuery("wordGameInit", () => getWrodGameInit(wordbookId), {
     refetchOnWindowFocus: false,
   });
 
   const backHandler = (direction: string) => {
+    setIsGameEnd(false);
     router.push(direction);
   };
 
@@ -55,6 +55,11 @@ const WordQuizGame = () => {
   }, [data]);
 
   useEffect(() => {
+    useGameStore.setState({ total: 0 });
+  }, []);
+
+  useEffect(() => {
+    console.log("totalAnswer", totalAnswer);
     totalAnswer === 16 ? setIsGameEnd(true) : setIsGameEnd(false);
   }, [totalAnswer]);
 
