@@ -1,16 +1,8 @@
-import {
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Canvas } from "./Drawing.style";
 
 interface CanvasProps {
-  resetBtnClick: boolean;
-  setResetBtnClick: Dispatch<SetStateAction<boolean>>;
+  canvasRef: React.RefObject<HTMLCanvasElement>;
 }
 
 interface Coordinate {
@@ -18,9 +10,7 @@ interface Coordinate {
   y: number;
 }
 
-function CanvasComp({ resetBtnClick, setResetBtnClick }: CanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
+function CanvasComp({ canvasRef }: CanvasProps) {
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
     undefined,
   );
@@ -88,14 +78,6 @@ function CanvasComp({ resetBtnClick, setResetBtnClick }: CanvasProps) {
     [isDrawing, mousePosition],
   );
 
-  const resetCanvas = () => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas: HTMLCanvasElement = canvasRef.current;
-    canvas.getContext("2d")!!.clearRect(0, 0, canvas.width, canvas.height);
-  };
-
   useEffect(() => {
     if (!canvasRef.current) {
       return;
@@ -113,14 +95,7 @@ function CanvasComp({ resetBtnClick, setResetBtnClick }: CanvasProps) {
       canvas.removeEventListener("mouseup", endDrawing);
       canvas.removeEventListener("mouseleave", endDrawing);
     };
-  }, [drawing, endDrawing, startDrawing]);
-
-  useEffect(() => {
-    if (resetBtnClick) {
-      resetCanvas();
-      setResetBtnClick(false);
-    }
-  }, [resetBtnClick, setResetBtnClick]);
+  }, [canvasRef, drawing, endDrawing, startDrawing]);
 
   return <Canvas ref={canvasRef} width="1300" height="700" />;
 }
