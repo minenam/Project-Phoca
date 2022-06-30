@@ -1,13 +1,21 @@
 import os
+import sys
 import dotenv
 import boto3
 import tensorflow as tf
 import PIL.Image as image
 import numpy as np
+from werkzeug.utils import secure_filename
+from flask_cors import CORS
 
 from flask import Flask, jsonify, request
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
+
 app = Flask(__name__)
+CORS(app)
 
 dotenv.load_dotenv()
 
@@ -38,7 +46,6 @@ OD_CLASS_NAME_PATH = os.path.join(OD_ROOT_PATH, LABEL_FILE_PATH)
 
 # Image Classification file path
 IC_ROOT_PATH = "./image-classification"
-IC_MODEL_PATH = os.path.join(IC_ROOT_PATH, "saved_model")
 IC_LABEL_FILE_PATH = os.path.join("data", os.getenv("IC_LABEL_FILE_NAME"))
 IC_CLASS_NAME_PATH = os.path.join(IC_ROOT_PATH, IC_LABEL_FILE_PATH)
 
@@ -54,8 +61,7 @@ def transform_images(img, size):
 
 # Image Classification transform image
 def ic_transform_images(img, size):
-    img = image.open(img)
-    img = tf.image.grayscale_to_rgb(img)
+    img = image.open(img).convert("RGB")
     img = tf.expand_dims(img, 0)
     img = tf.image.resize(img, (size, size))
     img = img / 255
@@ -87,23 +93,24 @@ def predict():
     return jsonify(outputs)
 
 
-@app.route("/ic/", methods=["GET"])
+# Image Classification model Api
+@app.route("/file_upload/", methods=["GET", "POST"])
 def image_predict():
-    # img_url = request.args.get("img")
-    img_url = image.open("./12345")
     outputs = "please input image url"
-    if img_url != None:
-        img_url = img
-        # img_url = img_url.split("?")[0]
-        # img = s3_load_image(img_url)
-        img = ic_transform_images(img, 32)
+    if request.method == 'POST':
+        file = request.files['file']
+        answer = request.form["answer"]
+        img = ic_transform_images(file, 32)
         res = ic_model.predict(img)
         label = np.argmax(res)
-        outputs = {"lagel": label}
+        class_names = [c.strip() for c in open(IC_CLASS_NAME_PATH).readlines()]
+        result = True if class_names[label] == answer else False
+        outputs = {"result": result}
     return jsonify(outputs)
 
 
 if __name__ == "__main__":
     od_model = tf.saved_model.load(OD_MODEL_PATH)
-    ic_model = tf.saved_model.load(IC_MODEL_PATH)
-    app.run(host="0.0.0.0", port=PORT)
+    ic_model = tf.keras.models.load_model(
+        './image-classification/saved_model/image_model.h5')
+    app.run(host="0.0.0.0", port=PORT, debug=True)
