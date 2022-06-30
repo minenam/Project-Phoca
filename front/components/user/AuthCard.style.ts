@@ -35,9 +35,9 @@ export const Title = styled("h1", {
   textAlign: "center",
 });
 
-export const Description = styled("p", {
+export const Description = styled("p", (props: { $success?: boolean }) => ({
   fontSize: "1.2rem",
   textAlign: "center",
   margin: "1rem 0",
-  color: "gray",
-});
+  color: props.$success ? "#000" : "gray",
+}));
