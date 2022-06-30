@@ -3,7 +3,7 @@ import { styled } from "styletron-react";
 export const GuideWrapper = styled(
   "div",
   (props: { $headerHeight: string }) => ({
-    width: "97%",
+    width: "100vw",
     height: `calc(100vh - ${props.$headerHeight})`,
     display: "flex",
     flexDirection: "row",
@@ -131,6 +131,7 @@ export const GuideStrong = styled("p", (props: { $fontColor?: string }) => ({
 export const TextContentWrapper = styled("div", {
   marginLeft: "20px",
   height: "100%",
+  width: "100%",
   display: "flex",
   justifyContent: "space-evenly",
   alignItems: "start",

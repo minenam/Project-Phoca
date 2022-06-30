@@ -9,7 +9,9 @@ import {
 export function MakeVoca() {
   return (
     <>
-      <GuidImage src={"images/faq.svg"} alt="question mark" />
+      <ImageWrapper>
+        <GuidImage src={"images/faq.svg"} alt="question mark" />
+      </ImageWrapper>
 
       <GuideImageWrapper>
         <GuideText>
@@ -26,8 +28,9 @@ export function MakeVoca() {
           만들 수 있어요!
         </GuideText>
       </GuideImageWrapper>
-
-      <GuidImage src={"/images/monster_artist.svg"} alt="main mark" />
+      <ImageWrapper>
+        <GuidImage src={"/images/monster_artist.svg"} alt="main mark" />
+      </ImageWrapper>
 
       <GuideImageWrapper>
         <GuideText>
