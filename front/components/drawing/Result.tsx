@@ -27,7 +27,7 @@ function Result(props: ResultProps) {
         </ColorText>
       </Description>
       <Description>
-        ai가 예측한 단어 : <ColorText>{predicted}</ColorText>
+        AI가 예측한 단어 : <ColorText>{predicted}</ColorText>
       </Description>
       <ResultBtn onClick={() => onClose()}>확인</ResultBtn>
     </ResultContainer>
