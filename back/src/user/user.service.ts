@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   Logger,
@@ -13,6 +14,7 @@ import { AuthCredentialDto } from "../auth/dto/auth.credential.dto";
 import { LoginUserInfo } from "../user/dto/login-user.dto";
 import { ImageMiddleware } from "../middleware/image.middleware";
 import { UserInfo } from "./dto/user-info.dto";
+import { UpdatePasswordDto } from "./dto/update-password.dto";
 
 @Injectable()
 export class UserService {
@@ -95,7 +97,7 @@ export class UserService {
     } = getUser;
     return {
       statusCode: 200,
-      message: "회원 정보 수정 완료",
+      message: "처리 완료",
       data: userInfo,
     };
   }
@@ -134,5 +136,28 @@ export class UserService {
     await this.userRepository.save(user);
 
     return await this.userRepository.findOneBy({ userId });
+  }
+
+  // 비밀번호 변경
+  async updatePassword(userId: string, updatePasswordDto: UpdatePasswordDto) {
+    const { newPassword, newPasswordValid } = updatePasswordDto;
+    const user = await this.userRepository.findOneBy({ userId });
+    if (!user) {
+      throw new NotFoundException(`존재하지 않는 회원입니다.`);
+    }
+    if (newPassword !== newPasswordValid) {
+      throw new BadRequestException(
+        `새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.`,
+      );
+    }
+    const newHashedPassword = await this.authService.hashedUser(newPassword);
+    user.password = newHashedPassword;
+    await this.userRepository.save(user);
+
+    return {
+      statusCode: 200,
+      message: "회원의 비밀번호가 변경되었습니다.",
+      data: { userId },
+    };
   }
 }

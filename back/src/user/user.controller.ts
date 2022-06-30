@@ -31,6 +31,7 @@ import { ParamUserDto } from "./dto/param-user.dto";
 import { LoginUserInfo } from "../user/dto/login-user.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { UserInfo } from "./dto/user-info.dto";
+import { UpdatePasswordDto } from "./dto/update-password.dto";
 
 @Controller("user")
 @ApiTags("회원(유저) API")
@@ -142,6 +143,24 @@ export class UserController {
     if (updateUserInfo) {
       return await this.userService.updateUser(userId, updateUserInfo);
     }
+  }
+
+  // 비밀번호 변경 API
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "비밀번호 변경 API" })
+  @ApiBearerAuth("accesskey")
+  @Patch(":userId/password")
+  async updatePassword(
+    @Param() paramUserDto: ParamUserDto,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+    @GetUser() user,
+  ) {
+    const { userId } = paramUserDto;
+    if (userId !== user.payload.sub) {
+      throw new BadRequestException(`토큰과 유저ID가 일치하지 않습니다.`);
+    }
+    this.logger.verbose(`Try to update password: UserId ${userId}`);
+    return this.userService.updatePassword(userId, updatePasswordDto);
   }
 
   // Token 만료 확인 (유효기간 10분)
