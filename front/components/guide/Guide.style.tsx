@@ -35,12 +35,13 @@ export const MenuRoot = styled("ul", {
   listStyle: "none",
   display: "flex",
   height: "100%",
+  width: "200px",
   flexDirection: "column",
 });
 export const MenuItemWrapper = styled("div", {});
 export const MenuItem = styled("li", (props: { $onClicked: boolean }) => ({
   position: "relative",
-  backgroundColor: "orange",
+  backgroundColor: "#FFCA7B",
   display: "flex",
   alignItems: "center",
   height: "85px",
@@ -56,7 +57,7 @@ export const MenuItem = styled("li", (props: { $onClicked: boolean }) => ({
     height: props.$onClicked ? "0px" : "",
     width: props.$onClicked ? "0px" : "",
     borderTop: props.$onClicked ? "solid 15px transparent" : "",
-    borderLeft: props.$onClicked ? "solid 15px orange" : "",
+    borderLeft: props.$onClicked ? "solid 15px #FFCA7B" : "",
     borderBottom: props.$onClicked ? "solid 15px transparent" : "",
   },
 }));

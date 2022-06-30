@@ -6,6 +6,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Users } from "../user/user.entity";
 import { AuthService } from "./auth.service";
 import { JWTStrategy } from "./jwt.strategy";
+import { AuthController } from "./auth.controller";
+import { KakaoAuthStrategy } from "./kakao-auth.strategy";
 
 @Module({
   imports: [
@@ -24,7 +26,8 @@ import { JWTStrategy } from "./jwt.strategy";
     }),
     TypeOrmModule.forFeature([Users]),
   ],
-  providers: [AuthService, JWTStrategy],
+  controllers: [AuthController],
+  providers: [AuthService, JWTStrategy, KakaoAuthStrategy],
   exports: [AuthService, PassportModule, JWTStrategy],
 })
 export class AuthModule {}
