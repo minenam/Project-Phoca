@@ -24,3 +24,7 @@ export interface BookMarkProps {
   wordbookId: string;
   userId?: string;
 }
+
+export interface GuideContentProps {
+  selected: string;
+}
