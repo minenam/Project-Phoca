@@ -125,3 +125,14 @@ export const KakaoBtn = styled("button", {
   backgroundColor: "transparent",
   cursor: "pointer",
 });
+
+export const FindPwBtn = styled("button", {
+  border: 0,
+  borderRadius: "20px",
+  margin: "1rem 0",
+  padding: "0.5rem 2rem",
+  fontSize: "1.2rem",
+  color: "#fff",
+  backgroundColor: "#FFAA2A",
+  cursor: "pointer",
+});

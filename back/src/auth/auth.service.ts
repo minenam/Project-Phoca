@@ -19,8 +19,15 @@ export class AuthService {
   async hashedUser(password: string) {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-
     return hashedPassword;
+  }
+
+  // 임시 비밀번호 발급
+  generateTempPassword() {
+    const tempPassword = Math.floor(Math.random() * 10 ** 8)
+      .toString()
+      .padStart(8, "0");
+    return tempPassword;
   }
 
   // payload와 유저 정보로 토큰 발급 및 결과 반환

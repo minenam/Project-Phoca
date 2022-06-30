@@ -11,13 +11,21 @@ import {
   Title,
 } from "../../components/user/AuthCard.style";
 import LoginPage from "../../components/user/LoginPage";
+import FindPasswordForm from "../../components/user/FindPasswordForm";
 import Seo from "../../common/Seo";
 import Toast from "../../common/toast/Toast";
+import Modal from "../../common/modal/Modal";
 
 const Login: NextPage = () => {
   const router = useRouter();
   const url = router.asPath;
+
   const [errorMsg, setErrorMsg] = useState("");
+  const [findPwModalOpen, setFindPwModalOpen] = useState(false);
+
+  const modalCloseHandler = () => {
+    setFindPwModalOpen(false);
+  };
 
   return (
     <>
@@ -37,7 +45,10 @@ const Login: NextPage = () => {
             </Link>
             <Title>로그인</Title>
           </TitleContainer>
-          <LoginPage setErrorMsg={setErrorMsg} />
+          <LoginPage
+            setErrorMsg={setErrorMsg}
+            setFindPwModalOpen={setFindPwModalOpen}
+          />
         </Card>
       </AuthCardContainer>
       {errorMsg.length > 1 && (
@@ -47,6 +58,16 @@ const Login: NextPage = () => {
           url={url}
           setErrorMsg={setErrorMsg}
         />
+      )}
+      {findPwModalOpen && (
+        <Modal
+          open={findPwModalOpen}
+          width="600px"
+          large={true}
+          url={url}
+          onClose={modalCloseHandler}>
+          <FindPasswordForm onClose={modalCloseHandler} />
+        </Modal>
       )}
     </>
   );
