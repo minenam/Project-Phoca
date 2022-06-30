@@ -8,16 +8,45 @@ import {
   LockBtn,
 } from "./Vocabulary.styles";
 import { MdPublic } from "react-icons/md";
-import { FaLock } from "react-icons/fa";
+import { FaLock, FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { WordBook } from "../../common/types/resultsType";
+import { shuffle } from "../../common/utils/shuffle";
+import { WORD_IMAGES } from "../../common/utils/constant";
+import Modal from "../../common/modal/Modal";
 import Toast from "../../common/toast/Toast";
+import VocabularyEditModal from "./VocabularyEditModal";
+import { vocaKeys } from "../../common/querykeys/querykeys";
+import { AiFillHeart } from "react-icons/ai";
+import { BookMarkProps } from "../../common/types/propsType";
+import { userStore } from "../../zustand/userStore";
 
 interface itemProps {
   listItem: WordBook[] | undefined;
-  trigger: Dispatch<SetStateAction<boolean>>;
+  isMine: boolean;
 }
+
+const imageUrl = shuffle(WORD_IMAGES);
+
+const bookMarkHandler = async (props: BookMarkProps) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+      body: JSON.stringify({
+        userId: props.userId,
+        wordbookId: props.wordbookId,
+      }),
+    });
+    return res;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 const wordBookChangeHandler = async (props: WordBook) => {
   const data = {
@@ -59,10 +88,15 @@ const checkWordsCount = async (wordbookId: string) => {
   return result;
 };
 
-const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
+const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
   const router = useRouter();
   const isLapTop = useIsLapTop();
+  const [isEdit, setIsEdit] = useState(false);
+  const [clickedItem, setClickedItem] = useState("");
+
+  const user = userStore((state) => state.user);
   const url = router.asPath;
+  const queryClient = useQueryClient();
 
   const [selectedWordbookId, setSelectedWordbookId] = useState(""); // 선택된 단어장 아이디
   const [errorMsg, setErrorMsg] = useState(""); // 에러 메세지
@@ -76,11 +110,20 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
     },
   );
 
+  const bookMarkMutation = useMutation(bookMarkHandler, {
+    onSuccess: (data) => {
+      console.log("단어장 삭제 성공", data);
+      queryClient.invalidateQueries([vocaKeys.getAll]);
+    },
+    onError: (error) => {
+      console.error("단어장 수정 실패", error);
+    },
+  });
+
   const VocaMutation = useMutation(wordBookChangeHandler, {
     onSuccess: (data) => {
       console.log("단어장 수정 성공", data);
-      trigger(true);
-      router.push("/vocabulary");
+      queryClient.invalidateQueries([vocaKeys.getAll]);
     },
     onError: (error) => {
       console.error("단어장 수정 실패", error);
@@ -103,17 +146,46 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
     }
   }, [data, isSuccess, router, selectedWordbookId]);
 
+  const editHandler = (
+    e: React.MouseEvent<HTMLDivElement>,
+    wordbookId: string,
+  ) => {
+    setIsEdit(true);
+    setClickedItem(wordbookId);
+  };
+
+  const modalClose = () => {
+    setIsEdit(false);
+  };
+
   return (
     <>
       <GridWrapper $lapTop={isLapTop}>
         {listItem != undefined && listItem?.length > 0 ? (
-          listItem.map((item) => {
+          listItem.map((item, idx) => {
             return (
-              <GridItem key={item.createDate}>
+              <GridItem
+                key={item.createDate}
+                $backgroundImage={imageUrl[idx % imageUrl.length]}>
                 <BtnWrapper>
                   <LockBtn onClick={() => vocaChangeHandler(item)}>
                     {item.secured ? <FaLock /> : <MdPublic />}
                   </LockBtn>
+                  {!isMine ? (
+                    <LockBtn onClick={(e) => editHandler(e, item.wordbookId)}>
+                      <FaEdit />
+                    </LockBtn>
+                  ) : (
+                    <LockBtn
+                      onClick={() =>
+                        bookMarkMutation.mutate({
+                          wordbookId: item.wordbookId,
+                          userId: user?.userId,
+                        })
+                      }>
+                      <AiFillHeart />
+                    </LockBtn>
+                  )}
                 </BtnWrapper>
                 <GridTextItem
                   onClick={() => setSelectedWordbookId(item.wordbookId)}>
@@ -133,6 +205,19 @@ const VocabularyItem: FC<itemProps> = ({ listItem, trigger }) => {
           url={url}
           setErrorMsg={setErrorMsg}
         />
+      )}
+      {isEdit && (
+        <Modal
+          open={isEdit}
+          width="500px"
+          onClose={modalClose}
+          large={true}
+          url={url}>
+          <VocabularyEditModal
+            onClose={modalClose}
+            wordbookInfo={clickedItem}
+          />
+        </Modal>
       )}
     </>
   );
