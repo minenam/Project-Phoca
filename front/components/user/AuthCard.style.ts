@@ -32,6 +32,12 @@ export const Logo = styled("img", {
 
 export const Title = styled("h1", {
   fontSize: "2rem",
-  fontWeight: 900,
   textAlign: "center",
+});
+
+export const Description = styled("p", {
+  fontSize: "1.2rem",
+  textAlign: "center",
+  margin: "1rem 0",
+  color: "gray",
 });

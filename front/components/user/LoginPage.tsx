@@ -24,6 +24,7 @@ import { userStore, UserProperties } from "../../zustand/userStore";
 
 interface LoginPageProps {
   setErrorMsg: Dispatch<SetStateAction<string>>;
+  setFindPwModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 interface LoginValues {
@@ -59,7 +60,7 @@ const loginHandler = async (data: LoginValues) => {
 
 function LoginPage(props: LoginPageProps) {
   const router = useRouter();
-  const { setErrorMsg } = props;
+  const { setErrorMsg, setFindPwModalOpen } = props;
 
   // 로그인 요청
   const loginMutation = useMutation(loginHandler, {
@@ -133,7 +134,10 @@ function LoginPage(props: LoginPageProps) {
             <Link href="/register">
               <TextButton>회원가입</TextButton>
             </Link>{" "}
-            |<TextButton>비밀번호 찾기</TextButton>
+            |
+            <TextButton onClick={() => setFindPwModalOpen(true)}>
+              비밀번호 찾기
+            </TextButton>
           </TextBtnContainer>
         </BtnContainer>
       </Form>
