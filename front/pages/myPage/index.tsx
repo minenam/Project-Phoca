@@ -72,7 +72,7 @@ const MyPage: NextPage = () => {
     ["getCount", user?.userId],
     () => getCount(user?.userId),
     {
-      enabled: !user,
+      enabled: !!user?.userId,
     },
   );
 

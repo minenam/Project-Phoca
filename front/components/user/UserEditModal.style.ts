@@ -36,6 +36,7 @@ export const InputWrapper = styled("div", {
   width: "100%",
   alignItems: "center",
   padding: "1rem",
+  marginBottom: "1.3rem",
 });
 export const Comment = styled("input", {
   padding: "5px",

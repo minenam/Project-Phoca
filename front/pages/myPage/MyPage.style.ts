@@ -7,7 +7,7 @@ export const MyPageWrapper = styled(
     justifyContent: "start",
     alignItems: "center",
     marginLeft: props.$sideBarWidth,
-    width: `calc(100vw - ${props.$sideBarWidth}px`,
+    width: `calc(100vw - ${props.$sideBarWidth})`,
     height: `calc(100vh - ${props.$headerHeight})`,
     flexDirection: "column",
   }),

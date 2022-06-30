@@ -5,11 +5,11 @@ export const VocaEditModalWrapper = styled("div", {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  width: "400px",
+  width: "100%",
   height: "250px",
 });
 
 export const EditTile = styled("p", {
   fontSize: "1.5rem",
-  marginBottom: "5rem",
+  marginBottom: "3rem",
 });
