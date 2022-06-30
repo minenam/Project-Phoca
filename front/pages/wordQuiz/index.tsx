@@ -7,6 +7,7 @@ import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
 import Modal from "../../common/modal/Modal";
 import BookList, { Wordbook } from "../../common/booklist/BookList";
 import Toast from "../../common/toast/Toast";
+import Seo from "../../common/Seo";
 import {
   CardContainer,
   Card,
@@ -103,6 +104,7 @@ function WordQuiz() {
 
   return (
     <>
+      <Seo title="단어퀴즈 하러가기" />
       <CardContainer
         $headerHeight={HEADER_HEIGHT}
         $sidebarWidth={SIDEBAR_WIDTH}>
