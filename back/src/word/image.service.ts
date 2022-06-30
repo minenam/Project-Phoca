@@ -37,7 +37,7 @@ export class ImageService {
       const data = await lastValueFrom(
         this.httpService.get(`${AI_URL}/od/?img=${wordKey}`),
       );
-      const wordEng = data.data.classes;
+      const wordEng = [...new Set(data.data.classes)];
       return { wordEng, wordImage, wordKey };
     } catch (e) {
       return e;
