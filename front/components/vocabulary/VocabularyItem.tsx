@@ -68,7 +68,6 @@ const wordBookChangeHandler = async (props: WordBook) => {
     if (!res.ok) throw new Error(res.statusText);
 
     const result = await res.json();
-    console.log("secure수정", result);
     return result;
   } catch (e) {
     console.error(e);
@@ -132,7 +131,6 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
   });
 
   const vocaChangeHandler = (props: WordBook) => {
-    console.log("props", props);
     VocaMutation.mutate(props);
   };
 

@@ -59,7 +59,6 @@ const WordQuizGame = () => {
   }, []);
 
   useEffect(() => {
-    console.log("totalAnswer", totalAnswer);
     totalAnswer === 16 ? setIsGameEnd(true) : setIsGameEnd(false);
   }, [totalAnswer]);
 
