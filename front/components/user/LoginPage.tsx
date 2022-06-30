@@ -58,7 +58,6 @@ const loginHandler = async (data: LoginValues) => {
 };
 
 function LoginPage(props: LoginPageProps) {
-  console.log(process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL);
   const router = useRouter();
   const { setErrorMsg } = props;
 
