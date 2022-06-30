@@ -10,8 +10,6 @@ import {
 import { Bookmark } from "../bookmark/bookmark.entity";
 import { Users } from "../user/user.entity";
 import { Word } from "../word/word.entity";
-
-//@Index("wordbook_pkey", ["wordbook_id"], { unique: true })
 @Entity("wordbook", { schema: "public" })
 export class Wordbook {
   @Column("uuid", { primary: true, name: "wordbook_id" })
