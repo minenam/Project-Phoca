@@ -2,12 +2,13 @@ import { styled } from "styletron-react";
 
 export const MyPageWrapper = styled(
   "div",
-  (props: { $sideBarWidth?: string }) => ({
+  (props: { $sideBarWidth?: string; $headerHeight: string }) => ({
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
     marginLeft: props.$sideBarWidth,
     width: `calc(100vw - ${props.$sideBarWidth}px`,
+    height: `calc(100vh - ${props.$headerHeight})`,
     flexDirection: "column",
   }),
 );
@@ -19,7 +20,7 @@ export const Browser = styled("a", {
   justifyContent: "center",
   textAlign: "start",
   fontSize: "2.3rem",
-  backgroundImage: "url(/note.png)",
+  backgroundImage: "url(/images/note.png)",
   backgroundRepeat: "round",
   height: "450px",
   width: "450px",
@@ -37,7 +38,7 @@ export const Browser = styled("a", {
       backgroundSize: "contain",
       zIndex: 1,
       content: "''",
-      backgroundImage: "url(/pencil.png)",
+      backgroundImage: "url(/images/pencil.png)",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
     },
@@ -135,10 +136,9 @@ export const UserWrapper = styled("div", (props: { $box?: Boolean }) => ({
   display: "flex",
   width: "100%",
   justifyContent: props.$box ? "space-evenly" : "space-between",
-
   alignContent: "center",
   flexDirection: "row",
-  marginTop: props.$box ? "4rem" : "",
+  marginTop: props.$box ? "8rem" : "",
 }));
 
 export const Branch = styled("img", {

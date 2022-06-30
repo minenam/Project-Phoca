@@ -52,12 +52,13 @@ export const EditButtonWrapper = styled("div", {
 });
 export const EditButton = styled(
   "button",
-  (props: { $backgroundColor?: string; $withdrawal?: boolean }) => ({
-    border: 0,
+  (props: { $borderColor?: string; $withdrawal?: boolean }) => ({
+    backgroundColor: "white",
     borderRadius: "20px",
-    backgroundColor: props?.$backgroundColor,
+    border: `4px solid ${props?.$borderColor}`,
     padding: "0.5rem 1.5rem",
     margin: "1rem 1rem 1.5rem",
+    color: props.$borderColor,
     fontSize: "1.2rem",
     cursor: "pointer",
   }),
