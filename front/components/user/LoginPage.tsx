@@ -58,6 +58,7 @@ const loginHandler = async (data: LoginValues) => {
 };
 
 function LoginPage(props: LoginPageProps) {
+  console.log(process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL);
   const router = useRouter();
   const { setErrorMsg } = props;
 
@@ -139,8 +140,7 @@ function LoginPage(props: LoginPageProps) {
       </Form>
       <SnsTitle>SNS 로그인</SnsTitle>
       <SNSBtnContainer>
-        <Link
-          href={`${process.env.NEXT_PUBLIC_KAKAO_LOGIN_URL}&client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL} `}>
+        <Link href={`${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL}`}>
           <KakaoBtn>
             <Image
               src="/images/kakaoLogin.png"
