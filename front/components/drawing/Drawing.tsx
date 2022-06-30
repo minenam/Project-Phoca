@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import CanvasComp from "./Canvas";
 import {
   DrawingContainer,
@@ -17,6 +17,7 @@ interface DrawingWord {
   wordKor: string;
 }
 
+// dataUri를 blob으로 바꾸는 함수
 const dataURItoBlob = (dataURI: string) => {
   const byteString: string = atob(dataURI.split(",")[1]);
   const mimeString: string = dataURI.split(",")[0].split(":")[1].split(";")[0];
@@ -29,9 +30,21 @@ const dataURItoBlob = (dataURI: string) => {
   return new Blob([ia], { type: mimeString });
 };
 
+// 그림 문제 받아오기
 const getDrawingWord = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/quiz`);
   const result: DrawingWord = await res.json();
+  return result;
+};
+
+// ai로 그림을 보내 정답인지 판별
+const getAnwser = async (formData: FormData) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_DRAWING_API_URL}`, {
+    method: "POST",
+    body: formData,
+  });
+
+  const result = await res.json();
   return result;
 };
 
@@ -46,6 +59,15 @@ function Drawing() {
     enabled: selectedWord === undefined,
   });
 
+  const drawingMutation = useMutation(getAnwser, {
+    onSuccess: (data, variables) => {
+      console.log(data);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const submitBtnClickHandler = () => {
     if (!canvasRef.current) {
       return;
@@ -58,6 +80,8 @@ function Drawing() {
     const formData = new FormData();
     formData.append("image", blob);
     formData.append("answer", selectedWord?.wordEng as string);
+
+    drawingMutation.mutate(formData);
   };
 
   const resetCanvas = () => {
