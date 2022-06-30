@@ -3,6 +3,7 @@ import { devtools } from "zustand/middleware";
 
 export const useGameStore = create(
   devtools(() => ({
-    answer: null,
+    total: 0,
+    answer: [],
   })),
 );

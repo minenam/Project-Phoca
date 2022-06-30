@@ -36,6 +36,7 @@ export const InputWrapper = styled("div", {
   width: "100%",
   alignItems: "center",
   padding: "1rem",
+  marginBottom: "1.3rem",
 });
 export const Comment = styled("input", {
   padding: "5px",
@@ -46,6 +47,7 @@ export const Comment = styled("input", {
   marginLeft: "5px",
 });
 export const EditButtonWrapper = styled("div", {
+  width: "400px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

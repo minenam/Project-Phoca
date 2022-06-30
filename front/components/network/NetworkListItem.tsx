@@ -13,18 +13,17 @@ import {
   SearchBar,
   SearchBarWrapper,
 } from "./Network.style";
-import { HEADER_HEIGHT } from "../../common/utils/constant";
+import { HEADER_HEIGHT, WORD_IMAGES } from "../../common/utils/constant";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { userStore } from "../../zustand/userStore";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { WordBook, BookMark } from "../../common/types/resultsType";
+import { shuffle } from "../../common/utils/shuffle";
+import { BookMarkProps } from "../../common/types/propsType";
 
-interface BookMakrProps {
-  wordbookId: string;
-  userId?: string;
-}
+const imageUrl = shuffle(WORD_IMAGES);
 
 const getOthersWordbookList = async (
   userId?: string,
@@ -43,7 +42,6 @@ const getOthersWordbookList = async (
     );
 
     const result = await res.json();
-    console.log("result", result);
     return result;
   } catch (e) {
     console.error(e);
@@ -85,8 +83,9 @@ const NetworkListItem: FC = () => {
 
   const { data } = useQuery(
     ["othersWordbookList", isStop, searchKeyword],
-    () => getOthersWordbookList(user?.userId, searchKeyword),
+    () => getOthersWordbookList(user?.userId, searchKeyword && searchKeyword),
     {
+      refetchOnWindowFocus: false,
       enabled: !!user?.userId,
     },
   );
@@ -95,11 +94,12 @@ const NetworkListItem: FC = () => {
     ["bookmarkList"],
     () => getMyBookMarkList(user?.userId),
     {
+      refetchOnWindowFocus: false,
       enabled: !!user?.userId,
     },
   );
 
-  const bookMarkHandler = async (props: BookMakrProps) => {
+  const bookMarkHandler = async (props: BookMarkProps) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/bookmark`,
@@ -177,9 +177,11 @@ const NetworkListItem: FC = () => {
       </SearchBarWrapper>
       <GridWrapper $lapTop={isLapTop}>
         {othersWordbookList != undefined && othersWordbookList?.length > 0 ? (
-          othersWordbookList.map((item: WordBook) => {
+          othersWordbookList.map((item: WordBook, idx) => {
             return (
-              <GridItem key={item.createDate}>
+              <GridItem
+                key={item.createDate}
+                $backgroundImage={imageUrl[idx % imageUrl.length]}>
                 <BtnWrapper>
                   {bookMarkList?.includes(item.wordbookId) ? (
                     <LockBtn
