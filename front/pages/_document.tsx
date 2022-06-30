@@ -43,6 +43,7 @@ class MyDocument extends NextDocument<{
             rel="stylesheet"
           />
           <link href="/fonts/style.css" rel="stylesheet" />
+          <link rel="shortcut icon" href="/favicon-32x32.png" />
 
           {this.props.stylesheets.map((sheet, i) => (
             <style
