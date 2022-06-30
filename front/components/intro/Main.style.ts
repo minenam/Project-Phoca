@@ -46,11 +46,13 @@ export const MainButton = styled(
     "--dy": "calc(var(--size) - var(--y))",
     ":hover": {
       fontSize: 0,
+      backgroundImage: `url(${props.$backgroundImage})`,
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundSize: "80%",
     },
     ":after": {
       content: "''",
-      backgroundImage: "url(/well_done.svg)",
-      backgroundRepeat: "round",
       position: "absolute",
       top: "0px",
       right: "0px",

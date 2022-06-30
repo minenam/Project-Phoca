@@ -13,5 +13,3 @@ export class LoginUserInfo extends UserInfo {
   };
   token: string;
 }
-
-export type LoginUserInfoType = LoginUserInfo;

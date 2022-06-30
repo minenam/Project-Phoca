@@ -9,10 +9,13 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { HttpModule } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
+import { EventEmitterModule } from "@nestjs/event-emitter";
+import { WordCreatedListener } from "./listener/word-created.listener";
 @Module({
   controllers: [WordController],
-  providers: [WordService, ImageService, TranslateService],
+  providers: [WordService, ImageService, TranslateService, WordCreatedListener],
   imports: [
+    EventEmitterModule.forRoot(),
     HttpModule,
     TypeOrmModule.forFeature([Word]),
     PassportModule.register({ defaultStrategy: "jwt" }),

@@ -7,6 +7,7 @@ import {
   Delete,
   Patch,
   UseGuards,
+  Query,
 } from "@nestjs/common";
 import { WordbookService } from "./wordbook.service";
 import { UpdateWordbookDto } from "./dto/update-wordbook.dto";
@@ -17,15 +18,20 @@ import {
   ApiParam,
   ApiTags,
   ApiBearerAuth,
+  ApiQuery,
 } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
+import { WordService } from "../word/word.service";
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth("accesskey")
 @ApiTags("단어장 API")
 @Controller("wordbook")
 export class WordbookController {
-  constructor(private wordbookService: WordbookService) {}
+  constructor(
+    private wordbookService: WordbookService,
+    private wordService: WordService,
+  ) {}
 
   //전체 단어장 조회
   @Get()
@@ -71,6 +77,40 @@ export class WordbookController {
   ) {
     return this.wordbookService.create({ userId, ...createWordbookDto });
   }
+
+  //키워드로 단어장 검색
+  @Get("/search/")
+  @ApiOperation({
+    summary: "단어장 검색 API",
+    description: "키워드를 입력받아 단어장을 검색.",
+  })
+  @ApiQuery({
+    name: "keyword",
+    type: "string",
+    description: "검색어",
+    required: true,
+  })
+  search(@Query("keyword") keyword: string) {
+    return this.wordbookService.search(keyword);
+  }
+
+  // 내 단어장 개수 카운트
+  @Get("/count/:userId")
+  @ApiOperation({
+    summary: "단어장 개수 카운트 API",
+    description: "유저 아이디를 입력받아 단어장 개수 카운트.",
+  })
+  @ApiParam({
+    name: "userId",
+    type: "string",
+    format: "uuid",
+    description: "유저 아이디",
+    required: true,
+  })
+  countWordbook(@Param("userId") userId: string) {
+    return this.wordbookService.countWordbook(userId);
+  }
+
   //본인 단어장 제외하고 조회
   @Get("/:userId")
   @ApiOperation({
@@ -85,7 +125,6 @@ export class WordbookController {
     required: true,
   })
   getExcept(@Param("userId") userId: string) {
-    console.log("gege");
     return this.wordbookService.getExcept(userId);
   }
   // 유저의 단어장 조희
@@ -101,7 +140,6 @@ export class WordbookController {
     required: true,
   })
   findById(@Param("userId") userId: string) {
-    console.log("hi");
     return this.wordbookService.getById(userId);
   }
   // 단어장 개별 조회
@@ -117,10 +155,13 @@ export class WordbookController {
     description: "단어장 아이디",
     required: true,
   })
-  findOne(@Param("wordbookId") wordbookId: string) {
-    console.log(wordbookId);
-    return this.wordbookService.get(wordbookId);
+  async findOne(@Param("wordbookId") wordbookId: string) {
+    const wordCount = await this.wordService.countWord(wordbookId);
+    const wordbookInfo = await this.wordbookService.get(wordbookId);
+
+    return { wordCount, ...wordbookInfo };
   }
+
   // 단어장 이름, 보안 수정
   @Patch(":wordbookId")
   @ApiOperation({

@@ -1,17 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsUUID } from "class-validator";
+import { Word } from "../word.entity";
 
 export class UpdateWordDto {
   @IsOptional()
-  @ApiProperty({ description: "영어 단어" })
-  wordEng: string[];
+  wordEng: Word["wordEng"];
 
   @IsOptional()
-  @ApiProperty({ description: "한글 단어" })
-  wordKor: string[];
+  wordKor: Word["wordKor"];
 
   @IsUUID()
   @IsOptional()
-  @ApiProperty({ description: "단어장 아이디" })
-  wordbookId: string;
+  wordbookId: Word["wordbookId"];
 }

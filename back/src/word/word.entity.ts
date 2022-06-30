@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, Generated, JoinColumn, ManyToOne } from "typeorm";
 import { Wordbook } from "../wordbook/wordbook.entity";
-
-//@Index("word_pkey", ["word_id"], { unique: true })
 @Entity("word", { schema: "public" })
 export class Word {
   @Column("uuid", { primary: true, name: "word_id" })
@@ -12,13 +10,23 @@ export class Word {
   })
   wordId: string;
 
-  @Column("character varying", { name: "word_eng", length: 45, array: true })
+  @Column("character varying", {
+    name: "word_eng",
+    length: 45,
+    nullable: true,
+    array: true,
+  })
   @ApiProperty({
     description: "영어 단어",
   })
   wordEng: string[];
 
-  @Column("character varying", { name: "word_kor", length: 20, array: true })
+  @Column("character varying", {
+    name: "word_kor",
+    nullable: true,
+    length: 20,
+    array: true,
+  })
   @ApiProperty({
     description: "한글 단어",
   })

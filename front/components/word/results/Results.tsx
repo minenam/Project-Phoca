@@ -18,28 +18,24 @@ import { FaVolumeUp, FaEdit } from "react-icons/fa";
 import Modal from "../../../common/modal/Modal";
 import EditForm from "./EditForm/EditForm";
 import SaveForm from "./SaveForm/SaveForm";
+import LoginRequiredModal from "../../../common/loginRequiredModal/LoginRequiredModal";
+import { ResultProps } from "../../../common/types/resultsType";
 
-interface ImageUrl {
-  imageUrl?: string;
-}
-
-function Results() {
+function Results({ wordInfo }: ResultProps) {
   const router = useRouter();
-  const { imageUrl }: ImageUrl = router.query;
+  const url = router.asPath;
 
-  const [engWord, setEngWord] = useState("apple");
-  const [korWord, setKorWord] = useState("사과");
+  const [engWord, setEngWord] = useState(wordInfo.wordEng[0]);
+  const [korWord, setKorWord] = useState(wordInfo.wordKor[0]);
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const ttsBtnClickHandler = () => {
-    const temp: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(
-      engWord,
-    );
-    const voice: SpeechSynthesisVoice[] = window.speechSynthesis.getVoices();
-    temp.voice = voice[2];
-    window.speechSynthesis.speak(temp);
+    const tts: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(engWord);
+    tts.lang = "en-US";
+    window.speechSynthesis.speak(tts);
   };
 
   const editBtnClickHandler = () => {
@@ -47,19 +43,27 @@ function Results() {
   };
 
   const saveBtnClickHandler = () => {
-    setSaveModalOpen(true);
+    if (sessionStorage.getItem("userToken")) {
+      setSaveModalOpen(true);
+    } else {
+      setLoginModalOpen(true);
+    }
   };
 
   const modalCloseHandler = () => {
     setEditModalOpen(false);
     setSaveModalOpen(false);
+    setLoginModalOpen(false);
   };
 
   return (
     <>
       <ResultsContainer>
         <ImageContainer>
-          <ThumbImage src={imageUrl} alt="submit-image" />
+          <ThumbImage
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${wordInfo.wordKey}`}
+            alt="submit-image"
+          />
         </ImageContainer>
         <WordContainer>
           <EngWord>{engWord}</EngWord>
@@ -85,13 +89,26 @@ function Results() {
           open={editModalOpen}
           width="800px"
           onClose={modalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <EditForm
-            imageUrl={imageUrl}
+            imageUrl={`${process.env.NEXT_PUBLIC_IMAGE_URL}${wordInfo.wordKey}`}
             onClose={modalCloseHandler}
             setEngWord={setEngWord}
             setKorWord={setKorWord}
+            engWordList={wordInfo.wordEng}
+            korWordList={wordInfo.wordKor}
           />
+        </Modal>
+      )}
+      {loginModalOpen && (
+        <Modal
+          open={loginModalOpen}
+          width="400px"
+          onClose={modalCloseHandler}
+          large={false}
+          url={url}>
+          <LoginRequiredModal onClose={modalCloseHandler} />
         </Modal>
       )}
       {saveModalOpen && (
@@ -99,8 +116,14 @@ function Results() {
           open={saveModalOpen}
           width="400px"
           onClose={modalCloseHandler}
-          large={false}>
-          <SaveForm onClose={modalCloseHandler} />
+          large={false}
+          url={url}>
+          <SaveForm
+            onClose={modalCloseHandler}
+            wordId={wordInfo.wordId}
+            engWord={engWord}
+            korWord={korWord}
+          />
         </Modal>
       )}
     </>

@@ -1,94 +1,94 @@
-import { useState, useEffect } from "react";
-import {
-  ListContainer,
-  ItemContainer,
-  BtnContainer,
-  Button,
-} from "../EditForm/EditForm.style";
-import {
-  SelectBookContainer,
-  Title,
-  Label,
-  AddBookBtn,
-} from "./SaveForm.style";
-import { AiOutlinePlusCircle, AiFillLock } from "react-icons/ai";
-import { MdPublic } from "react-icons/md";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useMutation } from "react-query";
+import { userStore } from "../../../../zustand/userStore";
+import { BtnContainer, Button } from "../EditForm/EditForm.style";
+import { AddBookBtn } from "./SaveForm.style";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import AddForm from "./AddForm";
+import BookList, { Wordbook } from "../../../../common/booklist/BookList";
 
 interface SaveFormProps {
   onClose: () => void;
+  wordId: string;
+  engWord: string;
+  korWord: string;
 }
 
-export interface Vocabulary {
-  name: string;
-  private: boolean;
+interface SubmitValues {
+  wordId: string;
+  wordEng: string[];
+  wordKor: string[];
+  wordbookId: string;
 }
 
-const fakeData: Vocabulary[] = [
-  {
-    name: "단어장 1",
-    private: false,
-  },
-  {
-    name: "단어장 2",
-    private: true,
-  },
-  {
-    name: "단어장 3",
-    private: false,
-  },
-  {
-    name: "단어장 4",
-    private: false,
-  },
-];
+// 최종 단어를 정해 수정 요청을 보냄
+const patchWord = async (data: SubmitValues) => {
+  const { wordId, wordEng, wordKor, wordbookId } = data;
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/word/${wordId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+      body: JSON.stringify({ wordbookId, wordEng, wordKor }),
+    },
+  );
+  if (!res.ok) {
+    throw new Error("잠시 후 다시 시도해 주세요.");
+  }
+  const result = await res.json();
+  return result;
+};
 
-function SaveForm({ onClose }: SaveFormProps) {
-  const [vocabularies, setVocabularies] = useState<Vocabulary[]>(fakeData);
-  const [selectedVocabulary, setSelectedVocabulary] = useState<Vocabulary>({
-    name: "",
-    private: false,
+function SaveForm({ onClose, wordId, engWord, korWord }: SaveFormProps) {
+  const router = useRouter();
+  const user = userStore((state) => state.user);
+
+  const patchWordMutation = useMutation(patchWord, {
+    onSuccess: (data, variables) => {
+      router.push("/myPage");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
   });
-  const [addFormOpen, setAddFormOpen] = useState(false);
 
-  const checkboxClickHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget;
-    const selected = vocabularies.filter((item, idx) => idx === Number(value));
-    if (selected) {
-      setSelectedVocabulary(selected[0]);
-    }
+  const [wordbookList, setWordbookList] = useState<Wordbook[]>([]); // 단어장 리스트를 저장
+  const [selectedWordbookId, setSelectedWordbookId] = useState(""); // 선택된 단어장 Id를 저장
+  const [addFormOpen, setAddFormOpen] = useState(false); // 새 단어장 추가 폼의 열림 상태를 저장
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const dataToSubmit = {
+      wordId,
+      wordEng: [engWord],
+      wordKor: [korWord],
+      wordbookId: selectedWordbookId,
+    };
+    patchWordMutation.mutate(dataToSubmit);
   };
-
-  useEffect(() => {
-    console.log(selectedVocabulary);
-  }, [selectedVocabulary]);
 
   return (
     <>
-      <SelectBookContainer>
-        <Title>단어장 저장</Title>
-        <ListContainer $height="250px">
-          {vocabularies.map((item, idx) => (
-            <ItemContainer key={item.name}>
-              <input
-                type="checkbox"
-                name="word"
-                value={idx}
-                checked={item.name === selectedVocabulary.name}
-                onChange={checkboxClickHandler}
-              />
-              <Label>{item.name}</Label>
-              <Label>{item.private ? <AiFillLock /> : <MdPublic />}</Label>
-            </ItemContainer>
-          ))}
-        </ListContainer>
-      </SelectBookContainer>
+      <BookList
+        title="단어장 저장"
+        height="250px"
+        wordbookList={wordbookList}
+        selectedWordbookId={selectedWordbookId}
+        setWordbookList={setWordbookList}
+        setSelectedWordbookId={setSelectedWordbookId}
+      />
       <AddBookBtn onClick={() => setAddFormOpen((cur) => !cur)}>
         <AiOutlinePlusCircle /> 새 단어장 추가
       </AddBookBtn>
-      {addFormOpen && <AddForm setVocabularies={setVocabularies} />}
+      {addFormOpen && <AddForm userId={user?.userId} />}
       <BtnContainer>
-        <Button type="submit">저장하기</Button>
+        <Button type="submit" onClick={handleSubmit}>
+          저장하기
+        </Button>
         <Button onClick={onClose}>취소하기</Button>
       </BtnContainer>
     </>

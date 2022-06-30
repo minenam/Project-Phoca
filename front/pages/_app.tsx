@@ -8,10 +8,14 @@ import { styletron } from "../common/utils/styletron";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { useEffect } from "react";
-import { userStore } from "../zustand/store";
+import { userStore, UserProperties } from "../zustand/userStore";
 
 import NavBar from "../components/intro/NavBar";
 import SideBar from "../components/sidebar/SideBar";
+import {
+  URL_WITHOUT_NAVBAR,
+  URL_WITHOUT_SIDEBAR,
+} from "../common/utils/constant";
 
 declare module "react-query/types/react/QueryClientProvider" {
   interface QueryClientProviderProps {
@@ -19,10 +23,15 @@ declare module "react-query/types/react/QueryClientProvider" {
   }
 }
 
+interface ResponseType {
+  statusCode: number;
+  message: string;
+  data: UserProperties;
+  token: string;
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const urlWithoutNavbar: string[] = ["/login", "/register"];
-  const urlWithoutSidebar: string[] = ["/", "/login", "/register"];
   const queryClient = new QueryClient();
 
   // 유저 정보 userStore에 저장
@@ -42,8 +51,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           throw new Error("토큰 만료");
         }
 
-        const user = await res.json();
-        userStore.setState({ user });
+        const result: ResponseType = await res.json();
+        userStore.setState({ user: result.data });
       } catch (err) {
         console.log(err);
       }
@@ -56,8 +65,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StyletronProvider value={styletron}>
       <QueryClientProvider client={queryClient}>
-        {!urlWithoutNavbar.includes(router.pathname) && <NavBar />}
-        {!urlWithoutSidebar.includes(router.pathname) && <SideBar />}
+        {!URL_WITHOUT_NAVBAR.includes(router.pathname) && <NavBar />}
+        {!URL_WITHOUT_SIDEBAR.includes(router.pathname) && <SideBar />}
         <Component {...pageProps} />
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>

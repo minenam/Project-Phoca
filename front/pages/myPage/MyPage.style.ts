@@ -2,13 +2,13 @@ import { styled } from "styletron-react";
 
 export const MyPageWrapper = styled(
   "div",
-  (props: { $sideBarWidth?: string }) => ({
+  (props: { $sideBarWidth?: string; $headerHeight: string }) => ({
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    // height: `calc(100vh - ${HEADER_HEIGHT}px)`,
     marginLeft: props.$sideBarWidth,
     width: `calc(100vw - ${props.$sideBarWidth}px`,
+    height: `calc(100vh - ${props.$headerHeight})`,
     flexDirection: "column",
   }),
 );
@@ -20,7 +20,7 @@ export const Browser = styled("a", {
   justifyContent: "center",
   textAlign: "start",
   fontSize: "2.3rem",
-  backgroundImage: "url(/note.png)",
+  backgroundImage: "url(/images/note.png)",
   backgroundRepeat: "round",
   height: "450px",
   width: "450px",
@@ -38,7 +38,7 @@ export const Browser = styled("a", {
       backgroundSize: "contain",
       zIndex: 1,
       content: "''",
-      backgroundImage: "url(/pencil.png)",
+      backgroundImage: "url(/images/pencil.png)",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
     },
@@ -72,17 +72,20 @@ export const UserInfoWrapper = styled("div", {
   alignSelf: "center",
 });
 
-export const Avatar = styled("div", {
+export const Avatar = styled("div", (props: { $modal?: boolean }) => ({
   borderRadius: "50%",
   width: "100px",
   height: "100px",
-  marginTop: "1.5rem",
+  marginTop: props.$modal ? "" : "1.5rem",
   border: "5px solid orange",
-});
+  zIndex: 2,
+  overflow: "hidden",
+}));
 
 export const AvatarImage = styled("img", {
-  width: "95%",
-  height: "95%",
+  padding: "10px",
+  width: "100%",
+  height: "100%",
   display: "block",
   margin: "0 auto",
   objectFit: "contain",
@@ -133,10 +136,9 @@ export const UserWrapper = styled("div", (props: { $box?: Boolean }) => ({
   display: "flex",
   width: "100%",
   justifyContent: props.$box ? "space-evenly" : "space-between",
-
   alignContent: "center",
   flexDirection: "row",
-  marginTop: props.$box ? "4rem" : "",
+  marginTop: props.$box ? "8rem" : "",
 }));
 
 export const Branch = styled("img", {

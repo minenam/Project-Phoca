@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
+import { Dispatch, SetStateAction } from "react";
 import {
   Form,
   ContentContainer,
@@ -18,45 +19,60 @@ import {
   SnsTitle,
   KakaoBtn,
 } from "./AccountPage.style";
-import { userStore } from "../../zustand/store";
+import { userStore, UserProperties } from "../../zustand/userStore";
+
+interface LoginPageProps {
+  setErrorMsg: Dispatch<SetStateAction<string>>;
+}
 
 interface LoginValues {
   email: string;
   password: string;
 }
 
+interface ResponseType {
+  statusCode: number;
+  message: string;
+  data: UserProperties;
+  token: string;
+}
+
 const initialValue: LoginValues = { email: "", password: "" };
 
 const loginHandler = async (data: LoginValues) => {
-  console.log("process", process.env.NEXT_PUBLIC_SERVER_URL);
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json",
     },
     body: JSON.stringify(data),
   });
 
-  if (!res.ok) {
-    throw new Error(res.statusText);
+  const result: ResponseType = await res.json();
+  if (result.statusCode !== 201) {
+    throw new Error(result.message);
   }
-
-  const result = res.json();
   return result;
 };
 
-function LoginPage() {
+function LoginPage(props: LoginPageProps) {
   const router = useRouter();
+  const { setErrorMsg } = props;
+
   const loginMutation = useMutation(loginHandler, {
-    onSuccess: (data, variables) => {
-      console.log("Login 성공 ", data);
-      sessionStorage.setItem("userToken", data.token);
-      userStore.setState({ user: data });
-      router.push("/");
+    onSuccess: (result, variables) => {
+      sessionStorage.setItem("userToken", result.token);
+      userStore.setState({ user: result.data });
+
+      if (router.query.returnUrl) {
+        const returnUrl = router.query.returnUrl as string;
+        router.push(returnUrl);
+      } else {
+        router.push("/");
+      }
     },
-    onError: (err, variables) => {
-      console.log("Login 실패 ", err);
+    onError: ({ message }, variables) => {
+      setErrorMsg(message);
     },
   });
 
