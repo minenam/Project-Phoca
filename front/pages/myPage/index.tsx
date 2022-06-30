@@ -26,6 +26,7 @@ import Modal from "../../common/modal/Modal";
 import UserEditModal from "../../components/user/UserEditModal";
 import { useQuery } from "react-query";
 import Seo from "../../common/Seo";
+import { BookMark } from "../../common/types/resultsType";
 
 const getCount = async (userId: string | undefined) => {
   try {
@@ -50,7 +51,11 @@ const getCount = async (userId: string | undefined) => {
     const wordbookResult = await wordbookRes.json();
     const bookmarkResult = await bookmarkRes.json();
 
-    return { wordbookResult, bookmarkResult };
+    if (!wordbookRes.ok || !bookmarkRes.ok) {
+      throw new Error("에러 발생");
+    }
+
+    return [wordbookResult, bookmarkResult];
   } catch (e) {
     console.error(e);
   }
@@ -85,8 +90,8 @@ const MyPage: NextPage = () => {
   };
 
   useEffect(() => {
-    setWordbookCount(data?.wordbookResult);
-    setbookmarkCount(data?.bookmarkResult);
+    setWordbookCount(data && data[0]);
+    setbookmarkCount(data && data[1]);
   }, [data]);
 
   return (

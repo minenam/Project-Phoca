@@ -88,7 +88,7 @@ const NetworkListItem: FC = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     ["othersWordbookList", isStop, searchKeyword],
     () => getOthersWordbookList(user?.userId, searchKeyword && searchKeyword),
     {
@@ -143,8 +143,8 @@ const NetworkListItem: FC = () => {
   };
 
   useEffect(() => {
-    setOthersWordbookList(data);
-    setBookMarkList(bookMarkedData?.data);
+    !isLoading && setOthersWordbookList(data);
+    !bookMarkedData.isLoading && setBookMarkList(bookMarkedData?.data);
   }, [data, bookMarkedData]);
 
   useEffect(() => {
@@ -184,7 +184,7 @@ const NetworkListItem: FC = () => {
         />
       </SearchBarWrapper>
       <GridWrapper $lapTop={isLapTop}>
-        {othersWordbookList != undefined && othersWordbookList?.length > 0 ? (
+        {othersWordbookList &&
           othersWordbookList.map((item: WordBook, idx: number) => {
             return (
               <GridItem
@@ -218,10 +218,7 @@ const NetworkListItem: FC = () => {
                 </GridTextItem>
               </GridItem>
             );
-          })
-        ) : (
-          <GridWrapper $without>단어장이 아직 없습니다</GridWrapper>
-        )}
+          })}
       </GridWrapper>
     </NetworkWrapper>
   );
