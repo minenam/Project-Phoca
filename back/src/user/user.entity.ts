@@ -53,7 +53,7 @@ export class Users {
   })
   @Column("character varying", {
     name: "user_image",
-    default: "https://cdn-icons-png.flaticon.com/512/1464/1464799.png",
+    default: "phoca_default_image.png",
   })
   userImage: string;
 

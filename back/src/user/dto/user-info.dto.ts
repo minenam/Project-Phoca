@@ -11,5 +11,3 @@ export class UserInfo {
     userImage: Users["userImage"];
   };
 }
-
-export type UserInfoType = UserInfo;

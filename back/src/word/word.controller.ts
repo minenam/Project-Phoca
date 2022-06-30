@@ -10,8 +10,6 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  UsePipes,
-  ValidationPipe,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import {
@@ -23,7 +21,8 @@ import {
   ApiBearerAuth,
 } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/auth.guard";
-import { UpdateWordDto } from "./dto/update-word.dto";
+import { BodyWordDto } from "./dto/body-word.dto";
+import { ParamWordDto } from "./dto/param-word.dto";
 import { ImageService } from "./image.service";
 import { TranslateService } from "./translate.service";
 import { Word } from "./word.entity";
@@ -57,7 +56,6 @@ export class WordController {
     },
   })
   @UseInterceptors(FileInterceptor("file"))
-  @UsePipes(new ValidationPipe({ transform: true }))
   async uploadWord(@UploadedFile() file: Express.Multer.File) {
     const { wordEng, wordKey } = await this.imageService.uploadImage(file);
     const wordKor = [];
@@ -81,6 +79,20 @@ export class WordController {
     summary: "단어장 단어 조회 API",
     description: "단어장 아이디를 입력받아 단어들을 조회.",
   })
+  getAll(@Param() paramWordDto: ParamWordDto) {
+    const { wordbookId } = paramWordDto;
+    return this.wordService.getAll(wordbookId);
+  }
+
+  // 카드 뒤집기 게임용 단어 단어장에서 추출
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth("accesskey")
+  @Get("game/:wordbookId")
+  @ApiOperation({
+    summary: "카드 뒤집기 단어 조회 API",
+    description: "단어장 아이디를 입력받아 단어들을 조회.",
+  })
   @ApiParam({
     name: "wordbookId",
     type: Word["wordbookId"],
@@ -88,8 +100,12 @@ export class WordController {
     description: "단어장 아이디",
     required: true,
   })
-  getAll(@Param("wordbookId") wordbookId: string) {
-    return this.wordService.getAll(wordbookId);
+  async getWords(@Param("wordbookId") wordbookId: string) {
+    const wordCount = await this.wordService.countWord(wordbookId);
+    if (wordCount < 8) {
+      return `게임을 하기 위해서는 최소 8개의 단어가 있어야 합니다. 현재 단어의 수는 ${wordCount}개 입니다. `;
+    }
+    return await this.wordService.getRandomWord(wordbookId);
   }
 
   // 단어 개별 조회
@@ -126,50 +142,12 @@ export class WordController {
     description: "단어 아이디",
     required: true,
   })
-  @ApiBody({
-    schema: {
-      type: "object",
-      properties: {
-        wordEng: {
-          type: Word["wordEng"],
-          description: "영어 단어",
-          example: ["word"],
-        },
-        wordKor: {
-          type: Word["wordKor"],
-          description: "한글 단어",
-          example: ["단어"],
-        },
-        wordbookId: {
-          type: Word["wordbookId"],
-          format: "uuid",
-          description: "단어장 아이디",
-        },
-      },
-    },
-  })
   updateWord(
     @Param("wordId") wordId: string,
-    @Body() updateWordDto: UpdateWordDto,
+    @Body() bodyWordDto: BodyWordDto,
   ) {
-    return this.wordService.update(wordId, updateWordDto);
+    return this.wordService.update(wordId, bodyWordDto);
   }
-
-  // // 이미지 삭제
-  // @Delete("image/:key")
-  // @ApiOperation({
-  //   summary: "이미지 삭제 API",
-  //   description: "이미지 키를 입력받아 버킷의 이미지를 삭제한다.",
-  // })
-  // @ApiParam({
-  //   name: "key",
-  //   type: "string",
-  //   description: "AWS S3 이미지 키(삭제 시 필요)",
-  //   required: true,
-  // })
-  // async deleteImage(@Param("key") key: string) {
-  //   return await this.imageService.deleteImage(key);
-  // }
 
   // 단어 삭제
   @UseGuards(JwtAuthGuard)
@@ -191,7 +169,6 @@ export class WordController {
     try {
       await this.imageService.deleteImage(key);
     } catch (e) {
-      console.log(e);
       return new BadRequestException("이미지 삭제 실패");
     }
     return "단어가 삭제되었습니다.";
