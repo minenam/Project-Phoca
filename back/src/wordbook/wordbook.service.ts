@@ -20,6 +20,9 @@ export class WordbookService {
   async getExcept(userId: string): Promise<Wordbook[]> {
     return await this.wordbookRepository.find({
       where: { secured: false, userId: Not(userId) },
+      order: {
+        createDate: "DESC",
+      },
     });
   }
 
@@ -35,6 +38,9 @@ export class WordbookService {
   async search(keyword: string): Promise<Wordbook[]> {
     return await this.wordbookRepository.find({
       where: { wordbookName: Like(`${keyword}%`) },
+      order: {
+        createDate: "DESC",
+      },
     });
   }
 
