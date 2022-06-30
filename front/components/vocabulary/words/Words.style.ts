@@ -25,6 +25,7 @@ export const IconBtn = styled("button", {
   fontSize: "2rem",
   border: 0,
   cursor: "pointer",
+  padding: "0 1rem",
 });
 
 export const CardContainer = styled("div", {
