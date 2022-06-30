@@ -32,6 +32,7 @@ import { LoginUserInfo } from "../user/dto/login-user.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { UserInfo } from "./dto/user-info.dto";
 import { UpdatePasswordDto } from "./dto/update-password.dto";
+import { CheckEmailDto } from "./dto/checkt-email.dto";
 
 @Controller("user")
 @ApiTags("회원(유저) API")
@@ -161,6 +162,23 @@ export class UserController {
     }
     this.logger.verbose(`Try to update password: UserId ${userId}`);
     return this.userService.updatePassword(userId, updatePasswordDto);
+  }
+
+  // 비밀번호 관련 - 이메일 확인
+  @ApiOperation({ summary: "이메일로 임시 비밀번호 발급 API" })
+  @ApiBody({
+    schema: {
+      type: "object",
+      properties: {
+        email: { type: "string" },
+      },
+    },
+  })
+  @Post("/email")
+  async sendTempPassword(@Body() checkEmailDto: CheckEmailDto) {
+    const { email } = checkEmailDto;
+    this.logger.verbose(`Try to create temp password by ${email}`);
+    return await this.userService.sendTempPasswordMail(email);
   }
 
   // Token 만료 확인 (유효기간 10분)

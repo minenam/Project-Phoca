@@ -15,6 +15,7 @@ import { LoginUserInfo } from "../user/dto/login-user.dto";
 import { ImageMiddleware } from "../middleware/image.middleware";
 import { UserInfo } from "./dto/user-info.dto";
 import { UpdatePasswordDto } from "./dto/update-password.dto";
+import { EmailService } from "../email/email.service";
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,7 @@ export class UserService {
     private userRepository: Repository<Users>,
     private authService: AuthService,
     private imageMiddleware: ImageMiddleware,
+    private emailService: EmailService,
   ) {}
 
   async getAll(): Promise<Users[]> {
@@ -157,7 +159,28 @@ export class UserService {
     return {
       statusCode: 200,
       message: "회원의 비밀번호가 변경되었습니다.",
-      data: { userId },
+    };
+  }
+
+  // 유저 이메일 존재 확인
+  async sendTempPasswordMail(email: string) {
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user) {
+      throw new NotFoundException(
+        `해당 이메일을 가진 회원이 존재하지 않습니다. 다시 확인해주세요.`,
+      );
+    }
+    // 임시 비밀번호 발급 및 저장
+    const tempPassword = await this.authService.generateTempPassword();
+    const hashedtempPassword = await this.authService.hashedUser(tempPassword);
+    await this.userRepository.update(user.userId, {
+      password: hashedtempPassword,
+    });
+    // 이메일 전송
+    await this.emailService.sendPasswordEmail(email, tempPassword);
+    return {
+      statusCode: 201,
+      message: "임시 비밀번호가 발급되었습니다. 이메일을 확인해주세요.",
     };
   }
 }
