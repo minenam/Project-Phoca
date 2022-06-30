@@ -18,6 +18,7 @@ import {
   ErrorMsg,
   SnsTitle,
   KakaoBtn,
+  SNSBtnContainer,
 } from "./AccountPage.style";
 import { userStore, UserProperties } from "../../zustand/userStore";
 
@@ -39,6 +40,7 @@ interface ResponseType {
 
 const initialValue: LoginValues = { email: "", password: "" };
 
+// 로그인 핸들러
 const loginHandler = async (data: LoginValues) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
     method: "POST",
@@ -59,6 +61,7 @@ function LoginPage(props: LoginPageProps) {
   const router = useRouter();
   const { setErrorMsg } = props;
 
+  // 로그인 요청
   const loginMutation = useMutation(loginHandler, {
     onSuccess: (result, variables) => {
       sessionStorage.setItem("userToken", result.token);
@@ -76,6 +79,7 @@ function LoginPage(props: LoginPageProps) {
     },
   });
 
+  // 폼 유효성 검사, Submit Handler
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: Yup.object({
@@ -93,7 +97,7 @@ function LoginPage(props: LoginPageProps) {
 
   return (
     <>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form $isLogin onSubmit={formik.handleSubmit}>
         <ContentContainer>
           <Field>
             <Label htmlFor="email">이메일</Label>
@@ -132,8 +136,10 @@ function LoginPage(props: LoginPageProps) {
             |<TextButton>비밀번호 찾기</TextButton>
           </TextBtnContainer>
         </BtnContainer>
-        <SnsTitle>SNS 로그인</SnsTitle>
-        <BtnContainer>
+      </Form>
+      <SnsTitle>SNS 로그인</SnsTitle>
+      <SNSBtnContainer>
+        <Link href={`${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL}`}>
           <KakaoBtn>
             <Image
               src="/images/kakaoLogin.png"
@@ -142,8 +148,8 @@ function LoginPage(props: LoginPageProps) {
               height="45"
             />
           </KakaoBtn>
-        </BtnContainer>
-      </Form>
+        </Link>
+      </SNSBtnContainer>
     </>
   );
 }
