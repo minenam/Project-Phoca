@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient, useQuery } from "react-query";
-import { ConfirmContainer, BtnContainer, Button } from "./Words.style";
+import { useMutation, useQueryClient } from "react-query";
+import { ConfirmContainer, BtnContainer, DelFormBtn } from "./Words.style";
 
 interface WordDelFormProps {
   wordId: string;
@@ -48,8 +48,10 @@ function WordDelForm(props: WordDelFormProps) {
     <ConfirmContainer>
       정말 삭제하시겠습니까?
       <BtnContainer>
-        <Button onClick={delBtnClickHandler}>삭제</Button>
-        <Button onClick={onClose}>취소</Button>
+        <DelFormBtn $isDelBtn onClick={delBtnClickHandler}>
+          삭제
+        </DelFormBtn>
+        <DelFormBtn onClick={onClose}>취소</DelFormBtn>
       </BtnContainer>
     </ConfirmContainer>
   );

@@ -134,3 +134,17 @@ export const ConfirmContainer = styled("div", {
   textAlign: "center",
   fontSize: "2rem",
 });
+
+export const DelFormBtn = styled(
+  "button",
+  (props: { $isDelBtn?: boolean }) => ({
+    backgroundColor: "transparent",
+    color: props.$isDelBtn ? "#48cfc8" : "#FE7394",
+    border: props.$isDelBtn ? "4px solid #48cfc8" : "4px solid #FE7394",
+    borderRadius: "20px",
+    padding: "0.5rem 1.5rem",
+    margin: "1rem",
+    fontSize: "1.2rem",
+    cursor: "pointer",
+  }),
+);
