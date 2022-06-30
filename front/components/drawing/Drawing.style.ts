@@ -57,3 +57,37 @@ export const ResetBtn = styled("button", {
   marginLeft: "auto",
   cursor: "pointer",
 });
+
+export const ResultContainer = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+export const Title = styled("h1", {
+  fontSize: "2rem",
+  marginBottom: "2rem",
+});
+
+export const Description = styled("p", {
+  fontSize: "1.5rem",
+  marginBottom: "1rem",
+});
+
+export const ColorText = styled("p", {
+  color: "#fe8c55",
+  display: "inline-block",
+});
+
+export const ResultBtn = styled("button", {
+  border: 0,
+  borderRadius: "20px",
+  backgroundColor: "#FFAA2A",
+  fontSize: "1.5rem",
+  color: "#fff",
+  width: "30%",
+  padding: "0.5rem",
+  marginBottom: "1rem",
+  cursor: "pointer",
+});

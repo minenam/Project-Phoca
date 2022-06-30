@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "react-query";
 import CanvasComp from "./Canvas";
@@ -10,6 +11,8 @@ import {
   ResetBtnContainer,
   ResetBtn,
 } from "./Drawing.style";
+import Modal from "../../common/modal/Modal";
+import Result from "./Result";
 
 interface DrawingWord {
   id: number;
@@ -49,11 +52,14 @@ const getAnwser = async (formData: FormData) => {
 };
 
 function Drawing() {
+  const router = useRouter();
+  const url = router.asPath;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [selectedWord, setSelectedWord] = useState<DrawingWord | undefined>(
     undefined,
   );
+  const [resultModalOpen, setResultModalOpen] = useState(false);
 
   const { data } = useQuery("drawing-word", getDrawingWord, {
     enabled: selectedWord === undefined,
@@ -61,7 +67,7 @@ function Drawing() {
 
   const drawingMutation = useMutation(getAnwser, {
     onSuccess: (data, variables) => {
-      console.log(data);
+      setResultModalOpen(true);
     },
     onError: (err) => {
       console.log(err);
@@ -92,25 +98,48 @@ function Drawing() {
     canvas.getContext("2d")!!.clearRect(0, 0, canvas.width, canvas.height);
   };
 
+  const modalCloseHandler = () => {
+    setResultModalOpen(false);
+  };
+
   useEffect(() => {
     setSelectedWord(data);
   }, [data]);
 
   return (
-    <DrawingContainer>
-      <Question>{data && data.wordEng}</Question>
-      <ResetBtnContainer>
-        <ResetBtn onClick={resetCanvas}>모두 지우기</ResetBtn>
-      </ResetBtnContainer>
+    <>
+      <DrawingContainer>
+        <Question>{data && data.wordEng}</Question>
+        <ResetBtnContainer>
+          <ResetBtn onClick={resetCanvas}>모두 지우기</ResetBtn>
+        </ResetBtnContainer>
 
-      <CanvasContainer>
-        <CanvasComp canvasRef={canvasRef} />
-      </CanvasContainer>
+        <CanvasContainer>
+          <CanvasComp canvasRef={canvasRef} />
+        </CanvasContainer>
 
-      <SubmitBtnContainer>
-        <SubmitBtn onClick={submitBtnClickHandler}>제출하기</SubmitBtn>
-      </SubmitBtnContainer>
-    </DrawingContainer>
+        <SubmitBtnContainer>
+          <SubmitBtn onClick={submitBtnClickHandler}>제출하기</SubmitBtn>
+        </SubmitBtnContainer>
+      </DrawingContainer>
+
+      {resultModalOpen && (
+        <Modal
+          open={resultModalOpen}
+          width="500px"
+          large={true}
+          url={url}
+          onClose={modalCloseHandler}>
+          <Result
+            result={drawingMutation.data.result}
+            engWord={selectedWord?.wordEng}
+            korWord={selectedWord?.wordKor}
+            predicted={drawingMutation.data.predicted}
+            onClose={modalCloseHandler}
+          />
+        </Modal>
+      )}
+    </>
   );
 }
 
