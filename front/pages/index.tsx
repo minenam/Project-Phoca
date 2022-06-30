@@ -13,6 +13,7 @@ import Link from "next/link";
 import { userStore } from "../zustand/userStore";
 import Modal from "../common/modal/Modal";
 import LoginRequiredModal from "../common/loginRequiredModal/LoginRequiredModal";
+import Seo from "../common/Seo";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -56,6 +57,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
+      <Seo title="메인페이지" />
       <MainPhrase>
         아이들 영어 교육, Phoca와 함께 주변 사물부터 시작해봐요.
       </MainPhrase>

@@ -106,7 +106,11 @@ const MyPage: NextPage = () => {
           <UserInfoWrapper>
             <Avatar>
               <AvatarImage
-                src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`}
+                src={
+                  user?.userImage.startsWith("http")
+                    ? user?.userImage
+                    : `${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`
+                }
                 alt="avatar"
               />
             </Avatar>

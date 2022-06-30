@@ -22,6 +22,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { WordBook, BookMark } from "../../common/types/resultsType";
 import { shuffle } from "../../common/utils/shuffle";
 import { BookMarkProps } from "../../common/types/propsType";
+import Seo from "../../common/Seo";
 
 const imageUrl = shuffle(WORD_IMAGES);
 
@@ -172,6 +173,7 @@ const NetworkListItem: FC = () => {
 
   return (
     <NetworkWrapper $headerHeight={HEADER_HEIGHT}>
+      <Seo title="단어장 둘러보기" />
       <SearchBarWrapper>
         <BackButton onClick={backButtonHandler}>
           <AiOutlineArrowLeft />

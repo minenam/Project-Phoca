@@ -20,6 +20,7 @@ import { useMutation, useQuery } from "react-query";
 import { useRouter } from "next/router";
 import Modal from "../../common/modal/Modal";
 import UserDelModal from "./UserDelModal";
+import UserPasswordEditModal from "./UserPasswordEditModal";
 
 export interface UserEditModalProps {
   onClose: () => void;
@@ -38,6 +39,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const [preview, setPreview] = useState("");
   const [comment, setComment] = useState(userInfo?.comment);
   const [isDel, setIsDel] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
   const router = useRouter();
   const url = router.asPath;
 
@@ -55,6 +57,15 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
 
   const deleteUserHandler = () => {
     setIsDel(true);
+  };
+
+  const passwordEdit = () => {
+    console.log("test");
+    setIsPassword(true);
+  };
+
+  const passwordModalCloseHandler = () => {
+    setIsPassword(false);
   };
 
   const deleteModalCloseHandler = () => {
@@ -109,6 +120,8 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       <AvatarImage src={preview} alt={file.name} />
     </Avatar>
   ));
+
+  const user = userStore((state) => state.user);
   return (
     <EditModalWrapper>
       <EditModalTitle>회원정보 수정하기</EditModalTitle>
@@ -118,8 +131,11 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         ) : (
           <Avatar $modal>
             <AvatarImage
-              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userInfo?.userImage}`}
-              alt="avatar"
+              src={
+                user?.userImage.startsWith("http")
+                  ? user?.userImage
+                  : `${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`
+              }
             />
           </Avatar>
         )}
@@ -150,7 +166,9 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         </InputWrapper>
       </CommentWrapper>
       <EditButtonWrapper>
-        <EditButton $borderColor="#48cfc8">비밀번호 변경</EditButton>
+        <EditButton $borderColor="#48cfc8" onClick={passwordEdit}>
+          비밀번호 변경
+        </EditButton>
         <EditButton
           $borderColor="#FE7394"
           $withdrawal
@@ -161,6 +179,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       <ConfirmButton onClick={() => userEditMutation.mutate()}>
         수정완료
       </ConfirmButton>
+
       {isDel && (
         <Modal
           open={isDel}
@@ -169,6 +188,19 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
           large={true}
           url={url}>
           <UserDelModal onClose={deleteModalCloseHandler} userInfo={userInfo} />
+        </Modal>
+      )}
+      {isPassword && (
+        <Modal
+          open={isPassword}
+          width="600px"
+          onClose={passwordModalCloseHandler}
+          large={true}
+          url={url}>
+          <UserPasswordEditModal
+            onClose={passwordModalCloseHandler}
+            userInfo={userInfo}
+          />
         </Modal>
       )}
     </EditModalWrapper>
