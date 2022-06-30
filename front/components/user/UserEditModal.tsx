@@ -39,6 +39,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const [comment, setComment] = useState(userInfo?.comment);
   const [isDel, setIsDel] = useState(false);
   const router = useRouter();
+  const url = router.asPath;
 
   const onDrop = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
@@ -130,7 +131,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       </AvatarEditWrapper>
       <CommentWrapper>
         <InputWrapper>
-          <label htmlFor="userName">유저명 :</label>
+          <label htmlFor="userName">이름 :</label>
           <Comment
             id="userName"
             type="text"
@@ -165,7 +166,8 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
           open={isDel}
           width="600px"
           onClose={deleteModalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <UserDelModal onClose={deleteModalCloseHandler} userInfo={userInfo} />
         </Modal>
       )}

@@ -5,6 +5,9 @@ import { useGameStore } from "../../../zustand/useGameStore";
 import { shuffle } from "../../../common/utils/shuffle";
 import {
   CardRootWrapper,
+  GameBackHomeWrapper,
+  GameEndButton,
+  GameReGameWrapper,
   GameWrapper,
 } from "../../../components/wordQuiz/WordQuiz.style";
 import WordQuizCardList from "../../../components/wordQuiz/WordQuizCardList";
@@ -23,7 +26,6 @@ const getWrodGameInit = async (wordbookId: string | string[] | undefined) => {
     const result = await res.json();
     const shuffled: string[] = shuffle(result[1]);
     useGameStore.setState({ answer: result[0] });
-    console.log(shuffled);
 
     return shuffled;
   } catch (e) {
@@ -32,22 +34,64 @@ const getWrodGameInit = async (wordbookId: string | string[] | undefined) => {
 };
 const WordQuizGame = () => {
   const [cardShuffled, setCardShuffled] = useState<string[] | undefined>([]);
+  const [isGameEnd, setIsGameEnd] = useState(false);
+
   const router = useRouter();
   const wordbookId = router.query.id;
-  const gameResult = useGameStore((state) => state.answer);
 
-  const { data } = useQuery("wordGameInit", () => getWrodGameInit(wordbookId));
+  const totalAnswer = useGameStore((state) => state.total);
+
+  const { data } = useQuery("wordGameInit", () => getWrodGameInit(wordbookId), {
+    refetchOnWindowFocus: false,
+  });
+
+  const backHandler = (direction: string) => {
+    setIsGameEnd(false);
+    router.push(direction);
+  };
 
   useEffect(() => {
-    console.log("data=========>", data);
     data && setCardShuffled(data);
   }, [data]);
 
+  useEffect(() => {
+    useGameStore.setState({ total: 0 });
+  }, []);
+
+  useEffect(() => {
+    totalAnswer === 16 ? setIsGameEnd(true) : setIsGameEnd(false);
+  }, [totalAnswer]);
+
   return (
     <GameWrapper $headerHeight={HEADER_HEIGHT}>
+      {isGameEnd && (
+        <GameBackHomeWrapper>
+          <GameEndButton
+            $buttonCss
+            $backgroundColor="skyblue"
+            onClick={() => {
+              backHandler("/");
+            }}>
+            홈으로
+          </GameEndButton>
+        </GameBackHomeWrapper>
+      )}
+
       <CardRootWrapper>
         <WordQuizCardList shuffleList={cardShuffled} />
       </CardRootWrapper>
+      {isGameEnd && (
+        <GameReGameWrapper>
+          <GameEndButton
+            $buttonCss
+            $backgroundColor="skyblue"
+            onClick={() => {
+              backHandler("/wordQuiz");
+            }}>
+            다시 할래요
+          </GameEndButton>
+        </GameReGameWrapper>
+      )}
     </GameWrapper>
   );
 };
