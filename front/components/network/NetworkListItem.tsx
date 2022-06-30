@@ -41,8 +41,13 @@ const getOthersWordbookList = async (
       },
     );
 
-    const result = await res.json();
-    return result;
+    const result: WordBook[] = await res.json();
+    let search = searchKeyword
+      ? result.filter((item) => item.userId !== userId)
+      : null;
+
+    console.log("search", search);
+    return search !== null ? search : result;
   } catch (e) {
     console.error(e);
   }
@@ -71,7 +76,9 @@ const getMyBookMarkList = async (userId?: string) => {
 const NetworkListItem: FC = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isStop, setIsStop] = useState(false);
-  const [othersWordbookList, setOthersWordbookList] = useState([]);
+  const [othersWordbookList, setOthersWordbookList] = useState<
+    WordBook[] | undefined
+  >([]);
   const [bookMarkList, setBookMarkList] = useState<
     SetStateAction<string>[] | undefined
   >([]);
@@ -177,7 +184,7 @@ const NetworkListItem: FC = () => {
       </SearchBarWrapper>
       <GridWrapper $lapTop={isLapTop}>
         {othersWordbookList != undefined && othersWordbookList?.length > 0 ? (
-          othersWordbookList.map((item: WordBook, idx) => {
+          othersWordbookList.map((item: WordBook, idx: number) => {
             return (
               <GridItem
                 key={item.createDate}
