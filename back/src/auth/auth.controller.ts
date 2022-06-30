@@ -1,20 +1,8 @@
-import {
-  Controller,
-  Get,
-  Header,
-  Logger,
-  Post,
-  Query,
-  Redirect,
-  Req,
-  Res,
-  UseGuards,
-} from "@nestjs/common";
+import { Controller, Get, Logger, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-// import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { KakaoAuthGuard } from "./kakao-auth.guard";
-import { Request, Response } from "express";
+import { Response } from "express";
 import { ConfigService } from "@nestjs/config";
 import { GetUser } from "../user/user.decorator";
 
@@ -27,6 +15,7 @@ export class AuthController {
     private readonly configService: ConfigService,
   ) {}
 
+  // 카카오 로그인 엔드포인트
   @Get("kakao/login")
   @UseGuards(KakaoAuthGuard)
   @ApiOperation({ summary: "카카오 로그인" })
@@ -38,8 +27,9 @@ export class AuthController {
   @Get("kakao/redirect")
   @UseGuards(KakaoAuthGuard)
   @ApiOperation({ summary: "카카오 로그인 Redirect로 토큰 발급" })
-  async kakaoLoginRedirect(@GetUser() user) {
+  async kakaoLoginRedirect(@GetUser() user, @Res() res: Response) {
     this.logger.verbose(`GET /kakao/redirect : 카카오 로그인 리다이렉트`);
-    return await this.authService.kakaoLogin(user);
+    const result = await this.authService.kakaoLogin(user);
+    res.redirect(`http://localhost:3000/login/kakao?token=${result.token}`);
   }
 }
