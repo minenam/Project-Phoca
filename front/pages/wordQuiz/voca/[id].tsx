@@ -95,7 +95,10 @@ function Voca() {
             </TtsBtnContainer>
 
             <TextContainer onClick={() => setKorWordVisible((cur) => !cur)}>
-              <EngWord>{isValid && wordList[currentIdx].wordEng[0]}</EngWord>
+              <EngWord
+                $long={isValid && wordList[currentIdx].wordEng[0].length > 6}>
+                {isValid && wordList[currentIdx].wordEng[0]}
+              </EngWord>
               {korWordVisible && (
                 <KorWord>{isValid && wordList[currentIdx].wordKor[0]}</KorWord>
               )}
