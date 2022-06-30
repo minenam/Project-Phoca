@@ -23,6 +23,7 @@ export const ContentWrapper = styled("div", {
 });
 
 export const Title = styled("p", {
+  textAlign: "center",
   fontSize: "1.6rem",
   padding: "1.4rem",
 });

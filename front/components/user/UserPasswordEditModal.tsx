@@ -12,6 +12,8 @@ import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 import { userStore } from "../../zustand/userStore";
 import { ErrorMsg } from "./AccountPage.style";
+import { ConfirmButton } from "../../common/loginRequiredModal/LoginRequiredModal.style";
+import { Title } from "../guide/Guide.style";
 
 interface passwordChangeProps {
   currentPassword: string;
@@ -90,57 +92,60 @@ const UserPasswordEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   });
 
   return (
-    <PasswordForm onSubmit={formik.handleSubmit}>
-      <PasswordWrapper>
-        <InputWrapper>
-          <label htmlFor="currentPassword">현재 비밀번호 :</label>
-          <PasswordInput
-            id="currentPassword"
-            name="currentPassword"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.currentPassword}
-          />
-        </InputWrapper>
-        {formik.touched.currentPassword && formik.errors.currentPassword ? (
-          <ErrorMsg>{formik.errors.currentPassword}</ErrorMsg>
-        ) : null}
-      </PasswordWrapper>
-      <PasswordWrapper>
-        <InputWrapper>
-          <label htmlFor="newPassword">새 비밀번호 :</label>
-          <PasswordInput
-            id="newPassword"
-            name="newPassword"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.newPassword}
-          />
-        </InputWrapper>
-        {formik.touched.newPassword && formik.errors.newPassword ? (
-          <ErrorMsg>{formik.errors.newPassword}</ErrorMsg>
-        ) : null}
-      </PasswordWrapper>
-      <PasswordWrapper>
-        <InputWrapper>
-          <label htmlFor="confirmPassword">새 비밀번호 확인 :</label>
-          <PasswordInput
-            id="confirmPassword"
-            name="confirmPassword"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.confirmPassword}
-          />
-        </InputWrapper>
-        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-          <ErrorMsg>{formik.errors.confirmPassword}</ErrorMsg>
-        ) : null}
-      </PasswordWrapper>
-      <button type={"submit"}> test</button>
-    </PasswordForm>
+    <>
+      <Title>비밀번호 변경</Title>
+      <PasswordForm onSubmit={formik.handleSubmit}>
+        <PasswordWrapper>
+          <InputWrapper>
+            <label htmlFor="currentPassword">현재 비밀번호 :</label>
+            <PasswordInput
+              id="currentPassword"
+              name="currentPassword"
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.currentPassword}
+            />
+          </InputWrapper>
+          {formik.touched.currentPassword && formik.errors.currentPassword ? (
+            <ErrorMsg>{formik.errors.currentPassword}</ErrorMsg>
+          ) : null}
+        </PasswordWrapper>
+        <PasswordWrapper>
+          <InputWrapper>
+            <label htmlFor="newPassword">새 비밀번호 :</label>
+            <PasswordInput
+              id="newPassword"
+              name="newPassword"
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.newPassword}
+            />
+          </InputWrapper>
+          {formik.touched.newPassword && formik.errors.newPassword ? (
+            <ErrorMsg>{formik.errors.newPassword}</ErrorMsg>
+          ) : null}
+        </PasswordWrapper>
+        <PasswordWrapper>
+          <InputWrapper>
+            <label htmlFor="confirmPassword">새 비밀번호 확인 :</label>
+            <PasswordInput
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.confirmPassword}
+            />
+          </InputWrapper>
+          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+            <ErrorMsg>{formik.errors.confirmPassword}</ErrorMsg>
+          ) : null}
+        </PasswordWrapper>
+        <ConfirmButton type={"submit"}>변경 완료</ConfirmButton>
+      </PasswordForm>
+    </>
   );
 };
 

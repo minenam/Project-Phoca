@@ -7,6 +7,7 @@ export const PasswordEditWrapper = styled("div", {
 });
 
 export const PasswordForm = styled("form", {
+  marginTop: "1.2rem",
   display: "flex",
   flexDirection: "column",
 });
