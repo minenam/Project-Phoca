@@ -5,11 +5,6 @@ interface Button {
   backgroundImage: string;
 }
 
-interface MockUP {
-  voc_type: string;
-  voc_name: string;
-}
-
 export const MAIN_BUTTON: Button[] = [
   {
     buttonName: "단어장 만들기",

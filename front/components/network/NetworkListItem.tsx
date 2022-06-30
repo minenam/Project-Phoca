@@ -47,7 +47,6 @@ const getOthersWordbookList = async (
       ? result.filter((item) => item.userId !== userId)
       : null;
 
-    console.log("search", search);
     return search !== null ? search : result;
   } catch (e) {
     console.error(e);

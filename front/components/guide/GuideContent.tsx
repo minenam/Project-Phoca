@@ -1,6 +1,5 @@
 import { GuideContentProps } from "../../common/types/propsType";
 import { GuideContentWrapper } from "./Guide.style";
-import { useEffect } from "react";
 import { MakeVoca } from "./MakeVoca";
 import { LookVoca } from "./LookVoca";
 import { ImageGame } from "./ImageGame";
@@ -8,9 +7,6 @@ import Seo from "../../common/Seo";
 import { VocaGame } from "./VocaGame";
 
 const GuideContent = ({ selected }: GuideContentProps) => {
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
   return (
     <GuideContentWrapper>
       <Seo title="학습가이드" />

@@ -60,7 +60,6 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   };
 
   const passwordEdit = () => {
-    console.log("test");
     setIsPassword(true);
   };
 
