@@ -15,7 +15,7 @@ import {
   BtnContainer,
   Button,
   SelectBtn,
-} from "./WordQuiz.style";
+} from "../../components/wordQuiz/WordQuiz.style";
 
 interface Card {
   title: string;
