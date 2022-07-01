@@ -48,6 +48,9 @@
 
 ## 3. 기능
 
+### 프로젝트 전체 기능 정리
+- [프로젝트 전체 기능 정리](https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team6/ai-project/-/wikis/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%A0%84%EC%B2%B4-%EA%B8%B0%EB%8A%A5-%EC%A0%95%EB%A6%AC)
+
 ### ⚙ 메인 기능
 - 이미지 인식 후 단어로 변환
     - 사진에 찍힌 사물들을 AI가 인식하여 영단어와 한글 뜻으로 변환해줍니다
