@@ -90,7 +90,7 @@ function WordQuiz() {
 
     if (
       (selectedBtn === "memorize-voca" && wordCount > 0) ||
-      (selectedBtn === "play-game" && wordCount > 4)
+      (selectedBtn === "play-game" && wordCount > 7)
     ) {
       router.push(`${card[selectedBtn].link}/${selectedWordbookId}`);
     } else {
