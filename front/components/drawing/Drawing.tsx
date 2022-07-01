@@ -53,7 +53,7 @@ const getAnwser = async (formData: FormData) => {
 
 function Drawing() {
   const router = useRouter();
-  const url = router.asPath;
+  const url = router.pathname;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [selectedWord, setSelectedWord] = useState<DrawingWord | undefined>(

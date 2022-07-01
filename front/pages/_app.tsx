@@ -49,7 +49,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         );
 
         const result: ResponseType = await res.json();
-
         if (result.statusCode !== 200) {
           throw new Error(result.message);
         }
@@ -59,7 +58,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         if (!URL_WITHOUT_LOGIN_REQUIRED.includes(router.pathname)) {
           router.push({
             pathname: "/login",
-            query: { returnUrl: router.asPath },
+            query: {
+              returnUrl: router.asPath,
+              message:
+                "로그인 시 발급받은 토큰이 만료되었습니다. 다시 로그인해 주세요.",
+            },
           });
         }
       }
@@ -67,7 +70,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (sessionStorage.getItem("userToken")) {
       getUser();
     }
-  }, []);
+  }, [router]);
 
   return (
     <StyletronProvider value={styletron}>

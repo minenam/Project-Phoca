@@ -2,10 +2,10 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
-import { Users } from "../user/user.entity";
+import { Users } from "../../user/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Profile, Strategy } from "passport-kakao";
-import { AuthService } from "./auth.service";
+import { AuthService } from "../auth.service";
 import { randomUUID } from "crypto";
 
 @Injectable()

@@ -20,7 +20,7 @@ import {
   ApiBearerAuth,
   ApiQuery,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "../auth/auth.guard";
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 import { WordService } from "../word/word.service";
 
 @UseGuards(JwtAuthGuard)

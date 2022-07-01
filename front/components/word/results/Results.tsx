@@ -23,7 +23,7 @@ import { ResultProps } from "../../../common/types/resultsType";
 
 function Results({ wordInfo }: ResultProps) {
   const router = useRouter();
-  const url = router.asPath;
+  const url = router.pathname;
 
   const [engWord, setEngWord] = useState(wordInfo.wordEng[0]);
   const [korWord, setKorWord] = useState(wordInfo.wordKor[0]);
