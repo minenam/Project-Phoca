@@ -24,8 +24,7 @@ const delWord = async (wordId: string) => {
   return result;
 };
 
-function WordDelForm(props: WordDelFormProps) {
-  const { wordId, wordbookId, onClose } = props;
+function WordDelForm({ wordId, wordbookId, onClose }: WordDelFormProps) {
   const queryClient = useQueryClient();
 
   const delWordMutation = useMutation(delWord, {
@@ -40,7 +39,6 @@ function WordDelForm(props: WordDelFormProps) {
 
   const delBtnClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     delWordMutation.mutate(wordId);
   };
 

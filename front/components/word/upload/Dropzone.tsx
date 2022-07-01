@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMutation } from "react-query";
+import Toast from "@toast/Toast";
 import { AiOutlinePlus } from "react-icons/ai";
 import {
   Title,
@@ -10,17 +11,18 @@ import {
   ImageContainer,
   ThumbImage,
 } from "./Dropzone.style";
-import { WordInfo } from "../../../common/types/resultsType";
-import Toast from "../../../common/toast/Toast";
+import { WordInfo } from "@common/types/resultsType";
 
 const uploadImage = async (formData: FormData) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/word/upload`, {
     method: "POST",
     body: formData,
   });
+
   if (!res.ok) {
     throw new Error("등록할 수 없는 이미지 입니다.");
   }
+
   const result: WordInfo = await res.json();
   return result;
 };
@@ -31,17 +33,18 @@ const Upload = () => {
 
   const [files, setFiles] = useState<File[]>([]); // 업로드할 파일
   const [preview, setPreview] = useState(""); // 업로드한 파일의 프리뷰
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState(""); // 에러 메세지
 
   // drop handler
   const onDrop = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
     setPreview(URL.createObjectURL(acceptedFiles[0]));
   };
+
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const uploadImageMutation = useMutation(uploadImage, {
-    onSuccess: (data, variables) => {
+    onSuccess: (data) => {
       router.push(`/word/results/${data.wordId}`);
     },
     onError: ({ message }) => {

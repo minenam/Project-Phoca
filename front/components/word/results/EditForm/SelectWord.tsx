@@ -20,15 +20,14 @@ interface SelectWordProps {
   setSelectedKorWord: Dispatch<SetStateAction<string>>;
   selectedEngWord: string;
 }
-function SelectWord(props: SelectWordProps) {
-  const {
-    data,
-    imageUrl,
-    setSelectedEngWord,
-    setSelectedKorWord,
-    selectedEngWord,
-  } = props;
 
+function SelectWord({
+  data,
+  imageUrl,
+  setSelectedEngWord,
+  setSelectedKorWord,
+  selectedEngWord,
+}: SelectWordProps) {
   const checkboxClickHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     const selected = data.filter((item, idx) => idx === Number(value));
@@ -48,7 +47,7 @@ function SelectWord(props: SelectWordProps) {
         </ImageContainer>
       </TitleContainer>
       <ListContainer $height="300px">
-        {props.data.map((item, idx) => (
+        {data.map((item, idx) => (
           <ItemContainer key={`${item.engWord}${idx}`}>
             <input
               type="checkbox"

@@ -14,9 +14,7 @@ interface ResultProps {
   onClose: () => void;
 }
 
-function Result(props: ResultProps) {
-  const { result, engWord, korWord, predicted, onClose } = props;
-
+function Result({ result, engWord, korWord, predicted, onClose }: ResultProps) {
   return (
     <ResultContainer>
       <Title>{result ? "정답!" : "아쉬워요"}</Title>

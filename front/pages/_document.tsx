@@ -8,7 +8,7 @@ import {
 } from "next/document";
 import { Server, Sheet } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
-import { styletron } from "../common/utils/styletron";
+import { styletron } from "@utils/styletron";
 
 class MyDocument extends NextDocument<{
   stylesheets: Sheet[];

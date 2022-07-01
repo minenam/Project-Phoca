@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useQuery } from "react-query";
 import { useMediaQuery } from "react-responsive";
-import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
-import Modal from "../../common/modal/Modal";
-import BookList, { Wordbook } from "../../common/booklist/BookList";
-import Toast from "../../common/toast/Toast";
-import Seo from "../../common/Seo";
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@utils/constant";
+import Modal from "@modal/Modal";
+import BookList, { Wordbook } from "@booklist/BookList";
+import Toast from "@toast/Toast";
+import Seo from "@common/Seo";
 import {
   CardContainer,
   Card,
@@ -15,7 +15,7 @@ import {
   BtnContainer,
   Button,
   SelectBtn,
-} from "../../components/wordQuiz/WordQuiz.style";
+} from "@wordQuizComp/WordQuiz.style";
 
 interface Card {
   title: string;
@@ -107,7 +107,6 @@ function WordQuiz() {
 
   const selectBtnClickHandler = () => {
     const { wordCount, wordbookId } = data as WordbookInfo;
-    console.log("wordCount", data);
 
     if (selectedBtn === "play-game") {
       checkArrayCount(wordbookId, setErrorMsg);
@@ -131,6 +130,7 @@ function WordQuiz() {
   return (
     <>
       <Seo title="단어퀴즈 하러가기" />
+
       <CardContainer
         $headerHeight={HEADER_HEIGHT}
         $sidebarWidth={SIDEBAR_WIDTH}>
@@ -146,6 +146,7 @@ function WordQuiz() {
           </Card>
         ))}
       </CardContainer>
+
       {isModalOpen && (
         <Modal
           open={isModalOpen}
@@ -166,6 +167,7 @@ function WordQuiz() {
           </BtnContainer>
         </Modal>
       )}
+
       {errorMsg.length > 0 && (
         <Toast
           success={false}

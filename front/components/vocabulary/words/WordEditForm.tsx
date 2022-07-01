@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { InputContainer, BtnContainer, Button } from "./Words.style";
-import {
-  Field,
-  Label,
-  Input,
-} from "../../word/results/EditForm/EditForm.style";
-import { Word } from "../../../common/types/wordType";
+import { Field, Label, Input } from "@wordComp/results/EditForm/EditForm.style";
+import { Word } from "@common/types/wordType";
 
 interface WordEditFormProps {
   wordId: string;
@@ -19,8 +15,7 @@ interface modifyWordValues {
   data: { wordbookId: string; wordEng: string[]; wordKor: string[] };
 }
 
-const modifyWord = async (props: modifyWordValues) => {
-  const { wordId, data } = props;
+const modifyWord = async ({ wordId, data }: modifyWordValues) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/word/${wordId}`,
     {
@@ -37,15 +32,14 @@ const modifyWord = async (props: modifyWordValues) => {
   return result;
 };
 
-function WordEditForm(props: WordEditFormProps) {
-  const { wordId, wordbookId, onClose } = props;
+function WordEditForm({ wordId, wordbookId, onClose }: WordEditFormProps) {
   const queryClient = useQueryClient();
 
   const [engWord, setEngWord] = useState("");
   const [korWord, setKorWord] = useState("");
 
   const modifyWordMutation = useMutation(modifyWord, {
-    onSuccess: (data, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(["getWords", wordbookId]); // 단어 리스트 갱신
       onClose();
     },

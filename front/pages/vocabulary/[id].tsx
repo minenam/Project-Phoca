@@ -1,5 +1,5 @@
-import Words from "../../components/vocabulary/words/Words";
-import Seo from "../../common/Seo";
+import Words from "@vocabularyComp/words/Words";
+import Seo from "@common/Seo";
 
 function WordPage() {
   return (

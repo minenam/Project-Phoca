@@ -1,7 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { ToastMsg } from "./Toast.style";
+import { isMiddle } from "@utils/useIsMiddle";
 import { BiError, BiCheck } from "react-icons/bi";
-import { isMiddle } from "../utils/useIsMiddle";
+import { ToastMsg } from "./Toast.style";
 
 interface ToastProps {
   success: boolean;

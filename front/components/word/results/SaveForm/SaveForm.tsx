@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { userStore } from "../../../../zustand/userStore";
+import { userStore } from "@zustand/userStore";
+import AddForm from "./AddForm";
+import BookList, { Wordbook } from "@booklist/BookList";
 import { BtnContainer, Button } from "../EditForm/EditForm.style";
 import { AddBookBtn } from "./SaveForm.style";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import AddForm from "./AddForm";
-import BookList, { Wordbook } from "../../../../common/booklist/BookList";
 
 interface SaveFormProps {
   onClose: () => void;
@@ -23,8 +23,12 @@ interface SubmitValues {
 }
 
 // 최종 단어를 정해 수정 요청을 보냄
-const patchWord = async (data: SubmitValues) => {
-  const { wordId, wordEng, wordKor, wordbookId } = data;
+const patchWord = async ({
+  wordId,
+  wordEng,
+  wordKor,
+  wordbookId,
+}: SubmitValues) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/word/${wordId}`,
     {
@@ -36,9 +40,11 @@ const patchWord = async (data: SubmitValues) => {
       body: JSON.stringify({ wordbookId, wordEng, wordKor }),
     },
   );
+
   if (!res.ok) {
     throw new Error("잠시 후 다시 시도해 주세요.");
   }
+
   const result = await res.json();
   return result;
 };
@@ -81,10 +87,12 @@ function SaveForm({ onClose, wordId, engWord, korWord }: SaveFormProps) {
         setWordbookList={setWordbookList}
         setSelectedWordbookId={setSelectedWordbookId}
       />
+
       <AddBookBtn onClick={() => setAddFormOpen((cur) => !cur)}>
         <AiOutlinePlusCircle /> 새 단어장 추가
       </AddBookBtn>
       {addFormOpen && <AddForm userId={user?.userId} />}
+
       <BtnContainer>
         <Button type="submit" onClick={handleSubmit}>
           저장하기
