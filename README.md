@@ -47,7 +47,7 @@
 ### 📃 API 명세서
 - [Swagger API 레퍼런스](https://app.swaggerhub.com/apis/PHOCAHELP/phoca-api-docs/1.0)
 
-### 와이어프레임
+### 🖼 와이어프레임
 - [Figma](https://www.figma.com/file/L48aThyqqlQRMsaaUQqMXa/DEVMON)
 
 ## 3. 기능
