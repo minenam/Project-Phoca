@@ -1,5 +1,5 @@
-import { Dispatch, FC, SetStateAction, useState, useEffect } from "react";
-import { useIsLapTop } from "../../common/utils/useIsLapTop";
+import { FC, useState, useEffect } from "react";
+import { useIsLapTop } from "@utils/useIsLapTop";
 import {
   BtnWrapper,
   GridItem,
@@ -11,16 +11,16 @@ import { MdPublic } from "react-icons/md";
 import { FaLock, FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { WordBook } from "../../common/types/resultsType";
-import { shuffle } from "../../common/utils/shuffle";
-import { WORD_IMAGES } from "../../common/utils/constant";
-import Modal from "../../common/modal/Modal";
-import Toast from "../../common/toast/Toast";
+import { WordBook } from "@common/types/resultsType";
+import { shuffle } from "@utils/shuffle";
+import { WORD_IMAGES } from "@utils/constant";
+import Modal from "@modal/Modal";
+import Toast from "@toast/Toast";
 import VocabularyEditModal from "./VocabularyEditModal";
-import { vocaKeys } from "../../common/querykeys/querykeys";
+import { vocaKeys } from "@queryKeys/querykeys";
 import { AiFillHeart } from "react-icons/ai";
-import { BookMarkProps } from "../../common/types/propsType";
-import { userStore } from "../../zustand/userStore";
+import { BookMarkProps } from "@common/types/propsType";
+import { userStore } from "@zustand/userStore";
 
 interface itemProps {
   listItem: WordBook[] | undefined;

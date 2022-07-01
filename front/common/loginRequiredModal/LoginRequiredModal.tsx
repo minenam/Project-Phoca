@@ -2,9 +2,9 @@ import {
   ModalWrapper,
   ConfirmButton,
   ModalContent,
-} from "./LoginRequiredModal.style";
+} from "@loginRequiredModal/LoginRequiredModal.style";
 import { useRouter } from "next/router";
-import { ModalProps } from "../types/propsType";
+import { ModalProps } from "@common/types/propsType";
 
 function LoginRequiredModal({ onClose }: ModalProps) {
   const router = useRouter();

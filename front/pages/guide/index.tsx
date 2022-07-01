@@ -10,12 +10,12 @@ import {
   TextContentWrapper,
   Title,
   WrapperWithFooter,
-} from "../../components/guide/Guide.style";
-import { HEADER_HEIGHT } from "../../common/utils/constant";
-import { useRef, useState } from "react";
-import MenuList from "../../components/guide/MenuList";
-import GuideContent from "../../components/guide/GuideContent";
-import GuideFooter from "../../components/guide/GuideFooter";
+} from "@guideComp/Guide.style";
+import { HEADER_HEIGHT } from "@utils/constant";
+import { useState } from "react";
+import MenuList from "@guideComp/MenuList";
+import GuideContent from "@guideComp/GuideContent";
+import GuideFooter from "@guideComp/GuideFooter";
 
 const Guide: NextPage = () => {
   const [selected, setSelected] = useState("");

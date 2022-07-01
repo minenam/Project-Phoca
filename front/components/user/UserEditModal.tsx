@@ -9,15 +9,15 @@ import {
   EditButtonWrapper,
   InputWrapper,
 } from "./UserEditModal.style";
-import { UserProperties, userStore } from "../../zustand/userStore";
+import { UserProperties, userStore } from "@zustand/userStore";
 import { Avatar, AvatarImage } from "../myPage/MyPage.style";
 import { useDropzone } from "react-dropzone";
-import { ConfirmButton } from "../../common/loginRequiredModal/LoginRequiredModal.style";
+import { ConfirmButton } from "@loginRequiredModal/LoginRequiredModal.style";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DropContainer } from "../word/upload/Dropzone.style";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
-import Modal from "../../common/modal/Modal";
+import Modal from "@modal/Modal";
 import UserDelModal from "./UserDelModal";
 import UserPasswordEditModal from "./UserPasswordEditModal";
 

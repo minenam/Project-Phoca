@@ -8,7 +8,7 @@ import {
   RightMenuWrapper,
   Welcome,
 } from "./NavBar.style";
-import { userStore } from "../../zustand/userStore";
+import { userStore } from "@zustand/userStore";
 
 const NavBar: FC = () => {
   const user = userStore((state) => state.user);

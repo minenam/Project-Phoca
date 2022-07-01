@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useMediaQuery } from "react-responsive";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@utils/constant";
