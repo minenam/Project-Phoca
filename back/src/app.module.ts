@@ -15,7 +15,7 @@ import emailConfig from "./config/email.confg";
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [".env"],
+      envFilePath: [".dev.env"],
       load: [emailConfig],
     }),
     TypeOrmModule.forRootAsync(configAsync),
