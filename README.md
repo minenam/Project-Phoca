@@ -36,7 +36,7 @@
 ### 📚 기술 스택
 | 📕 Front-end | 📘 Back-end | 📗 AI |
 | :---: | :---: | :---: |
-|Next.js<br />Typescript<br />React Query<br />Zustand<br />Styletron<br />|Nest.js<br />Typescript<br />TypeORM<br />PostgreSQL<br />MySQL<br />AWS S3<br />GCP<br />Docker<br />|Python<br />Jupyter<br />TensorFlow<br />yolo<br />Flask<br />|
+|Next.js<br />Typescript<br />React Query<br />Zustand<br />Styletron<br />|Nest.js<br />Typescript<br />TypeORM<br />PostgreSQL<br />AWS S3<br />GCP<br />Docker<br />|Python<br />Jupyter<br />TensorFlow<br />yolo<br />Flask<br />|
 
 ### 🗃 시스템 아키텍처
 ![image](https://user-images.githubusercontent.com/59808674/176872369-f3cee8a6-fa93-4064-a4aa-b838eccd7b4c.png)  
@@ -47,11 +47,14 @@
 ### 📃 API 명세서
 - [Swagger API 레퍼런스](https://app.swaggerhub.com/apis/PHOCAHELP/phoca-api-docs/1.0)
 
+### 와이어프레임
+- [Figma](https://www.figma.com/file/L48aThyqqlQRMsaaUQqMXa/DEVMON)
+
 ## 3. 기능
 
 ### ⚙ 메인 기능
 - 이미지 인식 후 단어로 변환
-    - 사진에 찍힌 사물들을 영단어와 뜻으로 변환해줍니다.
+    - 사진에 찍힌 사물들을 AI가 인식하여 영단어와 한글 뜻으로 변환해줍니다
 - 나만의 단어장 만들기
     - 이미지 인식으로 만든 단어들로 나만의 단어장을 만듭니다.
 - 그림 단어 게임
