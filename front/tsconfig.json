@@ -13,7 +13,28 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@zustand/*": ["zustand/*"],
+      "@common/*": ["common/*"],
+      "@booklist/*": ["common/booklist/*"],
+      "@loginRequiredModal/*": ["common/loginRequiredModal/*"],
+      "@modal/*": ["common/modal/*"],
+      "@note/*": ["common/note/*"],
+      "@queryKeys/*": ["common/queryKeys/*"],
+      "@toast/*": ["common/toast/*"],
+      "@types/*": ["common/types/*"],
+      "@utils/*": ["common/utils/*"],
+      "@drawingComp/*": ["components/drawing/*"],
+      "@guideComp/*": ["components/guide/*"],
+      "@introComp/*": ["components/intro/*"],
+      "@networkComp/*": ["components/network/*"],
+      "@sidebarComp/*": ["components/sidebar/*"],
+      "@userComp/*": ["components/user/*"],
+      "@wordComp/*": ["components/word/*"],
+      "@wordQuizComp/*": ["components/wordQuiz/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
