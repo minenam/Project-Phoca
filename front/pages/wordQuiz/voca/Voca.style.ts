@@ -58,12 +58,13 @@ export const TextContainer = styled("div", {
   gridTemplateRows: "2fr 1fr",
   alignItems: "center",
   cursor: "pointer",
+  boxSizing: "border-box",
 });
 
-export const EngWord = styled("h1", {
-  fontSize: "7rem",
+export const EngWord = styled("h1", (props: { $long: boolean }) => ({
+  fontSize: props.$long ? "4rem" : "7rem",
   textAlign: "center",
-});
+}));
 
 export const KorWord = styled("p", {
   fontSize: "2rem",

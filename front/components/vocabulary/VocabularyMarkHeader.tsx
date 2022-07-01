@@ -8,7 +8,7 @@ import {
   SwitchButtonText,
 } from "./Vocabulary.styles";
 import { Avatar, AvatarImage, UserName } from "../../pages/myPage/MyPage.style";
-import { UserProperties } from "../../zustand/userStore";
+import { UserProperties, userStore } from "../../zustand/userStore";
 
 interface Iprops {
   checkHandler: () => void;
@@ -23,6 +23,7 @@ function VocabularyMarkHeader({
   inputChecked,
   userInfo,
 }: Iprops): JSX.Element {
+  const user = userStore((state) => state.user);
   return (
     <>
       <SwitchWrapper>
@@ -40,8 +41,11 @@ function VocabularyMarkHeader({
         <HeadUserWrapper>
           <Avatar>
             <AvatarImage
-              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userInfo?.userImage}`}
-              alt="Avatar"
+              src={
+                user?.userImage.startsWith("http")
+                  ? user?.userImage
+                  : `${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`
+              }
             />
           </Avatar>
           <UserName>{userInfo?.userName}님</UserName>

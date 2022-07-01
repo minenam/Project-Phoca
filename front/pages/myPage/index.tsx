@@ -26,6 +26,7 @@ import Modal from "../../common/modal/Modal";
 import UserEditModal from "../../components/user/UserEditModal";
 import { useQuery } from "react-query";
 import Seo from "../../common/Seo";
+import { BookMark } from "../../common/types/resultsType";
 
 const getCount = async (userId: string | undefined) => {
   try {
@@ -46,6 +47,10 @@ const getCount = async (userId: string | undefined) => {
         },
       },
     );
+
+    if (!wordbookRes.ok || !bookmarkRes.ok) {
+      throw new Error("에러 발생");
+    }
 
     const wordbookResult = await wordbookRes.json();
     const bookmarkResult = await bookmarkRes.json();
@@ -85,8 +90,8 @@ const MyPage: NextPage = () => {
   };
 
   useEffect(() => {
-    setWordbookCount(data?.wordbookResult);
-    setbookmarkCount(data?.bookmarkResult);
+    data && setWordbookCount(data.wordbookResult);
+    data && setbookmarkCount(data.bookmarkResult);
   }, [data]);
 
   return (
@@ -106,7 +111,11 @@ const MyPage: NextPage = () => {
           <UserInfoWrapper>
             <Avatar>
               <AvatarImage
-                src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`}
+                src={
+                  user?.userImage.startsWith("http")
+                    ? user?.userImage
+                    : `${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`
+                }
                 alt="avatar"
               />
             </Avatar>

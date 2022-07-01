@@ -1,6 +1,6 @@
 import { styled } from "styletron-react";
 
-export const Form = styled("form", (props: { $isLogin: boolean }) => ({
+export const Form = styled("form", (props: { $isLogin?: boolean }) => ({
   display: "flex",
   flexDirection: "column",
   height: props.$isLogin ? "55%" : "80%",

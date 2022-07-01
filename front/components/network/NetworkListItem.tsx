@@ -22,6 +22,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { WordBook, BookMark } from "../../common/types/resultsType";
 import { shuffle } from "../../common/utils/shuffle";
 import { BookMarkProps } from "../../common/types/propsType";
+import Seo from "../../common/Seo";
 
 const imageUrl = shuffle(WORD_IMAGES);
 
@@ -41,8 +42,12 @@ const getOthersWordbookList = async (
       },
     );
 
-    const result = await res.json();
-    return result;
+    const result: WordBook[] = await res.json();
+    let search = searchKeyword
+      ? result.filter((item) => item.userId !== userId)
+      : null;
+
+    return search !== null ? search : result;
   } catch (e) {
     console.error(e);
   }
@@ -71,7 +76,9 @@ const getMyBookMarkList = async (userId?: string) => {
 const NetworkListItem: FC = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isStop, setIsStop] = useState(false);
-  const [othersWordbookList, setOthersWordbookList] = useState([]);
+  const [othersWordbookList, setOthersWordbookList] = useState<
+    WordBook[] | undefined
+  >([]);
   const [bookMarkList, setBookMarkList] = useState<
     SetStateAction<string>[] | undefined
   >([]);
@@ -81,7 +88,7 @@ const NetworkListItem: FC = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     ["othersWordbookList", isStop, searchKeyword],
     () => getOthersWordbookList(user?.userId, searchKeyword && searchKeyword),
     {
@@ -136,8 +143,8 @@ const NetworkListItem: FC = () => {
   };
 
   useEffect(() => {
-    setOthersWordbookList(data);
-    setBookMarkList(bookMarkedData?.data);
+    !isLoading && setOthersWordbookList(data);
+    !bookMarkedData.isLoading && setBookMarkList(bookMarkedData?.data);
   }, [data, bookMarkedData]);
 
   useEffect(() => {
@@ -165,6 +172,7 @@ const NetworkListItem: FC = () => {
 
   return (
     <NetworkWrapper $headerHeight={HEADER_HEIGHT}>
+      <Seo title="단어장 둘러보기" />
       <SearchBarWrapper>
         <BackButton onClick={backButtonHandler}>
           <AiOutlineArrowLeft />
@@ -176,8 +184,8 @@ const NetworkListItem: FC = () => {
         />
       </SearchBarWrapper>
       <GridWrapper $lapTop={isLapTop}>
-        {othersWordbookList != undefined && othersWordbookList?.length > 0 ? (
-          othersWordbookList.map((item: WordBook, idx) => {
+        {othersWordbookList &&
+          othersWordbookList.map((item: WordBook, idx: number) => {
             return (
               <GridItem
                 key={item.createDate}
@@ -210,10 +218,7 @@ const NetworkListItem: FC = () => {
                 </GridTextItem>
               </GridItem>
             );
-          })
-        ) : (
-          <GridWrapper $without>단어장이 아직 없습니다</GridWrapper>
-        )}
+          })}
       </GridWrapper>
     </NetworkWrapper>
   );

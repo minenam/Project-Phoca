@@ -12,8 +12,9 @@ import {
 } from "../../../components/wordQuiz/WordQuiz.style";
 import WordQuizCardList from "../../../components/wordQuiz/WordQuizCardList";
 import { HEADER_HEIGHT } from "../../../common/utils/constant";
+import Seo from "../../../common/Seo";
 
-const getWrodGameInit = async (wordbookId: string | string[] | undefined) => {
+const getWordGameInit = async (wordbookId: string | string[] | undefined) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/word/game/${wordbookId}`,
@@ -32,7 +33,8 @@ const getWrodGameInit = async (wordbookId: string | string[] | undefined) => {
     console.error(e);
   }
 };
-const WordQuizGame = () => {
+
+const WordQuiz = () => {
   const [cardShuffled, setCardShuffled] = useState<string[] | undefined>([]);
   const [isGameEnd, setIsGameEnd] = useState(false);
 
@@ -41,8 +43,9 @@ const WordQuizGame = () => {
 
   const totalAnswer = useGameStore((state) => state.total);
 
-  const { data } = useQuery("wordGameInit", () => getWrodGameInit(wordbookId), {
+  const { data } = useQuery("wordGameInit", () => getWordGameInit(wordbookId), {
     refetchOnWindowFocus: false,
+    enabled: !!wordbookId,
   });
 
   const backHandler = (direction: string) => {
@@ -64,6 +67,7 @@ const WordQuizGame = () => {
 
   return (
     <GameWrapper $headerHeight={HEADER_HEIGHT}>
+      <Seo title="단어 퀴즈" />
       {isGameEnd && (
         <GameBackHomeWrapper>
           <GameEndButton
@@ -96,4 +100,4 @@ const WordQuizGame = () => {
   );
 };
 
-export default WordQuizGame;
+export default WordQuiz;

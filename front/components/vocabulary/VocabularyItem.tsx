@@ -168,13 +168,15 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
                 key={item.createDate}
                 $backgroundImage={imageUrl[idx % imageUrl.length]}>
                 <BtnWrapper>
-                  <LockBtn onClick={() => vocaChangeHandler(item)}>
-                    {item.secured ? <FaLock /> : <MdPublic />}
-                  </LockBtn>
                   {!isMine ? (
-                    <LockBtn onClick={(e) => editHandler(e, item.wordbookId)}>
-                      <FaEdit />
-                    </LockBtn>
+                    <>
+                      <LockBtn onClick={() => vocaChangeHandler(item)}>
+                        {item.secured ? <FaLock /> : <MdPublic />}
+                      </LockBtn>
+                      <LockBtn onClick={(e) => editHandler(e, item.wordbookId)}>
+                        <FaEdit />
+                      </LockBtn>
+                    </>
                   ) : (
                     <LockBtn
                       onClick={() =>

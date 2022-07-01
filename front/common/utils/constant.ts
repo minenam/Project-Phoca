@@ -5,11 +5,6 @@ interface Button {
   backgroundImage: string;
 }
 
-interface MockUP {
-  voc_type: string;
-  voc_name: string;
-}
-
 export const MAIN_BUTTON: Button[] = [
   {
     buttonName: "단어장 만들기",
@@ -62,6 +57,15 @@ export const URL_WITHOUT_SIDEBAR: string[] = [
   "/network",
   "/guide",
   "/wordQuiz/game/[id]",
+];
+export const URL_WITHOUT_LOGIN_REQUIRED: string[] = [
+  "/",
+  "/guide",
+  "/word/upload",
+  "/word/result/[id]",
+  "/drawing",
+  "/login",
+  "/register",
 ];
 
 export const LEFT_WITH_SIDEBAR = "60%";
