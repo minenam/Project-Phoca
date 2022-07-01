@@ -36,23 +36,26 @@ const getWordbookList = async (userId: string | undefined) => {
       },
     },
   );
-  if (!res.ok) {
-    throw new Error("단어장 정보를 불러오는데 실패했습니다.");
-  }
+
   const result = await res.json();
+
+  if (result.statusCode >= 400) {
+    throw new Error(result.message);
+  }
+
   return result;
 };
 
-function BookList(props: ListProps) {
-  const {
-    title,
-    height,
-    wordbookList,
-    selectedWordbookId,
-    setWordbookList,
-    setSelectedWordbookId,
-  } = props;
+function BookList({
+  title,
+  height,
+  wordbookList,
+  selectedWordbookId,
+  setWordbookList,
+  setSelectedWordbookId,
+}: ListProps) {
   const user = userStore((state) => state.user);
+
   const { data } = useQuery("wordbookList", () =>
     getWordbookList(user?.userId),
   );

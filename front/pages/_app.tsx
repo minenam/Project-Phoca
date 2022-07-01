@@ -56,6 +56,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         userStore.setState({ user: result.data });
       } catch (err) {
         if (!URL_WITHOUT_LOGIN_REQUIRED.includes(router.pathname)) {
+          sessionStorage.removeItem("userToken");
+          userStore.setState({ user: null });
           router.push({
             pathname: "/login",
             query: {

@@ -62,7 +62,7 @@ export const URL_WITHOUT_LOGIN_REQUIRED: string[] = [
   "/",
   "/guide",
   "/word/upload",
-  "/word/result/[id]",
+  "/word/results/[id]",
   "/drawing",
   "/login",
   "/register",

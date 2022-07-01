@@ -84,7 +84,7 @@ function RegisterPage() {
 
   return (
     <>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit} $isLogin={false}>
         <ContentContainer>
           <Field>
             <Label htmlFor="email">이메일</Label>

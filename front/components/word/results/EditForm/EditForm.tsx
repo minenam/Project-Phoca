@@ -42,7 +42,7 @@ function EditForm({
       temp.push({ engWord: engWordList[i], korWord: korWordList[i] });
     }
     setWordList(temp);
-  }, []);
+  }, [engWordList, korWordList]);
 
   return (
     <>
