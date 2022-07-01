@@ -17,7 +17,7 @@ import {
   ImgWrapper,
   Seal,
   RoundedBox,
-} from "./MyPage.style";
+} from "../../components/myPage/MyPage.style";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { userStore } from "../../zustand/userStore";

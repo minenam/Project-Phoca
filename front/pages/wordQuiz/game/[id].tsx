@@ -9,8 +9,8 @@ import {
   GameEndButton,
   GameReGameWrapper,
   GameWrapper,
-} from "../../../components/wordQuiz/WordQuiz.style";
-import WordQuizCardList from "../../../components/wordQuiz/WordQuizCardList";
+} from "../../../components/wordQuiz/game/WordQuizGame.style";
+import WordQuizCardList from "../../../components/wordQuiz/game/WordQuizCardList";
 import { HEADER_HEIGHT } from "../../../common/utils/constant";
 import Seo from "../../../common/Seo";
 

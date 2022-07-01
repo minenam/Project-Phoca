@@ -10,7 +10,7 @@ import {
   InputWrapper,
 } from "./UserEditModal.style";
 import { UserProperties, userStore } from "../../zustand/userStore";
-import { Avatar, AvatarImage } from "../../pages/myPage/MyPage.style";
+import { Avatar, AvatarImage } from "../myPage/MyPage.style";
 import { useDropzone } from "react-dropzone";
 import { ConfirmButton } from "../../common/loginRequiredModal/LoginRequiredModal.style";
 import { AiOutlinePlus } from "react-icons/ai";

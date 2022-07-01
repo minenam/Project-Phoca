@@ -7,7 +7,7 @@ import {
   SwitchButtonInput,
   SwitchButtonText,
 } from "./Vocabulary.styles";
-import { Avatar, AvatarImage, UserName } from "../../pages/myPage/MyPage.style";
+import { Avatar, AvatarImage, UserName } from "../myPage/MyPage.style";
 import { UserProperties, userStore } from "../../zustand/userStore";
 
 interface Iprops {

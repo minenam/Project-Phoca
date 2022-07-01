@@ -154,5 +154,30 @@ export const WrapperWithFooter = styled(
 );
 
 export const FooterWrapper = styled("div", {
-  height: "100px",
+  width: "100vw",
+  backgroundColor: "#ffca7b",
+  height: "120px",
+});
+
+export const Footer = styled("div", {
+  display: "flex",
+  justifyContent: "space-evenly",
+  alignItems: "center",
+  height: "100%",
+});
+
+export const FooterTop = styled("p", {
+  padding: "10px",
+  fontSize: "25px",
+});
+
+export const FooterBottom = styled("p", {
+  color: "#595858",
+  padding: "10px",
+  fontSize: "15px",
+});
+
+export const TextWrapper = styled("div", {
+  display: "flex",
+  flexDirection: "column",
 });
