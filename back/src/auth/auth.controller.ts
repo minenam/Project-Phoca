@@ -30,6 +30,7 @@ export class AuthController {
   async kakaoLoginRedirect(@GetUser() user, @Res() res: Response) {
     this.logger.verbose(`GET /kakao/redirect : 카카오 로그인 리다이렉트`);
     const result = await this.authService.kakaoLogin(user);
-    res.redirect(`http://localhost:3000/login/kakao?token=${result.token}`);
+    const CLIENT_URL = await this.configService.get<string>("CLIENT_URL");
+    res.redirect(`${CLIENT_URL}/login/kakao?token=${result.token}`);
   }
 }
