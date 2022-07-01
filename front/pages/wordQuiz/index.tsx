@@ -110,7 +110,7 @@ function WordQuiz() {
     const { wordCount, wordbookId } = data as WordbookInfo;
     const wordCheck = await checkArrayCount(wordbookId);
 
-    if (wordCheck !== null) {
+    if (selectedBtn === "play-game" && !!wordCheck) {
       setErrorMsg(wordCheck as string);
       return;
     }
