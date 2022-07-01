@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
-import { useGameStore } from "../../../zustand/useGameStore";
-import { shuffle } from "../../../common/utils/shuffle";
+import { useGameStore } from "@zustand/useGameStore";
+import { shuffle } from "@utils/shuffle";
 import {
   CardRootWrapper,
   GameBackHomeWrapper,
   GameEndButton,
   GameReGameWrapper,
   GameWrapper,
-} from "../../../components/wordQuiz/WordQuiz.style";
-import WordQuizCardList from "../../../components/wordQuiz/WordQuizCardList";
-import { HEADER_HEIGHT } from "../../../common/utils/constant";
-import Seo from "../../../common/Seo";
+} from "@wordQuizComp/game/WordQuizGame.style";
+import WordQuizCardList from "@wordQuizComp/game/WordQuizCardList";
+import { HEADER_HEIGHT } from "@utils/constant";
+import Seo from "@common/Seo";
 
 const getWordGameInit = async (wordbookId: string | string[] | undefined) => {
   try {

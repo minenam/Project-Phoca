@@ -5,9 +5,9 @@ import {
   CardItem,
   Image,
 } from "./WordQuizGame.style";
-import { CardProps } from "../../../common/types/propsType";
-import { useEffect, useRef, useState } from "react";
-import { IMAGE_EXTENSION } from "../../../common/utils/constant";
+import { CardProps } from "@common/types/propsType";
+import { IMAGE_EXTENSION } from "@utils/constant";
+import { useEffect, useState } from "react";
 
 const WordQuizCard = ({
   value,
@@ -16,12 +16,6 @@ const WordQuizCard = ({
   handleChoice,
 }: CardProps) => {
   const [flip, setFlip] = useState(false);
-  const [height, setHeight] = useState("initial");
-
-  const frontEl = useRef();
-  const backEl = useRef();
-
-  const setMaxHeight = () => {};
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>, value: string) => {
     setFlip((v) => !v);

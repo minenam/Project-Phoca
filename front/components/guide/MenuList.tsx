@@ -1,6 +1,6 @@
-import { MAIN_BUTTON } from "../../common/utils/constant";
+import { MAIN_BUTTON } from "@utils/constant";
+import { GuideMenuButtonProps } from "@common/types/propsType";
 import { MenuItem } from "./Guide.style";
-import { GuideMenuButtonProps } from "../../common/types/propsType";
 import { useEffect } from "react";
 
 const MenuList = ({ selected, setSelected }: GuideMenuButtonProps) => {

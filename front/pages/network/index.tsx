@@ -1,4 +1,4 @@
-import NetworkListItem from "../../components/network/NetworkListItem";
+import NetworkListItem from "@networkComp/NetworkListItem";
 
 const Network = () => {
   return <NetworkListItem />;

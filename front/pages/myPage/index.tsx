@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@utils/constant";
 import {
   Browser,
   MyPageWrapper,
@@ -17,15 +17,15 @@ import {
   ImgWrapper,
   Seal,
   RoundedBox,
-} from "./MyPage.style";
+} from "@myPageComp/MyPage.style";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { userStore } from "../../zustand/userStore";
+import { userStore } from "@zustand/userStore";
 import React, { useEffect, useState } from "react";
-import Modal from "../../common/modal/Modal";
-import UserEditModal from "../../components/user/UserEditModal";
+import Modal from "@modal/Modal";
+import UserEditModal from "@userComp/UserEditModal";
 import { useQuery } from "react-query";
-import Seo from "../../common/Seo";
+import Seo from "@common/Seo";
 
 const getCount = async (userId: string | undefined) => {
   try {

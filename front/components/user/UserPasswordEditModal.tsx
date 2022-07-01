@@ -5,15 +5,15 @@ import {
   InputWrapper,
 } from "./UserPasswordEditModal.style";
 import { UserEditModalProps } from "./UserEditModal";
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
-import { userStore } from "../../zustand/userStore";
+import { userStore } from "@zustand/userStore";
 import { ErrorMsg } from "./AccountPage.style";
-import { ConfirmButton } from "../../common/loginRequiredModal/LoginRequiredModal.style";
-import { Title } from "../guide/Guide.style";
+import { ConfirmButton } from "@loginRequiredModal/LoginRequiredModal.style";
+import { Title } from "@guideComp/Guide.style";
 
 interface passwordChangeProps {
   currentPassword: string;

@@ -1,11 +1,5 @@
 import { styled } from "styletron-react";
 
-export const PasswordEditWrapper = styled("div", {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
 export const PasswordForm = styled("form", {
   marginTop: "1.2rem",
   display: "flex",

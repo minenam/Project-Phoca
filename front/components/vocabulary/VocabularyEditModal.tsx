@@ -1,15 +1,15 @@
-import { VocabularyModalProps } from "../../common/types/propsType";
+import { VocabularyModalProps } from "@common/types/propsType";
 import { EditTile, VocaEditModalWrapper } from "./modal/VocabularyModal.style";
 import {
   Comment,
   EditButton,
   InputWrapper,
   EditButtonWrapper,
-} from "../user/UserEditModal.style";
+} from "@userComp/UserEditModal.style";
 import React, { useEffect, useState } from "react";
 import { useQueryClient, useMutation, useQuery } from "react-query";
-import { Wordbook } from "../../common/booklist/BookList";
-import { vocaKeys } from "../../common/querykeys/querykeys";
+import { Wordbook } from "@booklist/BookList";
+import { vocaKeys } from "@queryKeys/querykeys";
 import { useRouter } from "next/router";
 
 const getVocaInfo = async (wordbookId: string) => {

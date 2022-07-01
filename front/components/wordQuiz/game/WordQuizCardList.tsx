@@ -1,8 +1,7 @@
-import { CardImageItem, CardItem } from "./WordQuizGame.style";
 import { useEffect, useState } from "react";
 import WordQuizCard from "./WordQuizCard";
-import { IMAGE_EXTENSION } from "../../../common/utils/constant";
-import { useGameStore } from "../../../zustand/useGameStore";
+import { IMAGE_EXTENSION } from "@utils/constant";
+import { useGameStore } from "@zustand/useGameStore";
 
 interface ShuffleProps {
   shuffleList: string[] | undefined;
@@ -56,7 +55,6 @@ const WordQuizCardList = ({ shuffleList }: ShuffleProps) => {
       useGameStore.setState({ total: totalAnswer + 2 });
 
       setCardList((cards) => {
-        //if(정답 로직)
         return cards?.map((card, idx) => {
           if (card.data === nameChoice || card.data === imageChoice) {
             return { ...card, matched: true };

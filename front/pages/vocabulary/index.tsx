@@ -1,14 +1,14 @@
 import { NextPage } from "next";
-import { VocabularyWrapper } from "../../components/vocabulary/Vocabulary.styles";
-import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
-import VocabularyMarkHeader from "../../components/vocabulary/VocabularyMarkHeader";
-import VocabularyItem from "../../components/vocabulary/VocabularyItem";
+import { VocabularyWrapper } from "@vocabularyComp/Vocabulary.styles";
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@utils/constant";
+import VocabularyMarkHeader from "@vocabularyComp/VocabularyMarkHeader";
+import VocabularyItem from "@vocabularyComp/VocabularyItem";
 import { useEffect, useState } from "react";
-import { userStore } from "../../zustand/userStore";
+import { userStore } from "@zustand/userStore";
 import { useQuery, useQueryClient } from "react-query";
-import { WordBook, BookMark } from "../../common/types/resultsType";
-import { vocaKeys } from "../../common/querykeys/querykeys";
-import Seo from "../../common/Seo";
+import { WordBook, BookMark } from "@common/types/resultsType";
+import { vocaKeys } from "@queryKeys/querykeys";
+import Seo from "@common/Seo";
 
 const Vocabulary: NextPage = () => {
   const [vocaList, setVocaList] = useState<WordBook[] | undefined>([]);

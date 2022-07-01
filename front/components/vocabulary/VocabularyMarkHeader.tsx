@@ -7,8 +7,8 @@ import {
   SwitchButtonInput,
   SwitchButtonText,
 } from "./Vocabulary.styles";
-import { Avatar, AvatarImage, UserName } from "../../pages/myPage/MyPage.style";
-import { UserProperties, userStore } from "../../zustand/userStore";
+import { Avatar, AvatarImage, UserName } from "@myPageComp/MyPage.style";
+import { UserProperties, userStore } from "@zustand/userStore";
 
 interface Iprops {
   checkHandler: () => void;

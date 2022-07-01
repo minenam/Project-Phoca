@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { MAIN_BUTTON } from "../common/utils/constant";
+import { MAIN_BUTTON } from "@utils/constant";
 import { useStyletron } from "styletron-react";
 import {
   MainButton,
   MainButtonHoverWrapper,
   MainButtonWrapper,
   MainPhrase,
-} from "../components/intro/Main.style";
+} from "@introComp/Main.style";
 import Link from "next/link";
-import { userStore } from "../zustand/userStore";
-import Modal from "../common/modal/Modal";
-import LoginRequiredModal from "../common/loginRequiredModal/LoginRequiredModal";
-import Seo from "../common/Seo";
+import { userStore } from "@zustand/userStore";
+import Modal from "@modal/Modal";
+import LoginRequiredModal from "@loginRequiredModal/LoginRequiredModal";
+import Seo from "@common/Seo";
 
 const Home: NextPage = () => {
   const router = useRouter();

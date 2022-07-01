@@ -2,7 +2,7 @@ import { UserEditModalProps } from "./UserEditModal";
 import { BtnWrapper, UserDelModalWrapper } from "./userDelModal.style";
 import { EditButton, EditModalTitle } from "./UserEditModal.style";
 import { useRouter } from "next/router";
-import { userStore } from "../../zustand/userStore";
+import { userStore } from "@zustand/userStore";
 
 const UserDelModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const router = useRouter();
