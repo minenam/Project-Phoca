@@ -67,7 +67,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (sessionStorage.getItem("userToken")) {
       getUser();
     }
-  }, [router]);
+  }, []);
 
   return (
     <StyletronProvider value={styletron}>

@@ -12,6 +12,7 @@ import {
 } from "../../../components/wordQuiz/WordQuiz.style";
 import WordQuizCardList from "../../../components/wordQuiz/WordQuizCardList";
 import { HEADER_HEIGHT } from "../../../common/utils/constant";
+import Seo from "../../../common/Seo";
 
 const getWrodGameInit = async (wordbookId: string | string[] | undefined) => {
   try {
@@ -64,6 +65,7 @@ const WordQuizGame = () => {
 
   return (
     <GameWrapper $headerHeight={HEADER_HEIGHT}>
+      <Seo title="단어 퀴즈" />
       {isGameEnd && (
         <GameBackHomeWrapper>
           <GameEndButton

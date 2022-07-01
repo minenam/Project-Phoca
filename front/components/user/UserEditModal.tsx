@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import {
   AvatarEditWrapper,
   EditModalWrapper,
@@ -15,21 +15,15 @@ import { useDropzone } from "react-dropzone";
 import { ConfirmButton } from "../../common/loginRequiredModal/LoginRequiredModal.style";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DropContainer } from "../word/upload/Dropzone.style";
-import { Input, Label } from "../word/results/EditForm/EditForm.style";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 import Modal from "../../common/modal/Modal";
 import UserDelModal from "./UserDelModal";
+import UserPasswordEditModal from "./UserPasswordEditModal";
 
 export interface UserEditModalProps {
   onClose: () => void;
   userInfo: UserProperties | null;
-}
-
-interface EditProps {
-  userName: string;
-  comment: string;
-  file: string;
 }
 
 const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
@@ -37,7 +31,8 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const [userNameState, setUserNameState] = useState(userInfo?.userName);
   const [preview, setPreview] = useState("");
   const [comment, setComment] = useState(userInfo?.comment);
-  const [isDel, setIsDel] = useState(false);
+  const [isDelModalOpen, setIsDelModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const router = useRouter();
   const url = router.asPath;
 
@@ -54,11 +49,19 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   };
 
   const deleteUserHandler = () => {
-    setIsDel(true);
+    setIsDelModalOpen(true);
   };
 
   const deleteModalCloseHandler = () => {
-    setIsDel(false);
+    setIsDelModalOpen(false);
+  };
+
+  const passwordEdit = () => {
+    setIsPasswordModalOpen(true);
+  };
+
+  const passwordModalCloseHandler = () => {
+    setIsPasswordModalOpen(false);
   };
 
   const onSubmitHandler = async () => {
@@ -109,6 +112,8 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       <AvatarImage src={preview} alt={file.name} />
     </Avatar>
   ));
+
+  const user = userStore((state) => state.user);
   return (
     <EditModalWrapper>
       <EditModalTitle>회원정보 수정하기</EditModalTitle>
@@ -118,8 +123,11 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         ) : (
           <Avatar $modal>
             <AvatarImage
-              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userInfo?.userImage}`}
-              alt="avatar"
+              src={
+                user?.userImage.startsWith("http")
+                  ? user?.userImage
+                  : `${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`
+              }
             />
           </Avatar>
         )}
@@ -150,7 +158,9 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         </InputWrapper>
       </CommentWrapper>
       <EditButtonWrapper>
-        <EditButton $borderColor="#48cfc8">비밀번호 변경</EditButton>
+        <EditButton $borderColor="#48cfc8" onClick={passwordEdit}>
+          비밀번호 변경
+        </EditButton>
         <EditButton
           $borderColor="#FE7394"
           $withdrawal
@@ -161,14 +171,28 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       <ConfirmButton onClick={() => userEditMutation.mutate()}>
         수정완료
       </ConfirmButton>
-      {isDel && (
+
+      {isDelModalOpen && (
         <Modal
-          open={isDel}
+          open={isDelModalOpen}
           width="600px"
           onClose={deleteModalCloseHandler}
           large={true}
           url={url}>
           <UserDelModal onClose={deleteModalCloseHandler} userInfo={userInfo} />
+        </Modal>
+      )}
+      {isPasswordModalOpen && (
+        <Modal
+          open={isPasswordModalOpen}
+          width="600px"
+          onClose={passwordModalCloseHandler}
+          large={true}
+          url={url}>
+          <UserPasswordEditModal
+            onClose={passwordModalCloseHandler}
+            userInfo={userInfo}
+          />
         </Modal>
       )}
     </EditModalWrapper>
