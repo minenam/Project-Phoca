@@ -20,21 +20,27 @@ import {
   ApiTags,
   ApiBearerAuth,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "../auth/auth.guard";
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
+import { ImageMiddleware } from "../middleware/image.middleware";
 import { BodyWordDto } from "./dto/body-word.dto";
 import { ParamWordDto } from "./dto/param-word.dto";
-import { ImageService } from "./image.service";
-import { TranslateService } from "./translate.service";
+import { TranslateMiddleware } from "../middleware/translate.middleware";
 import { Word } from "./word.entity";
 import { WordService } from "./word.service";
-
+import * as dotenv from "dotenv";
+import { HttpService } from "@nestjs/axios";
+import { lastValueFrom } from "rxjs";
+import { ConfigService } from "@nestjs/config";
+dotenv.config();
 @ApiTags("단어 API")
 @Controller("word")
 export class WordController {
   constructor(
-    private readonly imageService: ImageService,
+    private readonly imageMiddleware: ImageMiddleware,
     private readonly wordService: WordService,
-    private readonly translateService: TranslateService,
+    private readonly translateMiddleware: TranslateMiddleware,
+    private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
   ) {}
 
   //이미지 넣기
@@ -57,10 +63,16 @@ export class WordController {
   })
   @UseInterceptors(FileInterceptor("file"))
   async uploadWord(@UploadedFile() file: Express.Multer.File) {
-    const { wordEng, wordKey } = await this.imageService.uploadImage(file);
+    const wordKey = await this.imageMiddleware.uploadImage(file);
+    const AI_URL = this.configService.get("AI_IMAGE_DETECTION");
+    const data = await lastValueFrom(
+      this.httpService.get(`${AI_URL}/od/?img=${wordKey}`),
+    );
+    const wordClass: string[] = data.data.classes;
+    const wordEng: string[] = [...new Set(wordClass)];
     const wordKor = [];
     for (const word of wordEng) {
-      const kor = await this.translateService.translate(word, "ko", "en");
+      const kor = await this.translateMiddleware.translate(word, "ko", "en");
       wordKor.push(kor);
     }
     return await this.wordService.create({
@@ -167,7 +179,7 @@ export class WordController {
   async deleteWord(@Param("wordId") wordId: string) {
     const key = await this.wordService.deleteWord(wordId);
     try {
-      await this.imageService.deleteImage(key);
+      await this.imageMiddleware.deleteImage(key);
     } catch (e) {
       return new BadRequestException("이미지 삭제 실패");
     }

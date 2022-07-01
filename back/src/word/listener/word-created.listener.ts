@@ -3,7 +3,7 @@ import { OnEvent } from "@nestjs/event-emitter";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { WordCreatedEvent } from "../../events/word-created.event";
-import { ImageService } from "../image.service";
+import { ImageMiddleware } from "../../middleware/image.middleware";
 import { Word } from "../word.entity";
 import { WordService } from "../word.service";
 
@@ -13,7 +13,7 @@ export class WordCreatedListener {
   constructor(
     @InjectRepository(Word)
     private wordRepository: Repository<Word>,
-    private imageService: ImageService,
+    private imageMiddleware: ImageMiddleware,
     private wordService: WordService,
   ) {}
   @OnEvent("word.created", { async: true })
@@ -24,7 +24,7 @@ export class WordCreatedListener {
     const word = await this.wordRepository.findOne({ where: { wordId } });
     const { wordbookId, wordKey } = word;
     if (!wordbookId) {
-      await this.imageService.deleteImage(wordKey);
+      await this.imageMiddleware.deleteImage(wordKey);
       await this.wordService.deleteWord(wordId);
       this.logger.verbose("unsaved word deleted");
     }

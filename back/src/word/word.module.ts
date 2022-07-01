@@ -1,6 +1,4 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ImageService } from "./image.service";
-import { TranslateService } from "./translate.service";
 import { WordController } from "./word.controller";
 import { Word } from "./word.entity";
 import { WordService } from "./word.service";
@@ -11,9 +9,16 @@ import { HttpModule } from "@nestjs/axios";
 import { Module } from "@nestjs/common";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { WordCreatedListener } from "./listener/word-created.listener";
+import { ImageMiddleware } from "../middleware/image.middleware";
+import { TranslateMiddleware } from "../middleware/translate.middleware";
 @Module({
   controllers: [WordController],
-  providers: [WordService, ImageService, TranslateService, WordCreatedListener],
+  providers: [
+    WordService,
+    ImageMiddleware,
+    TranslateMiddleware,
+    WordCreatedListener,
+  ],
   imports: [
     EventEmitterModule.forRoot(),
     HttpModule,
