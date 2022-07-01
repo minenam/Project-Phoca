@@ -145,7 +145,7 @@ function WordQuiz() {
           success={false}
           message={errorMsg}
           url={url}
-          setErrorMsg={setErrorMsg}
+          setMessage={setErrorMsg}
         />
       )}
     </>

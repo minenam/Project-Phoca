@@ -90,7 +90,16 @@ const Upload = () => {
           success={false}
           message={errorMsg}
           url={url}
-          setErrorMsg={setErrorMsg}
+          setMessage={setErrorMsg}
+        />
+      )}
+
+      {uploadImageMutation.isLoading && (
+        <Toast
+          success={true}
+          message={"AI가 사진을 인식하고 있습니다."}
+          url={url}
+          setMessage={setErrorMsg}
         />
       )}
     </>

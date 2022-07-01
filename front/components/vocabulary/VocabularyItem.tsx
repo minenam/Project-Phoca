@@ -205,7 +205,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
           success={false}
           message={errorMsg}
           url={url}
-          setErrorMsg={setErrorMsg}
+          setMessage={setErrorMsg}
         />
       )}
       {isEdit && (
