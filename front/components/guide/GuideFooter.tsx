@@ -11,11 +11,10 @@ const GuideFooter = () => {
     <FooterWrapper>
       <Footer>
         <TextWrapper>
-          <FooterTop>포카</FooterTop>
+          <FooterBottom>© 2022, Devmon All rights reserved</FooterBottom>
           <FooterBottom>
             Logo, WordCard, BackgroundImage Designed by Freepik
           </FooterBottom>
-          <FooterBottom>© 2022, Devmon All rights reserved</FooterBottom>
         </TextWrapper>
         <TextWrapper>
           <FooterTop>엘리스 AI 트랙 4기</FooterTop>
