@@ -27,7 +27,7 @@ const uploadImage = async (formData: FormData) => {
 
 const Upload = () => {
   const router = useRouter();
-  const url = router.asPath;
+  const url = router.pathname;
 
   const [files, setFiles] = useState<File[]>([]); // 업로드할 파일
   const [preview, setPreview] = useState(""); // 업로드한 파일의 프리뷰

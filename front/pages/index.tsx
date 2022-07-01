@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   const router = useRouter();
   const user = userStore();
   const [css] = useStyletron();
-  const url = router.asPath;
+  const url = router.pathname;
 
   const btnRef = useRef<(HTMLDivElement | null)[]>([]);
   const [loginModalOpen, setLoginModalOpen] = useState(false);

@@ -63,7 +63,7 @@ const getCount = async (userId: string | undefined) => {
 
 const MyPage: NextPage = () => {
   const router = useRouter();
-  const url = router.asPath;
+  const url = router.pathname;
 
   const [userEditModalOpen, setUserEditModalOpen] = useState(false);
   const [wordbookCount, setWordbookCount] = useState();

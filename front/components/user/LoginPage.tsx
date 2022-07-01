@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import {
   Form,
   ContentContainer,
@@ -95,6 +95,12 @@ function LoginPage(props: LoginPageProps) {
       loginMutation.mutate(values);
     },
   });
+
+  useEffect(() => {
+    if (router.query.message) {
+      setErrorMsg(router.query.message as string);
+    }
+  }, [router, setErrorMsg]);
 
   return (
     <>

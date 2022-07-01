@@ -10,7 +10,7 @@ import { SideBarContainer, SideBarBtn } from "./SideBar.style";
 function SideBar() {
   const router = useRouter();
   const [css] = useStyletron();
-  const url = router.asPath;
+  const url = router.pathname;
 
   const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 페이지로 연결 여부
 

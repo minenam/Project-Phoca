@@ -18,7 +18,7 @@ import Modal from "../../common/modal/Modal";
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const url = router.asPath;
+  const url = router.pathname;
 
   const [errorMsg, setErrorMsg] = useState("");
   const [findPwModalOpen, setFindPwModalOpen] = useState(false);
