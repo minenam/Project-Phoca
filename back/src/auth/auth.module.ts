@@ -5,9 +5,9 @@ import { PassportModule } from "@nestjs/passport";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Users } from "../user/user.entity";
 import { AuthService } from "./auth.service";
-import { JWTStrategy } from "./jwt.strategy";
+import { JWTStrategy } from "./strategy/jwt.strategy";
 import { AuthController } from "./auth.controller";
-import { KakaoAuthStrategy } from "./kakao-auth.strategy";
+import { KakaoAuthStrategy } from "./strategy/kakao-auth.strategy";
 
 @Module({
   imports: [

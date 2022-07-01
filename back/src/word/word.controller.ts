@@ -20,7 +20,7 @@ import {
   ApiTags,
   ApiBearerAuth,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "../auth/auth.guard";
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 import { ImageMiddleware } from "../middleware/image.middleware";
 import { BodyWordDto } from "./dto/body-word.dto";
 import { ParamWordDto } from "./dto/param-word.dto";

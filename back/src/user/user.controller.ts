@@ -25,8 +25,8 @@ import {
   ApiOperation,
   ApiTags,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "../auth/auth.guard";
-import { GetUser } from "./user.decorator";
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
+import { GetUser } from "./decorator/user.decorator";
 import { ParamUserDto } from "./dto/param-user.dto";
 import { LoginUserInfo } from "../user/dto/login-user.dto";
 import { FileInterceptor } from "@nestjs/platform-express";

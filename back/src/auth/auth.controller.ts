@@ -1,10 +1,10 @@
 import { Controller, Get, Logger, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthService } from "./auth.service";
-import { KakaoAuthGuard } from "./kakao-auth.guard";
+import { KakaoAuthGuard } from "./guard/kakao-auth.guard";
 import { Response } from "express";
 import { ConfigService } from "@nestjs/config";
-import { GetUser } from "../user/user.decorator";
+import { GetUser } from "../user/decorator/user.decorator";
 
 @Controller("auth")
 @ApiTags("Oauth API")
