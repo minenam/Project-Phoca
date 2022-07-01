@@ -2,9 +2,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useStyletron } from "styletron-react";
-import { MAIN_BUTTON, HEADER_HEIGHT } from "../../common/utils/constant";
-import Modal from "../../common/modal/Modal";
-import LoginRequiredModal from "../../common/loginRequiredModal/LoginRequiredModal";
+import { MAIN_BUTTON, HEADER_HEIGHT } from "@utils/constant";
+import Modal from "@modal/Modal";
+import LoginRequiredModal from "@loginRequiredModal/LoginRequiredModal";
 import { SideBarContainer, SideBarBtn } from "./SideBar.style";
 
 function SideBar() {

@@ -20,7 +20,7 @@ import {
   KakaoBtn,
   SNSBtnContainer,
 } from "./AccountPage.style";
-import { userStore, UserProperties } from "../../zustand/userStore";
+import { userStore, UserProperties } from "@zustand/userStore";
 
 interface LoginPageProps {
   setErrorMsg: Dispatch<SetStateAction<string>>;
@@ -58,9 +58,8 @@ const loginHandler = async (data: LoginValues) => {
   return result;
 };
 
-function LoginPage(props: LoginPageProps) {
+function LoginPage({ setErrorMsg, setFindPwModalOpen }: LoginPageProps) {
   const router = useRouter();
-  const { setErrorMsg, setFindPwModalOpen } = props;
 
   // 로그인 요청
   const loginMutation = useMutation(loginHandler, {

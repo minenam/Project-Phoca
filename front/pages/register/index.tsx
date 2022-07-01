@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import Seo from "@common/Seo";
+import RegisterPage from "@userComp/RegisterPage";
 import {
   AuthCardContainer,
   Card,
   TitleContainer,
   Logo,
   Title,
-} from "../../components/user/AuthCard.style";
-import RegisterPage from "../../components/user/RegisterPage";
-import Seo from "../../common/Seo";
+} from "@userComp/AuthCard.style";
 
 const Register: NextPage = () => {
   return (

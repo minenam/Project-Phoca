@@ -1,6 +1,9 @@
 import { useEffect, Dispatch, SetStateAction } from "react";
 import { useQuery } from "react-query";
-import { userStore } from "../../zustand/userStore";
+import { userStore } from "@zustand/userStore";
+
+import { AiFillLock } from "react-icons/ai";
+import { MdPublic } from "react-icons/md";
 import {
   SelectBookContainer,
   Title,
@@ -8,8 +11,12 @@ import {
   ItemContainer,
   Label,
 } from "./BookList.style";
-import { AiFillLock } from "react-icons/ai";
-import { MdPublic } from "react-icons/md";
+
+export interface Wordbook {
+  wordbookId: string;
+  wordbookName: string;
+  secured: boolean;
+}
 
 interface ListProps {
   title: string;
@@ -18,12 +25,6 @@ interface ListProps {
   selectedWordbookId: string;
   setWordbookList: Dispatch<SetStateAction<Wordbook[]>>;
   setSelectedWordbookId: Dispatch<SetStateAction<string>>;
-}
-
-export interface Wordbook {
-  wordbookId: string;
-  wordbookName: string;
-  secured: boolean;
 }
 
 // 해당 유저의 단어장 리스트를 가져옴
@@ -64,6 +65,7 @@ function BookList({
   const checkboxClickHandler = (e: React.FormEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     const selected = wordbookList.filter((item, idx) => idx === Number(value));
+
     if (selected) {
       setSelectedWordbookId(selected[0].wordbookId);
     }
@@ -71,6 +73,7 @@ function BookList({
 
   useEffect(() => {
     setWordbookList(data);
+
     if (data && data.length > 0) {
       setSelectedWordbookId(data[0].wordbookId);
     }

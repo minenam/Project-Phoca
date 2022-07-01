@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "react-query";
 import CanvasComp from "./Canvas";
+import Modal from "@modal/Modal";
+import Result from "./Result";
 import {
   DrawingContainer,
   Question,
@@ -11,8 +13,6 @@ import {
   ResetBtnContainer,
   ResetBtn,
 } from "./Drawing.style";
-import Modal from "../../common/modal/Modal";
-import Result from "./Result";
 
 interface DrawingWord {
   id: number;

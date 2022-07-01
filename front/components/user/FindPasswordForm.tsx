@@ -41,9 +41,7 @@ const sendEmail = async (email: string) => {
   return result;
 };
 
-function FindPasswordForm(props: FindPwFormProps) {
-  const { onClose } = props;
-
+function FindPasswordForm({ onClose }: FindPwFormProps) {
   const [email, setEmail] = useState(""); // 이메일
   const [errorMsg, setErrorMsg] = useState(""); // 에러 메세지
 
