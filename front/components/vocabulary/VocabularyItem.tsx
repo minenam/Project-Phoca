@@ -95,7 +95,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
   const [clickedItem, setClickedItem] = useState("");
 
   const user = userStore((state) => state.user);
-  const url = router.asPath;
+  const url = router.pathname;
   const queryClient = useQueryClient();
 
   const [selectedWordbookId, setSelectedWordbookId] = useState(""); // 선택된 단어장 아이디
@@ -205,7 +205,7 @@ const VocabularyItem: FC<itemProps> = ({ listItem, isMine }) => {
           success={false}
           message={errorMsg}
           url={url}
-          setErrorMsg={setErrorMsg}
+          setMessage={setErrorMsg}
         />
       )}
       {isEdit && (

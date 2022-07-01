@@ -41,7 +41,7 @@ function Words() {
   const user = userStore((state) => state.user);
   const router = useRouter();
   const wordbookId = router.query.id;
-  const url = router.asPath;
+  const url = router.pathname;
 
   const [wordList, setWordList] = useState<Word[]>([]);
   const [selectedWordId, setSelectedWordId] = useState("");

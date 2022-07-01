@@ -7,11 +7,11 @@ interface ToastProps {
   success: boolean;
   message: string;
   url: string;
-  setErrorMsg: Dispatch<SetStateAction<string>>;
+  setMessage?: Dispatch<SetStateAction<string>>;
 }
 
 function Toast(props: ToastProps) {
-  const { success, message, url, setErrorMsg } = props;
+  const { success, message, url, setMessage } = props;
   const [toastVisible, setToastVisible] = useState(true);
   const left = isMiddle(url);
 
@@ -19,7 +19,9 @@ function Toast(props: ToastProps) {
     if (toastVisible) {
       const timerId = setTimeout(() => {
         setToastVisible(false);
-        setErrorMsg("");
+        if (setMessage) {
+          setMessage("");
+        }
       }, 3000);
       return () => {
         clearTimeout(timerId);

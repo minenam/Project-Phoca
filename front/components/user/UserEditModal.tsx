@@ -34,7 +34,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const [isDelModalOpen, setIsDelModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const router = useRouter();
-  const url = router.asPath;
+  const url = router.pathname;
 
   const onDrop = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
