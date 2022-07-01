@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import Note from "../../common/note/Note";
-import Seo from "../../common/Seo";
-import Drawing from "../../components/drawing/Drawing";
+import Note from "@note/Note";
+import Seo from "@common/Seo";
+import Drawing from "@drawingComp/Drawing";
 
 const DrawingPage: NextPage = () => {
   return (

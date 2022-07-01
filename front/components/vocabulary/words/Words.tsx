@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { userStore } from "../../../zustand/userStore";
-import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../../common/utils/constant";
-import Modal from "../../../common/modal/Modal";
+import { userStore } from "@zustand/userStore";
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@utils/constant";
+import Modal from "@modal/Modal";
 import WordEditForm from "./WordEditForm";
 import WordDelForm from "./WordDelForm";
 import {
@@ -22,7 +22,7 @@ import {
 } from "./Words.style";
 import { AiOutlineArrowLeft, AiFillDelete } from "react-icons/ai";
 import { FaEdit, FaVolumeUp } from "react-icons/fa";
-import { Word } from "../../../common/types/wordType";
+import { Word } from "@common/types/wordType";
 
 const getWords = async (wordbookId: string) => {
   const res = await fetch(
@@ -102,6 +102,7 @@ function Words() {
           </IconBtn>
           {isValid && wordList[0].wordbook.wordbookName}
         </Header>
+
         <CardContainer>
           {isValid &&
             wordList.map((item, idx) => (
@@ -145,6 +146,7 @@ function Words() {
             ))}
         </CardContainer>
       </Container>
+
       {editModalOpen && (
         <Modal
           open={editModalOpen}
@@ -159,6 +161,7 @@ function Words() {
           />
         </Modal>
       )}
+
       {deleteModalOpen && (
         <Modal
           open={deleteModalOpen}

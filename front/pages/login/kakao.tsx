@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { userStore } from "../../zustand/userStore";
-import Seo from "../../common/Seo";
+import { userStore } from "@zustand/userStore";
+import Seo from "@common/Seo";
 
 const getCurrentUser = async (token: string) => {
   const res = await fetch(

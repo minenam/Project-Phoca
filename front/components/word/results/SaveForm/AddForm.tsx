@@ -14,9 +14,7 @@ interface NewWordbook {
   secured: boolean;
 }
 
-const addWordbook = async (data: NewWordbook) => {
-  const { userId, wordbookName, secured } = data;
-
+const addWordbook = async ({ userId, wordbookName, secured }: NewWordbook) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/wordbook/create/${userId}`,
     {

@@ -1,12 +1,9 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import {
-  WORD_NOTE_WIDTH,
-  WORD_NOTE_HEIGHT,
-} from "../../../common/utils/constant";
-import Note from "../../../common/note/Note";
-import Seo from "../../../common/Seo";
+import { WORD_NOTE_WIDTH, WORD_NOTE_HEIGHT } from "@utils/constant";
+import Note from "@note/Note";
+import Seo from "@common/Seo";
 import { FaVolumeUp } from "react-icons/fa";
 import {
   TitleContainer,
@@ -21,21 +18,8 @@ import {
   PageBtnContainer,
   LeftBtn,
   RightBtn,
-} from "../../../components/wordQuiz/voca/Voca.style";
-
-interface Word {
-  wordId: string;
-  wordKey: string;
-  wordEng: string[];
-  wordKor: string[];
-  wordbook: {
-    wordbookId: string;
-    userId: string;
-    wordbookName: string;
-    secured: boolean;
-    createDate: string;
-  };
-}
+} from "@wordQuizComp/voca/Voca.style";
+import { Word } from "@common/types/wordType";
 
 const getWords = async (id: string) => {
   const res = await fetch(

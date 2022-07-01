@@ -1,3 +1,4 @@
+import { isMiddle } from "@utils/useIsMiddle";
 import {
   Container,
   ModalHeader,
@@ -5,7 +6,6 @@ import {
   CloseBtn,
   Background,
 } from "./Modal.style";
-import { isMiddle } from "../utils/useIsMiddle";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -20,7 +20,9 @@ function Modal({ children, open, width, large, url, onClose }: ModalProps) {
   if (!open) {
     return null;
   }
+
   const left = isMiddle(url);
+
   return (
     <>
       <Background $isOpen={open} onClick={onClose} />

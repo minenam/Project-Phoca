@@ -16,17 +16,17 @@ interface WriteWordProps {
   selectedKorWord: string;
 }
 
-function WriteWord(props: WriteWordProps) {
-  const {
-    setSelectedEngWord,
-    setSelectedKorWord,
-    selectedEngWord,
-    selectedKorWord,
-  } = props;
+function WriteWord({
+  setSelectedEngWord,
+  setSelectedKorWord,
+  selectedEngWord,
+  selectedKorWord,
+}: WriteWordProps) {
   return (
     <WriteWordContainer>
       <InfoTitle>원하는 단어가 없다면 직접 적어주세요!</InfoTitle>
       <InfoLine />
+
       <InputContainer>
         <Field>
           <Label htmlFor="selectedEngWord">영어단어</Label>
@@ -40,6 +40,7 @@ function WriteWord(props: WriteWordProps) {
             value={selectedEngWord}
           />
         </Field>
+
         <Field>
           <Label htmlFor="selectedKorWord">뜻</Label>
           <Input
