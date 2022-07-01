@@ -48,14 +48,14 @@ const getCount = async (userId: string | undefined) => {
       },
     );
 
-    const wordbookResult = await wordbookRes.json();
-    const bookmarkResult = await bookmarkRes.json();
-
     if (!wordbookRes.ok || !bookmarkRes.ok) {
       throw new Error("에러 발생");
     }
 
-    return [wordbookResult, bookmarkResult];
+    const wordbookResult = await wordbookRes.json();
+    const bookmarkResult = await bookmarkRes.json();
+
+    return { wordbookResult, bookmarkResult };
   } catch (e) {
     console.error(e);
   }
@@ -90,8 +90,8 @@ const MyPage: NextPage = () => {
   };
 
   useEffect(() => {
-    setWordbookCount(data && data[0]);
-    setbookmarkCount(data && data[1]);
+    data && setWordbookCount(data.wordbookResult);
+    data && setbookmarkCount(data.bookmarkResult);
   }, [data]);
 
   return (
