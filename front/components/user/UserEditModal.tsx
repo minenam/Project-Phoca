@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import {
   AvatarEditWrapper,
   EditModalWrapper,
@@ -15,8 +15,7 @@ import { useDropzone } from "react-dropzone";
 import { ConfirmButton } from "../../common/loginRequiredModal/LoginRequiredModal.style";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DropContainer } from "../word/upload/Dropzone.style";
-import { Input, Label } from "../word/results/EditForm/EditForm.style";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 import Modal from "../../common/modal/Modal";
 import UserDelModal from "./UserDelModal";
@@ -27,19 +26,13 @@ export interface UserEditModalProps {
   userInfo: UserProperties | null;
 }
 
-interface EditProps {
-  userName: string;
-  comment: string;
-  file: string;
-}
-
 const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [userNameState, setUserNameState] = useState(userInfo?.userName);
   const [preview, setPreview] = useState("");
   const [comment, setComment] = useState(userInfo?.comment);
-  const [isDel, setIsDel] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
+  const [isDelModalOpen, setIsDelModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const router = useRouter();
   const url = router.asPath;
 
@@ -56,19 +49,19 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   };
 
   const deleteUserHandler = () => {
-    setIsDel(true);
-  };
-
-  const passwordEdit = () => {
-    setIsPassword(true);
-  };
-
-  const passwordModalCloseHandler = () => {
-    setIsPassword(false);
+    setIsDelModalOpen(true);
   };
 
   const deleteModalCloseHandler = () => {
-    setIsDel(false);
+    setIsDelModalOpen(false);
+  };
+
+  const passwordEdit = () => {
+    setIsPasswordModalOpen(true);
+  };
+
+  const passwordModalCloseHandler = () => {
+    setIsPasswordModalOpen(false);
   };
 
   const onSubmitHandler = async () => {
@@ -179,9 +172,9 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         수정완료
       </ConfirmButton>
 
-      {isDel && (
+      {isDelModalOpen && (
         <Modal
-          open={isDel}
+          open={isDelModalOpen}
           width="600px"
           onClose={deleteModalCloseHandler}
           large={true}
@@ -189,9 +182,9 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
           <UserDelModal onClose={deleteModalCloseHandler} userInfo={userInfo} />
         </Modal>
       )}
-      {isPassword && (
+      {isPasswordModalOpen && (
         <Modal
-          open={isPassword}
+          open={isPasswordModalOpen}
           width="600px"
           onClose={passwordModalCloseHandler}
           large={true}
