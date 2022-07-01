@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { styled } from "styletron-react";
 
 export const GameWrapper = styled(
