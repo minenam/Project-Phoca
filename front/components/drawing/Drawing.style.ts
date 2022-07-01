@@ -63,7 +63,6 @@ export const ResultContainer = styled("div", {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  border: "1px solid red",
 });
 
 export const Title = styled("h1", {
