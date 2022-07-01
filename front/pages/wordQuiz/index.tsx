@@ -61,23 +61,24 @@ const getWordsCount = async (wordbookId: string) => {
   return result;
 };
 
-const checkArrayCount = async (
-  wordbookId: string,
-  setErrorMsg: Dispatch<SetStateAction<string>>,
-) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/word/game/${wordbookId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+const checkArrayCount = async (wordbookId: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/word/game/${wordbookId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
       },
-    },
-  );
-  const result = await res.json();
-  const deleteDuplication = new Set(result[1]);
+    );
+    const result = await res.json();
+    const deleteDuplication = new Set(result[1]);
 
-  if (deleteDuplication.size < 16) {
-    setErrorMsg("중복 제거 후 단어 수가 \n16개보다 적어 선택할 수 없습니다.");
+    return deleteDuplication.size < 16
+      ? "중복 제거 후 단어 수가 \n16개보다 적어 선택할 수 없습니다."
+      : null;
+  } catch (e) {
+    console.error(e);
   }
 };
 
@@ -105,15 +106,15 @@ function WordQuiz() {
     setIsModalOpen(true);
   };
 
-  const selectBtnClickHandler = () => {
+  const selectBtnClickHandler = async () => {
     const { wordCount, wordbookId } = data as WordbookInfo;
-    console.log("wordCount", data);
+    const wordCheck = await checkArrayCount(wordbookId);
+    console.log("wordCheck", wordCheck);
 
-    if (selectedBtn === "play-game") {
-      checkArrayCount(wordbookId, setErrorMsg);
+    if (wordCheck !== null) {
+      setErrorMsg(wordCheck as string);
       return;
     }
-
     if (
       (selectedBtn === "memorize-voca" && wordCount > 0) ||
       (selectedBtn === "play-game" && wordCount > 7)
