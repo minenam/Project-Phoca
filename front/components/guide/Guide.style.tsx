@@ -123,11 +123,11 @@ export const GuideText = styled("p", {
   fontSize: "1.4rem",
   padding: "10px",
 });
-export const GuideStrong = styled("p", (props: { $fontColor?: string }) => ({
+export const GuideStrong = styled("p", {
   display: "inline-block",
   fontSize: "1.7rem",
-  color: props.$fontColor ? props.$fontColor : "",
-}));
+  color: "#fe8c55",
+});
 
 export const TextContentWrapper = styled("div", {
   marginLeft: "20px",

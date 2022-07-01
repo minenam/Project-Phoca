@@ -16,8 +16,7 @@ export function ImageGame() {
       <GuideImageWrapper>
         <GuideText>랜덤으로 주어지는 단어를 보고</GuideText>
         <GuideText>
-          <GuideStrong $fontColor="#fe8c55"> 그림</GuideStrong>을 직접
-          그려보세요!
+          <GuideStrong> 그림</GuideStrong>을 직접 그려보세요!
         </GuideText>
         <GuideText>AI가 당신의 그림을 보고 영단어를 예상해 볼 거예요</GuideText>
         <GuideText>답이 틀려도 너무 슬퍼하지 마세요!</GuideText>
