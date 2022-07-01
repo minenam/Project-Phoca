@@ -143,14 +143,16 @@ function LoginPage(props: LoginPageProps) {
       </Form>
       <SnsTitle>SNS 로그인</SnsTitle>
       <SNSBtnContainer>
-        <KakaoBtn>
-          <Image
-            src="/images/kakaoLogin.png"
-            alt="kakao-login-btn"
-            width="183"
-            height="45"
-          />
-        </KakaoBtn>
+        <Link href={`${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL}`}>
+          <KakaoBtn>
+            <Image
+              src="/images/kakaoLogin.png"
+              alt="kakao-login-btn"
+              width="183"
+              height="45"
+            />
+          </KakaoBtn>
+        </Link>
       </SNSBtnContainer>
     </>
   );
