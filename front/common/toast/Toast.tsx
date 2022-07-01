@@ -7,7 +7,7 @@ interface ToastProps {
   success: boolean;
   message: string;
   url: string;
-  setMessage: Dispatch<SetStateAction<string>>;
+  setMessage?: Dispatch<SetStateAction<string>>;
 }
 
 function Toast(props: ToastProps) {

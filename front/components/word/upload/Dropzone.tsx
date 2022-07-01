@@ -99,7 +99,6 @@ const Upload = () => {
           success={true}
           message={"AI가 사진을 인식하고 있습니다."}
           url={url}
-          setMessage={setErrorMsg}
         />
       )}
     </>
