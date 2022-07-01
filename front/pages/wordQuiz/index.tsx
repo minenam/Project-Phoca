@@ -75,7 +75,7 @@ const checkArrayCount = async (wordbookId: string) => {
     const deleteDuplication = new Set(result[1]);
 
     return deleteDuplication.size < 16
-      ? "중복 제거 후 단어 수가 \n16개보다 적어 선택할 수 없습니다."
+      ? "중복 제거 후 단어 수가 \n8개보다 적어 선택할 수 없습니다."
       : null;
   } catch (e) {
     console.error(e);
