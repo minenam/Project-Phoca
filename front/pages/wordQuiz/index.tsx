@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useMediaQuery } from "react-responsive";
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../common/utils/constant";
@@ -61,6 +61,26 @@ const getWordsCount = async (wordbookId: string) => {
   return result;
 };
 
+const checkArrayCount = async (
+  wordbookId: string,
+  setErrorMsg: Dispatch<SetStateAction<string>>,
+) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/word/game/${wordbookId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    },
+  );
+  const result = await res.json();
+  const deleteDuplication = new Set(result[1]);
+
+  if (deleteDuplication.size < 16) {
+    setErrorMsg("중복 제거 후 단어 수가 \n16개보다 적어 선택할 수 없습니다.");
+  }
+};
+
 function WordQuiz() {
   const router = useRouter();
   const url = router.pathname;
@@ -86,7 +106,13 @@ function WordQuiz() {
   };
 
   const selectBtnClickHandler = () => {
-    const { wordCount } = data as WordbookInfo;
+    const { wordCount, wordbookId } = data as WordbookInfo;
+    console.log("wordCount", data);
+
+    if (selectedBtn === "play-game") {
+      checkArrayCount(wordbookId, setErrorMsg);
+      return;
+    }
 
     if (
       (selectedBtn === "memorize-voca" && wordCount > 0) ||
