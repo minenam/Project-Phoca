@@ -21,7 +21,7 @@ import {
   PageBtnContainer,
   LeftBtn,
   RightBtn,
-} from "./Voca.style";
+} from "../../../components/wordQuiz/voca/Voca.style";
 
 interface Word {
   wordId: string;
