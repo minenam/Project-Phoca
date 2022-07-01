@@ -1,8 +1,8 @@
-import { CardImageItem, CardItem } from "./WordQuiz.style";
+import { CardImageItem, CardItem } from "./WordQuizGame.style";
 import { useEffect, useState } from "react";
 import WordQuizCard from "./WordQuizCard";
-import { IMAGE_EXTENSION } from "../../common/utils/constant";
-import { useGameStore } from "../../zustand/useGameStore";
+import { IMAGE_EXTENSION } from "../../../common/utils/constant";
+import { useGameStore } from "../../../zustand/useGameStore";
 
 interface ShuffleProps {
   shuffleList: string[] | undefined;

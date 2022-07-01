@@ -26,7 +26,6 @@ import Modal from "../../common/modal/Modal";
 import UserEditModal from "../../components/user/UserEditModal";
 import { useQuery } from "react-query";
 import Seo from "../../common/Seo";
-import { BookMark } from "../../common/types/resultsType";
 
 const getCount = async (userId: string | undefined) => {
   try {
@@ -49,7 +48,7 @@ const getCount = async (userId: string | undefined) => {
     );
 
     if (!wordbookRes.ok || !bookmarkRes.ok) {
-      throw new Error("에러 발생");
+      throw new Error(wordbookRes.statusText && bookmarkRes.statusText);
     }
 
     const wordbookResult = await wordbookRes.json();

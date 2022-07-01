@@ -3,7 +3,7 @@ import { v2 } from "@google-cloud/translate";
 import { ConfigService } from "@nestjs/config";
 
 @Injectable()
-export class TranslateService {
+export class TranslateMiddleware {
   constructor(private configService: ConfigService) {}
   async translate(
     text: string,

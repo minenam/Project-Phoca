@@ -1,15 +1,12 @@
 import { styled } from "styletron-react";
 
-export const GuideWrapper = styled(
-  "div",
-  (props: { $headerHeight: string }) => ({
-    width: "100vw",
-    height: `calc(100vh - ${props.$headerHeight})`,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  }),
-);
+export const GuideWrapper = styled("div", {
+  width: "100vw",
+  height: `100%`,
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+});
 
 export const GuideMenuWrapper = styled("div", {
   display: "flex",
@@ -143,4 +140,19 @@ export const MainText = styled("p", {
   fontSize: "2rem",
   padding: "10px",
   MarginBottom: "2.5rem",
+});
+
+export const WrapperWithFooter = styled(
+  "div",
+  (props: { $headerHeight: string }) => ({
+    width: "100vw",
+    height: `calc(100vh - ${props.$headerHeight})`,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }),
+);
+
+export const FooterWrapper = styled("div", {
+  height: "100px",
 });

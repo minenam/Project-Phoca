@@ -64,7 +64,6 @@ export class AuthService {
 
   // 카카오 로그인
   async kakaoLogin(user: Users) {
-    console.log(user);
     const email = user.email;
     const found = await this.userRepository.findOneBy({ email });
 

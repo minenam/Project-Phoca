@@ -4,10 +4,10 @@ import {
   CardImageItem,
   CardItem,
   Image,
-} from "./WordQuiz.style";
-import { CardProps } from "../../common/types/propsType";
+} from "./WordQuizGame.style";
+import { CardProps } from "../../../common/types/propsType";
 import { useEffect, useRef, useState } from "react";
-import { IMAGE_EXTENSION } from "../../common/utils/constant";
+import { IMAGE_EXTENSION } from "../../../common/utils/constant";
 
 const WordQuizCard = ({
   value,
