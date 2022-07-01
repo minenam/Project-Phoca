@@ -7,22 +7,22 @@ import {
   GridTextItem,
 } from "@vocabularyComp/Vocabulary.styles";
 import { useIsLapTop } from "@utils/useIsLapTop";
+import { HEADER_HEIGHT, WORD_IMAGES } from "@utils/constant";
+import { shuffle } from "@utils/shuffle";
 import {
   BackButton,
   NetworkWrapper,
   SearchBar,
   SearchBarWrapper,
 } from "./Network.style";
-import { HEADER_HEIGHT, WORD_IMAGES } from "@utils/constant";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { userStore } from "@zustand/userStore";
+import { WordBook, BookMark } from "@common/types/resultsType";
+import { BookMarkProps } from "@common/types/propsType";
+import Seo from "@common/Seo";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { WordBook, BookMark } from "@common/types/resultsType";
-import { shuffle } from "@utils/shuffle";
-import { BookMarkProps } from "@common/types/propsType";
-import Seo from "@common/Seo";
 
 const imageUrl = shuffle(WORD_IMAGES);
 

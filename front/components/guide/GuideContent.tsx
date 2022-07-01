@@ -1,9 +1,9 @@
 import { GuideContentProps } from "@common/types/propsType";
+import Seo from "@common/Seo";
 import { GuideContentWrapper } from "./Guide.style";
 import { MakeVoca } from "./MakeVoca";
 import { LookVoca } from "./LookVoca";
 import { ImageGame } from "./ImageGame";
-import Seo from "@common/Seo";
 import { VocaGame } from "./VocaGame";
 
 const GuideContent = ({ selected }: GuideContentProps) => {

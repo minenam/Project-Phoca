@@ -5,9 +5,9 @@ import {
   CardItem,
   Image,
 } from "./WordQuizGame.style";
-import { CardProps } from "@common//types/propsType";
-import { useEffect, useState } from "react";
+import { CardProps } from "@common/types/propsType";
 import { IMAGE_EXTENSION } from "@utils/constant";
+import { useEffect, useState } from "react";
 
 const WordQuizCard = ({
   value,

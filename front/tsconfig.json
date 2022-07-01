@@ -34,7 +34,7 @@
       "@vocabularyComp/*": ["components/vocabulary/*"],
       "@wordComp/*": ["components/word/*"],
       "@wordQuizComp/*": ["components/wordQuiz/*"],
-      "@myPage/*": ["components/myPage/*"],
+      "@myPageComp/*": ["components/myPage/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

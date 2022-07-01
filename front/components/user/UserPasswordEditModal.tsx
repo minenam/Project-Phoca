@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { userStore } from "@zustand/userStore";
 import { ErrorMsg } from "./AccountPage.style";
 import { ConfirmButton } from "@loginRequiredModal/LoginRequiredModal.style";
-import { Title } from "../guide/Guide.style";
+import { Title } from "@guideComp/Guide.style";
 
 interface passwordChangeProps {
   currentPassword: string;
