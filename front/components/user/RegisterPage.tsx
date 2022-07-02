@@ -54,11 +54,13 @@ function RegisterPage() {
   const router = useRouter();
 
   const registerMutation = useMutation(registerHandler, {
-    onSuccess: (data, variables) => {
-      console.log("Register 성공 ", data);
-      router.push("/login");
+    onSuccess: (result) => {
+      router.push(
+        { pathname: "/login", query: { email: result.data.email } },
+        "/login",
+      );
     },
-    onError: (err, variables) => {
+    onError: (err) => {
       console.log("Register 실패 ", err);
     },
   });

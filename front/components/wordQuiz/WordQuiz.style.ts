@@ -21,6 +21,7 @@ export const Card = styled("div", {
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "space-between",
+  paddingTop: "2rem",
 });
 
 export const Title = styled("h1", {

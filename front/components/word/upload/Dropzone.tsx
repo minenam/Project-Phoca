@@ -41,7 +41,10 @@ const Upload = () => {
     setPreview(URL.createObjectURL(acceptedFiles[0]));
   };
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { "image/jpeg": [] },
+  });
 
   const uploadImageMutation = useMutation(uploadImage, {
     onSuccess: (data) => {
