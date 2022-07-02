@@ -10,7 +10,7 @@ export function VocaGame() {
   return (
     <>
       <ImageWrapper>
-        <GuidImage src={"images/faq.svg"} alt="question mark" />
+        <GuidImage src={"images/faq.png"} alt="question mark" />
       </ImageWrapper>
       <GuideImageWrapper>
         <GuideText>
@@ -27,7 +27,7 @@ export function VocaGame() {
         </GuideText>
       </GuideImageWrapper>
       <ImageWrapper>
-        <GuidImage src={"/images/popularity.svg"} alt="main mark" />
+        <GuidImage src={"/images/popularity.png"} alt="main mark" />
       </ImageWrapper>
       <GuideImageWrapper>
         <GuideText>단어장 암기가 필요하신가요?</GuideText>

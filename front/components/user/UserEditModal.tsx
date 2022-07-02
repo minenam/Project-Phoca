@@ -143,7 +143,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
           <Comment
             id="userName"
             type="text"
-            value={userNameState}
+            placeholder={userNameState}
             onChange={onChangeHandler}
           />
         </InputWrapper>
@@ -152,7 +152,7 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
           <Comment
             id="comment"
             type="text"
-            value={comment}
+            placeholder={comment}
             onChange={onChangeHandler}
           />
         </InputWrapper>

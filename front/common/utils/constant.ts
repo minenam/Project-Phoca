@@ -33,12 +33,12 @@ export const MAIN_BUTTON: Button[] = [
 ];
 
 export const WORD_IMAGES: string[] = [
-  "/images/contemplating.svg",
-  "/images/faq.svg",
-  "/images/monster_artist.svg",
-  "/images/playing_cards.svg",
-  "/images/popularity.svg",
-  "/images/updated.svg",
+  "/images/contemplating.png",
+  "/images/faq.png",
+  "/images/monster_artist.png",
+  "/images/playing_cards.png",
+  "/images/popularity.png",
+  "/images/updated.png",
 ];
 
 export const IMAGE_EXTENSION = [".jpg", ".png", ".jpeg"];
