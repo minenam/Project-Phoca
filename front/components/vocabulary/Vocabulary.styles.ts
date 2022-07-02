@@ -7,7 +7,7 @@ export const VocabularyWrapper = styled(
     alignItems: "center",
     height: `calc(100vh - ${props.$headerHeight})`,
     marginLeft: props.$sideBarWidth,
-    width: `calc(100vw - ${props.$sideBarWidth}px`,
+    width: `calc(100vw - ${props.$sideBarWidth})`,
     flexDirection: "column",
     padding: "20px",
   }),
