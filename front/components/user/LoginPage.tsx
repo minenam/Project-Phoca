@@ -60,10 +60,12 @@ const loginHandler = async (data: LoginValues) => {
 
 function LoginPage({ setErrorMsg, setFindPwModalOpen }: LoginPageProps) {
   const router = useRouter();
+  const userEmail = router.query?.email as string;
+  const emailInitValue = { email: userEmail, password: "" };
 
   // 로그인 요청
   const loginMutation = useMutation(loginHandler, {
-    onSuccess: (result, variables) => {
+    onSuccess: (result) => {
       sessionStorage.setItem("userToken", result.token);
       userStore.setState({ user: result.data });
 
@@ -81,7 +83,7 @@ function LoginPage({ setErrorMsg, setFindPwModalOpen }: LoginPageProps) {
 
   // 폼 유효성 검사, Submit Handler
   const formik = useFormik({
-    initialValues: initialValue,
+    initialValues: userEmail ? emailInitValue : initialValue,
     validationSchema: Yup.object({
       email: Yup.string()
         .email("이메일을 다시 확인해 주세요.")
@@ -113,7 +115,7 @@ function LoginPage({ setErrorMsg, setFindPwModalOpen }: LoginPageProps) {
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.email}
+              value={userEmail ? userEmail : formik.values.email}
             />
             {formik.touched.email && formik.errors.email ? (
               <ErrorMsg>{formik.errors.email}</ErrorMsg>
@@ -127,6 +129,7 @@ function LoginPage({ setErrorMsg, setFindPwModalOpen }: LoginPageProps) {
               type="password"
               onChange={formik.handleChange}
               value={formik.values.password}
+              autoFocus={!!userEmail}
             />
             {formik.touched.password && formik.errors.password ? (
               <ErrorMsg>{formik.errors.password}</ErrorMsg>
