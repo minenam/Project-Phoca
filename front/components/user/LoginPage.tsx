@@ -148,7 +148,7 @@ function LoginPage({ setErrorMsg, setFindPwModalOpen }: LoginPageProps) {
       </Form>
       <SnsTitle>SNS 로그인</SnsTitle>
       <SNSBtnContainer>
-        <Link href={`${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URL}`}>
+        <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/kakao/login`}>
           <KakaoBtn>
             <Image
               src="/images/kakaoLogin.png"
