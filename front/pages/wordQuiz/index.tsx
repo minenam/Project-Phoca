@@ -137,7 +137,7 @@ function WordQuiz() {
         $sidebarWidth={SIDEBAR_WIDTH}>
         {Object.entries(card).map(([key, value]) => (
           <Card key={key}>
-            <Image src={value.src} alt={key} width={400} height={400} />
+            <Image src={value.src} alt={key} width={400} height={350} />
             <Title>{value.title}</Title>
             <BtnContainer>
               <Button $small={small} onClick={() => btnClickHandler(key)}>
