@@ -9,6 +9,10 @@ import tensorflow as tf
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+from tensorflow.keras.applications import MobileNet
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.metrics import categorical_accuracy, top_k_categorical_accuracy, categorical_crossentropy
+from tensorflow.keras.applications.mobilenet import preprocess_input
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -62,9 +66,11 @@ def transform_images(img, size):
 # Image Classification transform image
 def ic_transform_images(img, size):
   img = image.open(img).convert("RGB")
+  img = np.invert(img)
+  img = tf.image.rgb_to_grayscale(img)
   img = tf.expand_dims(img, 0)
   img = tf.image.resize(img, (size, size))
-  img = img / 255
+  img = preprocess_input(img)
   return img
 
 
@@ -100,13 +106,13 @@ def image_predict():
   if request.method == 'POST':
     file = request.files['image']
     answer = request.form["answer"]
-    img = ic_transform_images(file, 32)
-    res = ic_model.predict(img)
-    label = np.argmax(res) - 1
+    img = ic_transform_images(file, 64)
+    res = ic_model.predict([img])
+    label = np.argsort(-res, axis=1)[:,0:1]
     class_names = [c.strip() for c in open(IC_CLASS_NAME_PATH).readlines()]
-    result = True if class_names[label] == answer else False
+    result = True if class_names[label[0][0]] == answer else False
     outputs = {
-      "predicted": class_names[label],
+      "predicted": class_names[label[0][0]],
       "answer": answer,
       "result": result
     }
@@ -115,6 +121,6 @@ def image_predict():
 
 if __name__ == "__main__":
   od_model = tf.saved_model.load(OD_MODEL_PATH)
-  ic_model = tf.keras.models.load_model(
-    './image-classification/saved_model/image_model.h5')
+  ic_model = MobileNet(input_shape=(64, 64, 1), alpha=1., weights=None, classes=340)
+  ic_model.load_weights("./image-classification/saved_model/image_model.h5")
   app.run(host="0.0.0.0", port=PORT, debug=True)
