@@ -40,3 +40,15 @@ export const ItemContainer = styled("div", {
   backgroundColor: "#fff",
   borderRadius: "10px",
 });
+
+export const TextContainer = styled("div", {
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+export const Text = styled("p", {
+  fontSize: "1.5rem",
+  textAlign: "center",
+});

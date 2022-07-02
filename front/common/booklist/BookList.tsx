@@ -10,6 +10,8 @@ import {
   ListContainer,
   ItemContainer,
   Label,
+  TextContainer,
+  Text,
 } from "./BookList.style";
 
 export interface Wordbook {
@@ -83,19 +85,25 @@ function BookList({
     <SelectBookContainer>
       <Title>{title}</Title>
       <ListContainer $height={height}>
-        {wordbookList?.map((item, idx) => (
-          <ItemContainer key={`${item.wordbookName}${idx}`}>
-            <input
-              type="checkbox"
-              name="word"
-              value={idx}
-              checked={item.wordbookId === selectedWordbookId}
-              onChange={checkboxClickHandler}
-            />
-            <Label>{item.wordbookName}</Label>
-            <Label>{item.secured ? <AiFillLock /> : <MdPublic />}</Label>
-          </ItemContainer>
-        ))}
+        {wordbookList && wordbookList.length > 0 ? (
+          wordbookList?.map((item, idx) => (
+            <ItemContainer key={`${item.wordbookName}${idx}`}>
+              <input
+                type="checkbox"
+                name="word"
+                value={idx}
+                checked={item.wordbookId === selectedWordbookId}
+                onChange={checkboxClickHandler}
+              />
+              <Label>{item.wordbookName}</Label>
+              <Label>{item.secured ? <AiFillLock /> : <MdPublic />}</Label>
+            </ItemContainer>
+          ))
+        ) : (
+          <TextContainer>
+            <Text>단어장이 없습니다.</Text>
+          </TextContainer>
+        )}
       </ListContainer>
     </SelectBookContainer>
   );
