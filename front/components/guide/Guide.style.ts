@@ -105,7 +105,7 @@ export const ImageWrapper = styled("div", {
 export const GuidImage = styled("img", {
   padding: "20px",
   width: "400px",
-  height: "400px",
+  height: "350px",
 });
 
 export const Hr = styled("div", {
@@ -140,6 +140,7 @@ export const MainText = styled("p", {
   fontSize: "2rem",
   padding: "10px",
   MarginBottom: "2.5rem",
+  cursor: "pointer",
 });
 
 export const WrapperWithFooter = styled(

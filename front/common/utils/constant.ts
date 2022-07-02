@@ -32,6 +32,13 @@ export const MAIN_BUTTON: Button[] = [
   },
 ];
 
+export const GuideButton: { [key in string]: string } = {
+  "단어장 만들기": "/word/upload",
+  "단어장 보러가기": "/myPage",
+  "그림퀴즈 하러가기": "/drawing",
+  "단어퀴즈 하러가기": "/wordQuiz",
+};
+
 export const WORD_IMAGES: string[] = [
   "/images/contemplating.png",
   "/images/faq.png",

@@ -11,11 +11,12 @@ import {
   Title,
   WrapperWithFooter,
 } from "@guideComp/Guide.style";
-import { HEADER_HEIGHT } from "@utils/constant";
+import { GuideButton, HEADER_HEIGHT } from "@utils/constant";
 import { useState } from "react";
 import MenuList from "@guideComp/MenuList";
 import GuideContent from "@guideComp/GuideContent";
 import GuideFooter from "@guideComp/GuideFooter";
+import Link from "next/link";
 
 const Guide: NextPage = () => {
   const [selected, setSelected] = useState("");
@@ -36,7 +37,9 @@ const Guide: NextPage = () => {
           </GuideMenuWrapper>
           <Hr />
           <TextContentWrapper>
-            <MainText>{selected}</MainText>
+            <Link href={selected && GuideButton[selected]} passHref>
+              <MainText>{selected}</MainText>
+            </Link>
             <GuideContent selected={selected} />
           </TextContentWrapper>
         </GuideWrapper>
