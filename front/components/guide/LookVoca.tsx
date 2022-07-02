@@ -10,7 +10,7 @@ export function LookVoca() {
   return (
     <>
       <ImageWrapper>
-        <GuidImage src={"images/faq.svg"} alt="question mark" />
+        <GuidImage src={"images/faq.png"} alt="question mark" />
       </ImageWrapper>
       <GuideImageWrapper>
         <GuideText>
@@ -27,7 +27,7 @@ export function LookVoca() {
         </GuideText>
       </GuideImageWrapper>
       <ImageWrapper>
-        <GuidImage src={"/images/traveling.svg"} alt="main mark" />
+        <GuidImage src={"/images/traveling.png"} alt="main mark" />
       </ImageWrapper>
       <GuideImageWrapper>
         <GuideText>내 단어장 페이지에서는 </GuideText>

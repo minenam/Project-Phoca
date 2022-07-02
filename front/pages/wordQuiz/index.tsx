@@ -36,13 +36,13 @@ interface WordbookInfo {
 const card: { [key in string]: Card } = {
   "play-game": {
     title: "재밌는 게임으로 \n영어단어를 외우고 싶다면?",
-    src: "/images/playing_cards_yellow.svg",
+    src: "/images/playing_cards_yellow.png",
     buttonName: "단어 짝 맞추기 게임",
     link: "/wordQuiz/game",
   },
   "memorize-voca": {
     title: "직접 만든 단어장의 \n단어들을 외우고 싶다면?",
-    src: "/images/Memorizing.svg",
+    src: "/images/Memorizing.png",
     buttonName: "단어장 외우기",
     link: "/wordQuiz/voca",
   },

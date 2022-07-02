@@ -10,7 +10,7 @@ export function ImageGame() {
   return (
     <>
       <ImageWrapper>
-        <GuidImage src={"/images/playing_cards.svg"} alt="question mark" />
+        <GuidImage src={"/images/playing_cards.png"} alt="question mark" />
       </ImageWrapper>
 
       <GuideImageWrapper>

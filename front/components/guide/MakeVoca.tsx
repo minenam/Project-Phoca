@@ -10,7 +10,7 @@ export function MakeVoca() {
   return (
     <>
       <ImageWrapper>
-        <GuidImage src={"images/faq.svg"} alt="question mark" />
+        <GuidImage src={"images/faq.png"} alt="question mark" />
       </ImageWrapper>
 
       <GuideImageWrapper>
@@ -28,7 +28,7 @@ export function MakeVoca() {
         </GuideText>
       </GuideImageWrapper>
       <ImageWrapper>
-        <GuidImage src={"/images/monster_artist.svg"} alt="main mark" />
+        <GuidImage src={"/images/monster_artist.png"} alt="main mark" />
       </ImageWrapper>
 
       <GuideImageWrapper>
