@@ -94,8 +94,8 @@ export const GridItem = styled(
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255)",
     borderRadius: "25px",
-    width: "250px",
-    height: "250px",
+    width: "17rem",
+    height: "17rem",
     cursor: "pointer",
     margin: "25px auto",
     ":after": {
