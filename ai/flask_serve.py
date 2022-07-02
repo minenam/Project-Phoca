@@ -1,18 +1,16 @@
 import os
-import sys
 
 import boto3
 import dotenv
 import numpy as np
 import PIL.Image as image
 import tensorflow as tf
+from PIL import ImageChops
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
 from tensorflow.keras.applications import MobileNet
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.metrics import categorical_accuracy, top_k_categorical_accuracy, categorical_crossentropy
 from tensorflow.keras.applications.mobilenet import preprocess_input
+
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
@@ -53,6 +51,13 @@ IC_ROOT_PATH = "./image-classification"
 IC_LABEL_FILE_PATH = os.path.join("data", os.getenv("IC_LABEL_FILE_NAME"))
 IC_CLASS_NAME_PATH = os.path.join(IC_ROOT_PATH, IC_LABEL_FILE_PATH)
 
+def trim(im):
+    bg = image.new(im.mode, im.size, im.getpixel((0,0)))
+    diff = ImageChops.difference(im, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    if bbox:
+        return im.crop(bbox)
 
 # Object Detection transform image
 def transform_images(img, size):
@@ -65,7 +70,15 @@ def transform_images(img, size):
 
 # Image Classification transform image
 def ic_transform_images(img, size):
-  img = image.open(img).convert("RGB")
+  img = image.open(img.stream).convert("RGBA")
+  img = trim(img)
+  nsize = max(img.size)
+  background = image.new("RGBA", (nsize,nsize), "WHITE")
+  img_w, img_h = img.size
+  bg_w, bg_h = background.size
+  offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
+  background.paste(img, offset,mask=img)
+  img = background.convert("RGB")
   img = np.invert(img)
   img = tf.image.rgb_to_grayscale(img)
   img = tf.expand_dims(img, 0)
