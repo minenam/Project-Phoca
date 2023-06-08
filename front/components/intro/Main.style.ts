@@ -53,8 +53,6 @@ export const MainButton = styled(
     },
     ":after": {
       content: "''",
-      backgroundImage: "url(/well_done.svg)",
-      backgroundRepeat: "round",
       position: "absolute",
       top: "0px",
       right: "0px",

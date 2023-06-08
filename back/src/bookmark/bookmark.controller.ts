@@ -14,7 +14,7 @@ import {
   ApiTags,
   ApiBearerAuth,
 } from "@nestjs/swagger";
-import { JwtAuthGuard } from "../auth/auth.guard";
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 import { BookmarkService } from "./bookmark.service";
 import { CreateBookmarkDto } from "./dto/create-bookmark.dto";
 
@@ -80,7 +80,6 @@ export class BookmarkController {
     },
   })
   create(@Body() createBookmarkDto: CreateBookmarkDto) {
-    console.log(createBookmarkDto);
     return this.bookmarkService.create(createBookmarkDto);
   }
   @Delete("/")

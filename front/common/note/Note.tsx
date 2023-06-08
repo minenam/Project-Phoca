@@ -1,5 +1,5 @@
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@utils/constant";
 import { NoteContainer, NoteBackground, NoteHeader } from "./Note.style";
-import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../utils/constant";
 
 interface NoteProps {
   children: React.ReactNode;

@@ -1,20 +1,31 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import Seo from "@common/Seo";
+import Toast from "@toast/Toast";
+import Modal from "@modal/Modal";
+import LoginPage from "@userComp/LoginPage";
+import FindPasswordForm from "@userComp/FindPasswordForm";
 import {
   AuthCardContainer,
   Card,
   TitleContainer,
   Logo,
   Title,
-} from "../../components/user/AuthCard.style";
-import LoginPage from "../../components/user/LoginPage";
-import Seo from "../../common/Seo";
-import Toast from "../../common/toast/Toast";
+} from "@userComp/AuthCard.style";
 
 const Login: NextPage = () => {
+  const router = useRouter();
+  const url = router.pathname;
+
   const [errorMsg, setErrorMsg] = useState("");
+  const [findPwModalOpen, setFindPwModalOpen] = useState(false);
+
+  const modalCloseHandler = () => {
+    setFindPwModalOpen(false);
+  };
 
   return (
     <>
@@ -34,11 +45,31 @@ const Login: NextPage = () => {
             </Link>
             <Title>로그인</Title>
           </TitleContainer>
-          <LoginPage setErrorMsg={setErrorMsg} />
+          <LoginPage
+            setErrorMsg={setErrorMsg}
+            setFindPwModalOpen={setFindPwModalOpen}
+          />
         </Card>
       </AuthCardContainer>
+
       {errorMsg.length > 1 && (
-        <Toast success={false} message={errorMsg} setErrorMsg={setErrorMsg} />
+        <Toast
+          success={false}
+          message={errorMsg}
+          url={url}
+          setMessage={setErrorMsg}
+        />
+      )}
+
+      {findPwModalOpen && (
+        <Modal
+          open={findPwModalOpen}
+          width="600px"
+          large={true}
+          url={url}
+          onClose={modalCloseHandler}>
+          <FindPasswordForm onClose={modalCloseHandler} />
+        </Modal>
       )}
     </>
   );

@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import { WORD_NOTE_WIDTH, WORD_NOTE_HEIGHT } from "../../common/utils/constant";
-import Seo from "../../common/Seo";
-import Note from "../../common/note/Note";
-import Dropzone from "../../components/word/upload/Dropzone";
+import { WORD_NOTE_WIDTH, WORD_NOTE_HEIGHT } from "@utils/constant";
+import Seo from "@common/Seo";
+import Note from "@note/Note";
+import Dropzone from "@wordComp/upload/Dropzone";
 
 const UploadPage: NextPage = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import {
   AvatarEditWrapper,
   EditModalWrapper,
@@ -9,27 +9,21 @@ import {
   EditButtonWrapper,
   InputWrapper,
 } from "./UserEditModal.style";
-import { UserProperties, userStore } from "../../zustand/userStore";
-import { Avatar, AvatarImage } from "../../pages/myPage/MyPage.style";
 import { useDropzone } from "react-dropzone";
-import { ConfirmButton } from "../intro/LoginRequiredModal.style";
+import { useMutation } from "react-query";
+import { useRouter } from "next/router";
+import { UserProperties, userStore } from "@zustand/userStore";
+import { Avatar, AvatarImage } from "@myPageComp/MyPage.style";
+import Modal from "@modal/Modal";
+import { ConfirmButton } from "@loginRequiredModal/LoginRequiredModal.style";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DropContainer } from "../word/upload/Dropzone.style";
-import { Input, Label } from "../word/results/EditForm/EditForm.style";
-import { useMutation, useQuery } from "react-query";
-import { useRouter } from "next/router";
-import Modal from "../../common/modal/Modal";
 import UserDelModal from "./UserDelModal";
+import UserPasswordEditModal from "./UserPasswordEditModal";
 
 export interface UserEditModalProps {
   onClose: () => void;
   userInfo: UserProperties | null;
-}
-
-interface EditProps {
-  userName: string;
-  comment: string;
-  file: string;
 }
 
 const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
@@ -37,8 +31,10 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   const [userNameState, setUserNameState] = useState(userInfo?.userName);
   const [preview, setPreview] = useState("");
   const [comment, setComment] = useState(userInfo?.comment);
-  const [isDel, setIsDel] = useState(false);
+  const [isDelModalOpen, setIsDelModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const router = useRouter();
+  const url = router.pathname;
 
   const onDrop = (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
@@ -53,11 +49,19 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
   };
 
   const deleteUserHandler = () => {
-    setIsDel(true);
+    setIsDelModalOpen(true);
   };
 
   const deleteModalCloseHandler = () => {
-    setIsDel(false);
+    setIsDelModalOpen(false);
+  };
+
+  const passwordEdit = () => {
+    setIsPasswordModalOpen(true);
+  };
+
+  const passwordModalCloseHandler = () => {
+    setIsPasswordModalOpen(false);
   };
 
   const onSubmitHandler = async () => {
@@ -108,6 +112,8 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       <AvatarImage src={preview} alt={file.name} />
     </Avatar>
   ));
+
+  const user = userStore((state) => state.user);
   return (
     <EditModalWrapper>
       <EditModalTitle>회원정보 수정하기</EditModalTitle>
@@ -117,8 +123,11 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
         ) : (
           <Avatar $modal>
             <AvatarImage
-              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${userInfo?.userImage}`}
-              alt="avatar"
+              src={
+                user?.userImage.startsWith("http")
+                  ? user?.userImage
+                  : `${process.env.NEXT_PUBLIC_IMAGE_URL}${user?.userImage}`
+              }
             />
           </Avatar>
         )}
@@ -130,11 +139,11 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       </AvatarEditWrapper>
       <CommentWrapper>
         <InputWrapper>
-          <label htmlFor="userName">유저명 :</label>
+          <label htmlFor="userName">이름 :</label>
           <Comment
             id="userName"
             type="text"
-            value={userNameState}
+            placeholder={userNameState}
             onChange={onChangeHandler}
           />
         </InputWrapper>
@@ -143,15 +152,17 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
           <Comment
             id="comment"
             type="text"
-            value={comment}
+            placeholder={comment}
             onChange={onChangeHandler}
           />
         </InputWrapper>
       </CommentWrapper>
       <EditButtonWrapper>
-        <EditButton $backgroundColor="orange">비밀번호 변경</EditButton>
+        <EditButton $borderColor="#48cfc8" onClick={passwordEdit}>
+          비밀번호 변경
+        </EditButton>
         <EditButton
-          $backgroundColor="#FE7394"
+          $borderColor="#FE7394"
           $withdrawal
           onClick={deleteUserHandler}>
           회원 탈퇴
@@ -160,13 +171,28 @@ const UserEditModal = ({ onClose, userInfo }: UserEditModalProps) => {
       <ConfirmButton onClick={() => userEditMutation.mutate()}>
         수정완료
       </ConfirmButton>
-      {isDel && (
+
+      {isDelModalOpen && (
         <Modal
-          open={isDel}
+          open={isDelModalOpen}
           width="600px"
           onClose={deleteModalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <UserDelModal onClose={deleteModalCloseHandler} userInfo={userInfo} />
+        </Modal>
+      )}
+      {isPasswordModalOpen && (
+        <Modal
+          open={isPasswordModalOpen}
+          width="600px"
+          onClose={passwordModalCloseHandler}
+          large={true}
+          url={url}>
+          <UserPasswordEditModal
+            onClose={passwordModalCloseHandler}
+            userInfo={userInfo}
+          />
         </Modal>
       )}
     </EditModalWrapper>

@@ -43,23 +43,27 @@ const registerHandler = async (data: RegisterValues) => {
   return result;
 };
 
+const initialValue: RegisterValues = {
+  email: "",
+  userName: "",
+  password: "",
+  confirmPassword: "",
+};
+
 function RegisterPage() {
   const router = useRouter();
+
   const registerMutation = useMutation(registerHandler, {
-    onSuccess: (data, variables) => {
-      console.log("Register 성공 ", data);
-      router.push("/login");
+    onSuccess: (result) => {
+      router.push(
+        { pathname: "/login", query: { email: result.data.email } },
+        "/login",
+      );
     },
-    onError: (err, variables) => {
+    onError: (err) => {
       console.log("Register 실패 ", err);
     },
   });
-  const initialValue: RegisterValues = {
-    email: "",
-    userName: "",
-    password: "",
-    confirmPassword: "",
-  };
 
   const formik = useFormik({
     initialValues: initialValue,
@@ -84,7 +88,7 @@ function RegisterPage() {
 
   return (
     <>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit} $isLogin={false}>
         <ContentContainer>
           <Field>
             <Label htmlFor="email">이메일</Label>

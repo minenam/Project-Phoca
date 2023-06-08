@@ -1,23 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
-import { MAIN_BUTTON } from "../common/utils/constant";
+import { useRouter } from "next/router";
+import { MAIN_BUTTON } from "@utils/constant";
 import { useStyletron } from "styletron-react";
 import {
   MainButton,
   MainButtonHoverWrapper,
   MainButtonWrapper,
   MainPhrase,
-} from "../components/intro/Main.style";
+} from "@introComp/Main.style";
 import Link from "next/link";
-import { userStore } from "../zustand/userStore";
-import Modal from "../common/modal/Modal";
-import LoginRequiredModal from "../components/intro/LoginRequiredModal";
+import { userStore } from "@zustand/userStore";
+import Modal from "@modal/Modal";
+import LoginRequiredModal from "@loginRequiredModal/LoginRequiredModal";
+import Seo from "@common/Seo";
 
 const Home: NextPage = () => {
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const router = useRouter();
   const user = userStore();
   const [css] = useStyletron();
+  const url = router.pathname;
+
   const btnRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   useEffect(() => {
     btnRef.current.forEach((btn: any) => {
@@ -41,7 +46,10 @@ const Home: NextPage = () => {
     e: React.MouseEvent<HTMLDivElement>,
     idx: number,
   ) => {
-    if (idx === 1 && user.user === null) {
+    if (
+      (idx === 1 && user.user === null) ||
+      (idx === 3 && user.user === null)
+    ) {
       e.preventDefault();
       setLoginModalOpen(true);
     }
@@ -49,17 +57,18 @@ const Home: NextPage = () => {
 
   return (
     <div>
+      <Seo title="메인페이지" />
       <MainPhrase>
-        아이들 영여 교육, Phoca와 함께 주변 사물부터 시작해봐요.
+        아이들 영어 교육, Phoca와 함께 주변 사물부터 시작해봐요.
       </MainPhrase>
 
       <MainButtonWrapper>
-        <Link href={MAIN_BUTTON[0].link} passHref>
+        <Link href={"/guide"} passHref>
           <MainButtonHoverWrapper $guide>
             <MainButton
               $guide
               ref={(ref) => (btnRef.current[0] = ref)}
-              $backgroundImage="/faq.svg">
+              $backgroundImage="/images/faq.png">
               학습가이드
             </MainButton>
           </MainButtonHoverWrapper>
@@ -67,7 +76,7 @@ const Home: NextPage = () => {
 
         {MAIN_BUTTON.map((item, idx) => {
           return (
-            <Link href={item.link} key={idx} passHref>
+            <Link href={item.link} key={item.buttonName} passHref>
               <MainButtonHoverWrapper>
                 <MainButton
                   ref={(ref) => (btnRef.current[idx + 1] = ref)}
@@ -86,7 +95,8 @@ const Home: NextPage = () => {
           open={loginModalOpen}
           width="400px"
           onClose={loginModalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <LoginRequiredModal onClose={loginModalCloseHandler} />
         </Modal>
       )}

@@ -1,13 +1,21 @@
+// @ts-nocheck
 import { styled } from "styletron-react";
 
 export const Container = styled(
   "div",
-  (props: { $isOpen: boolean; $width: string; $large: boolean }) => ({
+  (props: {
+    $isOpen: boolean;
+    $width: string;
+    $large: boolean;
+    $left: string;
+  }) => ({
     position: "absolute",
     width: props.$width,
     top: props.$large ? "45%" : "50%",
-    left: "60%",
-    transform: props.$large ? "translate(-60%, -35%)" : "translate(-60%, -50%)",
+    left: props.$left,
+    transform: props.$large
+      ? `translate(-${props.$left}, -35%)`
+      : `translate(-${props.$left}, -50%)`,
     backgroundColor: "#fff",
     zIndex: 3,
     visibility: props.$isOpen ? "visible" : "hidden",

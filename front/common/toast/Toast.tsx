@@ -1,22 +1,27 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { ToastMsg } from "./Toast.style";
+import { isMiddle } from "@utils/useIsMiddle";
 import { BiError, BiCheck } from "react-icons/bi";
+import { ToastMsg } from "./Toast.style";
 
 interface ToastProps {
   success: boolean;
   message: string;
-  setErrorMsg: Dispatch<SetStateAction<string>>;
+  url: string;
+  setMessage?: Dispatch<SetStateAction<string>>;
 }
 
 function Toast(props: ToastProps) {
-  const { success, message, setErrorMsg } = props;
+  const { success, message, url, setMessage } = props;
   const [toastVisible, setToastVisible] = useState(true);
+  const left = isMiddle(url);
 
   useEffect(() => {
     if (toastVisible) {
       const timerId = setTimeout(() => {
         setToastVisible(false);
-        setErrorMsg("");
+        if (setMessage) {
+          setMessage("");
+        }
       }, 3000);
       return () => {
         clearTimeout(timerId);
@@ -27,8 +32,14 @@ function Toast(props: ToastProps) {
   return (
     <>
       {toastVisible && (
-        <ToastMsg $success={success}>
-          {success ? <BiCheck /> : <BiError />} {message}
+        <ToastMsg $success={success} $left={left}>
+          {success ? <BiCheck /> : <BiError />}{" "}
+          {message.split("\n").map((text) => (
+            <>
+              {text}
+              <br />
+            </>
+          ))}
         </ToastMsg>
       )}
     </>

@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Modal from "@modal/Modal";
+import EditForm from "./EditForm/EditForm";
+import SaveForm from "./SaveForm/SaveForm";
+import LoginRequiredModal from "@loginRequiredModal/LoginRequiredModal";
 import {
   ResultsContainer,
   ImageContainer,
@@ -15,19 +19,18 @@ import {
   Button,
 } from "./Results.style";
 import { FaVolumeUp, FaEdit } from "react-icons/fa";
-import Modal from "../../../common/modal/Modal";
-import EditForm from "./EditForm/EditForm";
-import SaveForm from "./SaveForm/SaveForm";
-import { ResultProps } from "../../../common/types/resultsType";
+import { ResultProps } from "@common/types/resultsType";
 
 function Results({ wordInfo }: ResultProps) {
   const router = useRouter();
+  const url = router.pathname;
 
   const [engWord, setEngWord] = useState(wordInfo.wordEng[0]);
   const [korWord, setKorWord] = useState(wordInfo.wordKor[0]);
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const ttsBtnClickHandler = () => {
     const tts: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(engWord);
@@ -43,20 +46,14 @@ function Results({ wordInfo }: ResultProps) {
     if (sessionStorage.getItem("userToken")) {
       setSaveModalOpen(true);
     } else {
-      const currentUrl = router.asPath;
-      router.push(
-        {
-          pathname: "/login",
-          query: { returnUrl: currentUrl },
-        },
-        "/login",
-      );
+      setLoginModalOpen(true);
     }
   };
 
   const modalCloseHandler = () => {
     setEditModalOpen(false);
     setSaveModalOpen(false);
+    setLoginModalOpen(false);
   };
 
   return (
@@ -68,6 +65,7 @@ function Results({ wordInfo }: ResultProps) {
             alt="submit-image"
           />
         </ImageContainer>
+
         <WordContainer>
           <EngWord>{engWord}</EngWord>
           <IconContainer>
@@ -80,6 +78,7 @@ function Results({ wordInfo }: ResultProps) {
           </IconContainer>
           <KorWord>{korWord}</KorWord>
         </WordContainer>
+
         <BtnContainer>
           <Link href="/word/upload">
             <Button>사진 다시 찍기</Button>
@@ -87,12 +86,14 @@ function Results({ wordInfo }: ResultProps) {
           <Button onClick={saveBtnClickHandler}>단어장 저장하기</Button>
         </BtnContainer>
       </ResultsContainer>
+
       {editModalOpen && (
         <Modal
           open={editModalOpen}
           width="800px"
           onClose={modalCloseHandler}
-          large={true}>
+          large={true}
+          url={url}>
           <EditForm
             imageUrl={`${process.env.NEXT_PUBLIC_IMAGE_URL}${wordInfo.wordKey}`}
             onClose={modalCloseHandler}
@@ -103,12 +104,25 @@ function Results({ wordInfo }: ResultProps) {
           />
         </Modal>
       )}
+
+      {loginModalOpen && (
+        <Modal
+          open={loginModalOpen}
+          width="400px"
+          onClose={modalCloseHandler}
+          large={false}
+          url={url}>
+          <LoginRequiredModal onClose={modalCloseHandler} />
+        </Modal>
+      )}
+
       {saveModalOpen && (
         <Modal
           open={saveModalOpen}
           width="400px"
           onClose={modalCloseHandler}
-          large={false}>
+          large={false}
+          url={url}>
           <SaveForm
             onClose={modalCloseHandler}
             wordId={wordInfo.wordId}

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import {
   Form,
   ContentContainer,
@@ -18,11 +18,13 @@ import {
   ErrorMsg,
   SnsTitle,
   KakaoBtn,
+  SNSBtnContainer,
 } from "./AccountPage.style";
-import { userStore, UserProperties } from "../../zustand/userStore";
+import { userStore, UserProperties } from "@zustand/userStore";
 
 interface LoginPageProps {
   setErrorMsg: Dispatch<SetStateAction<string>>;
+  setFindPwModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 interface LoginValues {
@@ -39,6 +41,7 @@ interface ResponseType {
 
 const initialValue: LoginValues = { email: "", password: "" };
 
+// 로그인 핸들러
 const loginHandler = async (data: LoginValues) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/login`, {
     method: "POST",
@@ -55,12 +58,14 @@ const loginHandler = async (data: LoginValues) => {
   return result;
 };
 
-function LoginPage(props: LoginPageProps) {
+function LoginPage({ setErrorMsg, setFindPwModalOpen }: LoginPageProps) {
   const router = useRouter();
-  const { setErrorMsg } = props;
+  const userEmail = router.query?.email as string;
+  const emailInitValue = { email: userEmail, password: "" };
 
+  // 로그인 요청
   const loginMutation = useMutation(loginHandler, {
-    onSuccess: (result, variables) => {
+    onSuccess: (result) => {
       sessionStorage.setItem("userToken", result.token);
       userStore.setState({ user: result.data });
 
@@ -76,8 +81,9 @@ function LoginPage(props: LoginPageProps) {
     },
   });
 
+  // 폼 유효성 검사, Submit Handler
   const formik = useFormik({
-    initialValues: initialValue,
+    initialValues: userEmail ? emailInitValue : initialValue,
     validationSchema: Yup.object({
       email: Yup.string()
         .email("이메일을 다시 확인해 주세요.")
@@ -91,9 +97,15 @@ function LoginPage(props: LoginPageProps) {
     },
   });
 
+  useEffect(() => {
+    if (router.query.message) {
+      setErrorMsg(router.query.message as string);
+    }
+  }, [router, setErrorMsg]);
+
   return (
     <>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form $isLogin onSubmit={formik.handleSubmit}>
         <ContentContainer>
           <Field>
             <Label htmlFor="email">이메일</Label>
@@ -103,7 +115,7 @@ function LoginPage(props: LoginPageProps) {
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.email}
+              value={userEmail ? userEmail : formik.values.email}
             />
             {formik.touched.email && formik.errors.email ? (
               <ErrorMsg>{formik.errors.email}</ErrorMsg>
@@ -117,6 +129,7 @@ function LoginPage(props: LoginPageProps) {
               type="password"
               onChange={formik.handleChange}
               value={formik.values.password}
+              autoFocus={!!userEmail}
             />
             {formik.touched.password && formik.errors.password ? (
               <ErrorMsg>{formik.errors.password}</ErrorMsg>
@@ -129,11 +142,16 @@ function LoginPage(props: LoginPageProps) {
             <Link href="/register">
               <TextButton>회원가입</TextButton>
             </Link>{" "}
-            |<TextButton>비밀번호 찾기</TextButton>
+            |
+            <TextButton onClick={() => setFindPwModalOpen(true)}>
+              비밀번호 찾기
+            </TextButton>
           </TextBtnContainer>
         </BtnContainer>
-        <SnsTitle>SNS 로그인</SnsTitle>
-        <BtnContainer>
+      </Form>
+      <SnsTitle>SNS 로그인</SnsTitle>
+      <SNSBtnContainer>
+        <Link href={`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/kakao/login`}>
           <KakaoBtn>
             <Image
               src="/images/kakaoLogin.png"
@@ -142,8 +160,8 @@ function LoginPage(props: LoginPageProps) {
               height="45"
             />
           </KakaoBtn>
-        </BtnContainer>
-      </Form>
+        </Link>
+      </SNSBtnContainer>
     </>
   );
 }

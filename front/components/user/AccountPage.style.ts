@@ -1,10 +1,10 @@
 import { styled } from "styletron-react";
 
-export const Form = styled("form", {
+export const Form = styled("form", (props: { $isLogin?: boolean }) => ({
   display: "flex",
   flexDirection: "column",
-  height: "80%",
-});
+  height: props.$isLogin ? "55%" : "80%",
+}));
 
 export const ContentContainer = styled("div", {
   display: "flex",
@@ -80,6 +80,7 @@ export const TextButton = styled("button", {
   color: "#fff",
   cursor: "pointer",
   fontSize: "1rem",
+  marginTop: "0.5rem",
 });
 
 export const ErrorMsg = styled("div", {
@@ -112,9 +113,26 @@ export const SnsTitle = styled("div", {
   },
 });
 
+export const SNSBtnContainer = styled("div", {
+  display: "flex",
+  height: "20%",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
 export const KakaoBtn = styled("button", {
   border: 0,
   backgroundColor: "transparent",
   cursor: "pointer",
-  marginBottom: "1rem",
+});
+
+export const FindPwBtn = styled("button", {
+  border: 0,
+  borderRadius: "20px",
+  margin: "1rem 0",
+  padding: "0.5rem 2rem",
+  fontSize: "1.2rem",
+  color: "#fff",
+  backgroundColor: "#FFAA2A",
+  cursor: "pointer",
 });

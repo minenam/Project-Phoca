@@ -7,7 +7,7 @@ export const VocabularyWrapper = styled(
     alignItems: "center",
     height: `calc(100vh - ${props.$headerHeight})`,
     marginLeft: props.$sideBarWidth,
-    width: `calc(100vw - ${props.$sideBarWidth}px`,
+    width: `calc(100vw - ${props.$sideBarWidth})`,
     flexDirection: "column",
     padding: "20px",
   }),
@@ -84,21 +84,37 @@ export const SwitchButton = styled("label", (props: { $checked: Boolean }) => ({
   },
 }));
 
-export const GridItem = styled("div", {
-  display: "flex",
-  justifyContent: "flex-start",
-  flexDirection: "column",
-  alignItems: "center",
-  backgroundColor: "white",
-  borderRadius: "25px",
-  width: "250px",
-  height: "250px",
-  cursor: "pointer",
-  margin: "25px auto",
-});
+export const GridItem = styled(
+  "div",
+  (props: { $backgroundImage?: string }) => ({
+    position: "relative",
+    display: "flex",
+    justifyContent: "flex-start",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255)",
+    borderRadius: "25px",
+    width: "17rem",
+    height: "17rem",
+    cursor: "pointer",
+    margin: "25px auto",
+    ":after": {
+      position: "absolute",
+      backgroundImage: `url(${props.$backgroundImage})`,
+      backgroundSize: "cover",
+      content: "''",
+      top: "65px",
+      left: "65px",
+      right: "65px",
+      bottom: "65px",
+      opacity: "0.65",
+    },
+  }),
+);
 
 export const GridTextItem = styled("p", {
   display: "flex",
+  zIndex: 2,
   justifyContent: "center",
   alignItems: "flex-end",
   height: "100%",
@@ -136,6 +152,7 @@ export const GridWrapper = styled(
 );
 
 export const BtnWrapper = styled("div", {
+  zIndex: 2,
   display: "flex",
   width: "100%",
   flexDirection: "row",
